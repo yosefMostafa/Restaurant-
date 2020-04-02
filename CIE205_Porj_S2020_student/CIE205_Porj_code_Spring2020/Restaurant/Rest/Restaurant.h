@@ -21,6 +21,9 @@ private:
 	/// ==> 
 	//	DEMO-related members. Should be removed in phases 1&2
 	Queue<Order*> DEMO_Queue;	//Important: This is just for demo
+	Queue<Cook> NormalCQueue;
+	Queue<Cook> VeganCQueue;
+	Queue<Cook> VIPCQueue;
 	/// ==>
 	
 	
@@ -36,6 +39,7 @@ public:
 	
 	void ExecuteEvents(int TimeStep);	//executes all events at current timestep
 	void RunSimulation();
+	void load();
 
 	
 

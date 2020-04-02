@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <time.h>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 #include "Restaurant.h"
@@ -15,7 +16,9 @@ Restaurant::Restaurant()
 void Restaurant::RunSimulation()
 {
 	pGUI = new GUI;
+	load();
 	PROG_MODE	mode = pGUI->getGUIMode();
+
 		
 	switch (mode)	//Add a function for each mode in next phases
 	{
@@ -68,8 +71,39 @@ void Restaurant::FillDrawingList()
 	//To add Cooks it should call function  void GUI::AddToDrawingList(Cook* pCc);
 
 }
+void::Restaurant::load() {
+	ifstream file("data.txt");
+	int Normalcooks, vegancooks, vipcooks;
+	int Normalcooksspeed, vegancooksspeed, vipcooksspeed;
 
+	file >> Normalcooks >> vegancooks >> vipcooks;
+	file >> Normalcooksspeed >> vegancooksspeed >> vipcooksspeed;//getting the information of the cook from file 
 
+	int sum = Normalcooks + vegancooks + vipcooks;
+
+	Cook* pc = new Cook[sum];//array for cooks objects
+	
+
+	for (int i = 0; i < Normalcooks; i++) {
+		pc[i].setID((i + 1) * 2 + sum);
+		pc[i].setspeed(Normalcooksspeed);
+		pc[i].setType((ORD_TYPE)(TYPE_NRM));
+		NormalCQueue.enqueue(pc[i]);//setting the id and type for the normal cooks 
+	}
+	for (int i = Normalcooks; i < vegancooks+ Normalcooks; i++) {
+		pc[i].setID((i + 1) * 3 + sum);
+		pc[i].setspeed(vegancooksspeed);
+		pc[i].setType((ORD_TYPE)(TYPE_VGAN));
+		VeganCQueue.enqueue(pc[i]);//setting the id and type for the vegan cooks
+	}
+	
+	for (int i = vegancooks + Normalcooks; i < sum; i++) {
+		pc[i].setID((i + 1) * 5 + sum);
+		pc[i].setspeed(vipcooksspeed);
+		pc[i].setType((ORD_TYPE)(TYPE_VIP));
+		VIPCQueue.enqueue(pc[i]);//setting the id and type for the VIP cooks
+	}
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -189,6 +223,7 @@ void Restaurant::Just_A_Demo()
 
 void Restaurant::AddtoDemoQueue(Order *pOrd)
 {
+
 	DEMO_Queue.enqueue(pOrd);
 }
 
