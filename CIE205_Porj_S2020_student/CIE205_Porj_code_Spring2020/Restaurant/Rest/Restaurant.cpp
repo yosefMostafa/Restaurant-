@@ -76,14 +76,16 @@ void::Restaurant::load() {
 	int Normalcooks, vegancooks, vipcooks;
 	int Normalcooksspeed, vegancooksspeed, vipcooksspeed;
 	int breaktime, normalbreaktime, veganbreaktime, vipbreaktime;
+	int autopromotionlimit;
+	int numofevents;
 
 	file >> Normalcooks >> vegancooks >> vipcooks;
 	file >> Normalcooksspeed >> vegancooksspeed >> vipcooksspeed;//getting the information of the cook from file 
 	file >> normalbreaktime >> veganbreaktime >> vipbreaktime;
+	file >> autopromotionlimit;
+	file >> numofevents;
 
 	int sum = Normalcooks + vegancooks + vipcooks;
-
-	//Cook* pc =new Cook[sum];//array for cooks objects
 	
 
 	for (int i = 0; i < Normalcooks; i++) {
@@ -98,6 +100,47 @@ void::Restaurant::load() {
 	for (int i = vegancooks + Normalcooks; i < sum; i++) {
 		Cook pc((i + 1) * 5 + sum, vipcooksspeed, (ORD_TYPE)(TYPE_VIP));
 		VIPCQueue.enqueue(pc);//setting the id and type for the VIP cooks
+	}
+
+	//a break event should be created here
+
+	Event* pEv;
+	for (int i = 0; i < numofevents; i++) {
+		char event,type;
+		ORD_TYPE typ= TYPE_NRM;
+
+		file >> event;
+
+		if (event='R') {
+			int timestep, ID, size,money;
+
+			file >> type;
+
+			switch (type) {
+			case 'N':typ = TYPE_NRM;
+				break;
+			case 'G':typ = TYPE_VGAN;
+				break;
+			case'V':typ= TYPE_VIP; //to detemine the type 
+			}
+
+			file >> timestep >> ID >> size >> money;
+
+			pEv = new ArrivalEvent(timestep, ID, size,money,(ORD_TYPE)typ);
+			EventsQueue.enqueue(pEv);//adding the arrival evevnt in a queue
+		}
+		else if (event == 'X') {
+			int timestep, ID;
+			file >> timestep >> ID;
+
+			//cancellation event should be added
+		}
+		else if(event =='P') {
+			int timestep, ID, Exmoney;
+			file >> timestep >> ID >> Exmoney;
+			//promotion event 
+		}
+
 	}
 
 

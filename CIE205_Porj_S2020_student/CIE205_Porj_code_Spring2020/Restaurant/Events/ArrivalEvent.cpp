@@ -2,9 +2,14 @@
 #include "..\Rest\Restaurant.h"
 
 
-ArrivalEvent::ArrivalEvent(int eTime, int oID, ORD_TYPE oType):Event(eTime, oID)
+ArrivalEvent::ArrivalEvent(int eTime, int oID, int s,double o,ORD_TYPE oType):Event(eTime, oID)
 {
-	OrdType = oType;
+	OrdType = oType; size = s; OrdMoney = o;
+}
+
+ArrivalEvent::ArrivalEvent(int eTime, int oID, ORD_TYPE oType) : Event(eTime, oID)
+{
+	OrdType = oType;//demo constructor
 }
 
 void ArrivalEvent::Execute(Restaurant* pRest)
