@@ -107,11 +107,11 @@ void::Restaurant::load() {
 	Event* pEv;
 	for (int i = 0; i < numofevents; i++) {
 		char event,type;
-		ORD_TYPE typ= TYPE_NRM;
+		ORD_TYPE typ= TYPE_CNT;
 
 		file >> event;
 
-		if (event='R') {
+		if (event=='R') {
 			int timestep, ID, size,money;
 
 			file >> type;
