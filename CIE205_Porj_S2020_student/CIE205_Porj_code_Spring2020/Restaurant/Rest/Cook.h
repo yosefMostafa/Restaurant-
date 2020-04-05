@@ -8,12 +8,11 @@ class Cook
 	int ID;
 	ORD_TYPE type;	//for each order type there is a corresponding type (VIP, Normal, Vegan)
 	int speed;		//dishes it can prepare in one clock tick (in one timestep)
-
+	AVAIL_TYPE statue; //The statue of the cook (in break, availble, non availble)
 
          //
 	//  Add ing More Data Members As Needed
 	//
-	// how I will now whether a chief is busy or not    chief_status
 	//  Break time  after n orders   I may put it in chief_status                    Breaktime   
 	// number of orders done                         completed orders
 	int breakduration; 
@@ -22,13 +21,15 @@ class Cook
 
 
 public:
-	Cook();
-	Cook(int id, int s, ORD_TYPE t);
+	Cook(int id, int s, ORD_TYPE t, int b);
+	Cook(int id, int s, ORD_TYPE t, AVAIL_TYPE at, int b);
 	virtual ~Cook();
 	int GetID() const;
 	ORD_TYPE GetType() const;
 	void setID(int);
 	void setspeed(int);
+	void setStatue(AVAIL_TYPE t);
+	bool Isavail(AVAIL_TYPE t);
 	void setType(ORD_TYPE) ;
 
 };
