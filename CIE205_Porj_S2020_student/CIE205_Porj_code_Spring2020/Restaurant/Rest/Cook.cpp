@@ -1,6 +1,11 @@
 #include "Cook.h"
 
 
+Cook::Cook(int id,int s,ORD_TYPE t)
+{
+	ID = id, speed = s; type = t;
+}
+
 Cook::Cook()
 {
 }

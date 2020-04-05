@@ -11,6 +11,7 @@ class Cook
 
 public:
 	Cook();
+	Cook(int id, int s, ORD_TYPE t);
 	virtual ~Cook();
 	int GetID() const;
 	ORD_TYPE GetType() const;

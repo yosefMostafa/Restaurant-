@@ -75,34 +75,32 @@ void::Restaurant::load() {
 	ifstream file("data.txt");
 	int Normalcooks, vegancooks, vipcooks;
 	int Normalcooksspeed, vegancooksspeed, vipcooksspeed;
+	int breaktime, normalbreaktime, veganbreaktime, vipbreaktime;
 
 	file >> Normalcooks >> vegancooks >> vipcooks;
 	file >> Normalcooksspeed >> vegancooksspeed >> vipcooksspeed;//getting the information of the cook from file 
+	file >> normalbreaktime >> veganbreaktime >> vipbreaktime;
 
 	int sum = Normalcooks + vegancooks + vipcooks;
 
-	Cook* pc = new Cook[sum];//array for cooks objects
+	//Cook* pc =new Cook[sum];//array for cooks objects
 	
 
 	for (int i = 0; i < Normalcooks; i++) {
-		pc[i].setID((i + 1) * 2 + sum);
-		pc[i].setspeed(Normalcooksspeed);
-		pc[i].setType((ORD_TYPE)(TYPE_NRM));
-		NormalCQueue.enqueue(pc[i]);//setting the id and type for the normal cooks 
+		Cook pc((i + 1) * 2 + sum, Normalcooksspeed, (ORD_TYPE)(TYPE_NRM));
+		NormalCQueue.enqueue(pc);//setting the id and type for the normal cooks 
 	}
 	for (int i = Normalcooks; i < vegancooks+ Normalcooks; i++) {
-		pc[i].setID((i + 1) * 3 + sum);
-		pc[i].setspeed(vegancooksspeed);
-		pc[i].setType((ORD_TYPE)(TYPE_VGAN));
-		VeganCQueue.enqueue(pc[i]);//setting the id and type for the vegan cooks
+		Cook pc((i + 1) * 3 + sum, vegancooksspeed, (ORD_TYPE)(TYPE_VGAN));
+		VeganCQueue.enqueue(pc);//setting the id and type for the vegan cooks
 	}
 	
 	for (int i = vegancooks + Normalcooks; i < sum; i++) {
-		pc[i].setID((i + 1) * 5 + sum);
-		pc[i].setspeed(vipcooksspeed);
-		pc[i].setType((ORD_TYPE)(TYPE_VIP));
-		VIPCQueue.enqueue(pc[i]);//setting the id and type for the VIP cooks
+		Cook pc((i + 1) * 5 + sum, vipcooksspeed, (ORD_TYPE)(TYPE_VIP));
+		VIPCQueue.enqueue(pc);//setting the id and type for the VIP cooks
 	}
+
+
 }
 
 
