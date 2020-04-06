@@ -2,12 +2,12 @@
   Demo_Main.cpp
   ArrivalEvent.cpp
   Restaurant.cpp
-D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(178): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
+D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(175): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdlib.h(1323): note: see declaration of 'itoa'
-D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(192): warning C4101: 'pOrd': unreferenced local variable
-D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(191): warning C4101: 'pc': unreferenced local variable
-D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(252): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(306): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
+D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(189): warning C4101: 'pOrd': unreferenced local variable
+D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(188): warning C4101: 'pc': unreferenced local variable
+D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(249): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(303): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdlib.h(1323): note: see declaration of 'itoa'
   Generating Code...
   Restaurant.vcxproj -> D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Debug\Restaurant.exe

@@ -80,7 +80,6 @@ public:
 	void Addtoserving(Order* po);
 	void check(int timestep);
 	void addorder(Order* po,ORD_TYPE t);
-	void getservcount(int& s);
 
 /// ================================================================================================== 
 

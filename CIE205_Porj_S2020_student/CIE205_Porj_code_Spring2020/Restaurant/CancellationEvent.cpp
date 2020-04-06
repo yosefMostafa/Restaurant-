@@ -9,8 +9,6 @@ void CancellationEvent::Execute(Restaurant* pRest)
 {	
 	Order* op;
 	Queue<Order*> p=pRest->GetNormal();
-	int s;
-	pRest->getservcount(s);
 	Queue<Order*> p2;
 	while (p.dequeue(op)) 
 	{
@@ -18,7 +16,6 @@ void CancellationEvent::Execute(Restaurant* pRest)
 		a = op->GetID(); b = op->getArrTime();
 		if (!(a == OrderID && b == EventTime)) {
 			p2.enqueue(op);
-			s--;
 		}
 	}
 	while (p2.dequeue(op))
