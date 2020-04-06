@@ -73,36 +73,42 @@ void Restaurant::FillDrawingList()
 }
 void::Restaurant::load() {
 	ifstream file("data.txt");
-	int Normalcooks, vegancooks, vipcooks;
-	int Normalcooksspeed, vegancooksspeed, vipcooksspeed;
+	int Normalcooks, vegancooks, vipcooks;     
+	int Normalcooksspeed, vegancooksspeed, vipcooksspeed;  
 	int breaktime, normalbreaktime, veganbreaktime, vipbreaktime;
-	int autopromotionlimit;
+	int autoP;
 	int numofevents;
 
 	file >> Normalcooks >> vegancooks >> vipcooks;
 	file >> Normalcooksspeed >> vegancooksspeed >> vipcooksspeed;//getting the information of the cook from file 
-	file >> normalbreaktime >> veganbreaktime >> vipbreaktime;
-	file >> autopromotionlimit;
+	file >>breaktime >>normalbreaktime >> veganbreaktime >> vipbreaktime;
+	file >> autoP;
 	file >> numofevents;
 
 	int sum = Normalcooks + vegancooks + vipcooks;
 	
-
-	for (int i = 0; i < Normalcooks; i++) {
-		Cook pc((i + 1) * 2 + sum, Normalcooksspeed, (ORD_TYPE)(TYPE_NRM));
+	// 
+	//Intializing all the cooks 
+	//
+	for (int i = 0; i < Normalcooks; i++) 
+	{
+		Cook* pc = new Cook(i,Normalcooksspeed, TYPE_NRM, normalbreaktime);
 		NormalCQueue.enqueue(pc);//setting the id and type for the normal cooks 
+
 	}
+	
 	for (int i = Normalcooks; i < vegancooks+ Normalcooks; i++) {
-		Cook pc((i + 1) * 3 + sum, vegancooksspeed, (ORD_TYPE)(TYPE_VGAN));
+		Cook* pc = new Cook(i, vegancooksspeed , TYPE_VGAN, veganbreaktime);
 		VeganCQueue.enqueue(pc);//setting the id and type for the vegan cooks
 	}
 	
 	for (int i = vegancooks + Normalcooks; i < sum; i++) {
-		Cook pc((i + 1) * 5 + sum, vipcooksspeed, (ORD_TYPE)(TYPE_VIP));
+		Cook* pc = new Cook(i, vipcooksspeed, TYPE_VIP , vipbreaktime);
 		VIPCQueue.enqueue(pc);//setting the id and type for the VIP cooks
 	}
 
-	//a break event should be created here
+	
+	//  a break event should be created here
 
 	Event* pEv;
 	for (int i = 0; i < numofevents; i++) {

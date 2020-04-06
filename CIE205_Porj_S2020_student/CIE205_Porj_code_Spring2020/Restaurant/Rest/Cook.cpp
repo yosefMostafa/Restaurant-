@@ -3,15 +3,21 @@
 
 
 
-Cook::Cook(int id, int s, ORD_TYPE t,int b)
+Cook::Cook()
 {
-	ID = id, speed = s; type = t; statue = Avail; breakduration = b; completedOrders = 0;
 }
 
-Cook::Cook(int id,int s,ORD_TYPE t,AVAIL_TYPE at,int b)
+Cook::Cook(int id, int spd, ORD_TYPE t, int breakDur)
 {
-	ID = id, speed = s; type = t; statue = at; breakduration = b; completedOrders = 0;
+	ID = id; 
+	speed = spd;
+	type = t; 
+	statue= Avail;
+	breakduration = breakDur; 
+	completedOrders = 0;
+	assignedOrder = nullptr;
 }
+
 
 
 

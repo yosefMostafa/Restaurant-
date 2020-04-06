@@ -1,5 +1,5 @@
 #pragma once
-
+#include"../Rest/Order.h"
 #include "..\Defs.h"
 
 #pragma once
@@ -17,12 +17,12 @@ class Cook
 	// number of orders done                         completed orders
 	int breakduration; 
 	int completedOrders;  //number of completed orders 
-	// chiefstatus  status;    // at break or free or at work I may not use it in case I have had 2 lists
+	Order* assignedOrder; // those orders come from waiting lists and then  
 
 
 public:
-	Cook(int id, int s, ORD_TYPE t, int b);
-	Cook(int id, int s, ORD_TYPE t, AVAIL_TYPE at, int b);
+	Cook();
+	Cook(int id, int spd, ORD_TYPE t, int breakDur);
 	virtual ~Cook();
 	int GetID() const;
 	ORD_TYPE GetType() const;
