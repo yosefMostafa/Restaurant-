@@ -5,6 +5,7 @@
 #include "..\CMUgraphicsLib\CMUgraphics.h"
 #include "..\GUI\GUI.h"
 #include "..\Generic_DS\Queue.h"
+#include"../Llist.h"
 #include "..\Events\Event.h"
 
 
@@ -21,9 +22,7 @@ private:
 	/// ==> 
 	//	DEMO-related members. Should be removed in phases 1&2
 	Queue<Order*> DEMO_Queue;	//Important: This is just for demo
-	Queue<Cook> NormalCQueue;
-	Queue<Cook> VeganCQueue;
-	Queue<Cook> VIPCQueue;
+	
 	/// ==>
 	
 	
@@ -31,6 +30,24 @@ private:
 	//
 	// TODO: Add More Data Members As Needed
 	//
+	//
+	// for the cooks 
+	Queue<Cook*> NormalCQueue;
+	Queue<Cook*> VeganCQueue;        //those three queues have all the available cooks
+	Queue<Cook*> VIPCQueue;
+	Llist<Cook*> BusyCooks;    // this list contains all the cook who are preparing orders or in the break duration
+	//
+	//
+
+	//
+	//for the orders 
+	Queue<Order*> VOWaiting;        //those three have all orders On the waiting list
+	Llist<Order*> NOwaiting;              
+	Llist<Order*> VOwaiting;
+	//finsihed orders bs lsa ha4of how we are going to implement it
+	// linked list or array list
+
+	int sum;
 
 public:
 	
@@ -40,6 +57,7 @@ public:
 	void ExecuteEvents(int TimeStep);	//executes all events at current timestep
 	void RunSimulation();
 	void load();
+	void interactive(Queue < Cook*> np, Queue < Cook*> gp, Queue < Cook*> vp);
 
 	
 

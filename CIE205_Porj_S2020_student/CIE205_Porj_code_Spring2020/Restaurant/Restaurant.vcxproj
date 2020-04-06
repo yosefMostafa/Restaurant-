@@ -98,7 +98,9 @@
     <ClInclude Include="CMUgraphicsLib\windowinput.h" />
     <ClInclude Include="Defs.h" />
     <ClInclude Include="Events\ArrivalEvent.h" />
+    <ClInclude Include="Events\canellation.h" />
     <ClInclude Include="Events\Event.h" />
+    <ClInclude Include="Events\promotion.h" />
     <ClInclude Include="Generic_DS\Node.h" />
     <ClInclude Include="Generic_DS\Queue.h" />
     <ClInclude Include="GUI\GUI.h" />
@@ -144,8 +146,10 @@
     <ClCompile Include="CMUgraphicsLib\mousequeue.cpp" />
     <ClCompile Include="CMUgraphicsLib\windowinput.cpp" />
     <ClCompile Include="Demo_Main.cpp" />
+    <ClCompile Include="Events\cancellation.cpp" />
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\ArrivalEvent.cpp" />
+    <ClCompile Include="Events\promotion.cpp" />
     <ClCompile Include="GUI\GUI.cpp" />
     <ClCompile Include="Rest\Cook.cpp" />
     <ClCompile Include="Rest\Order.cpp" />
