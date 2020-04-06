@@ -101,7 +101,6 @@
     <ClInclude Include="Events\canellation.h" />
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\promotion.h" />
-    <ClInclude Include="Generic_DS\Llist.h" />
     <ClInclude Include="Generic_DS\Node.h" />
     <ClInclude Include="Generic_DS\Queue.h" />
     <ClInclude Include="GUI\GUI.h" />
