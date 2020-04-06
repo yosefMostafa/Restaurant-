@@ -111,6 +111,15 @@
     <ClInclude Include="CancellationEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
+    <ClInclude Include="Events\canellation.h">
+      <Filter>Restaurant</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\promotion.h">
+      <Filter>Restaurant</Filter>
+    </ClInclude>
+    <ClInclude Include="Generic_DS\Llist.h">
+      <Filter>Generic_DS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Demo_Main.cpp" />
@@ -240,6 +249,8 @@
     <ClCompile Include="CancellationEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
+    <ClCompile Include="Events\cancellation.cpp" />
+    <ClCompile Include="Events\promotion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMUgraphicsLib\Manual.txt">
