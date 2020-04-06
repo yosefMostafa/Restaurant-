@@ -108,14 +108,8 @@
     <ClInclude Include="Rest\Cook.h">
       <Filter>Restaurant</Filter>
     </ClInclude>
-    <ClInclude Include="CancellationEvent.h">
-      <Filter>Events</Filter>
-    </ClInclude>
     <ClInclude Include="Events\promotion.h">
       <Filter>Restaurant</Filter>
-    </ClInclude>
-    <ClInclude Include="Generic_DS\Llist.h">
-      <Filter>Generic_DS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +236,6 @@
     </ClCompile>
     <ClCompile Include="Rest\Cook.cpp">
       <Filter>Restaurant</Filter>
-    </ClCompile>
-    <ClCompile Include="CancellationEvent.cpp">
-      <Filter>Events</Filter>
     </ClCompile>
     <ClCompile Include="Events\promotion.cpp" />
   </ItemGroup>
