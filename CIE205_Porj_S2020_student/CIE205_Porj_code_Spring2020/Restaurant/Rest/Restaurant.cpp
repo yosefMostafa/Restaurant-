@@ -123,7 +123,7 @@ void::Restaurant::load() {
 				break;
 			case'V':typ= TYPE_VIP; //to detemine the type 
 			}
-
+		
 			file >> timestep >> ID >> size >> money;
 
 			pEv = new ArrivalEvent(timestep, ID, size,money,(ORD_TYPE)typ);

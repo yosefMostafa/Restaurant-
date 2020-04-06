@@ -108,6 +108,12 @@
     <ClInclude Include="Rest\Cook.h">
       <Filter>Restaurant</Filter>
     </ClInclude>
+    <ClInclude Include="Events\canellation.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\promotion.h">
+      <Filter>Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Demo_Main.cpp" />
@@ -233,6 +239,12 @@
     </ClCompile>
     <ClCompile Include="Rest\Cook.cpp">
       <Filter>Restaurant</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\cancellation.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\promotion.cpp">
+      <Filter>Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
