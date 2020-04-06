@@ -10,7 +10,7 @@ using namespace std;
 #include"..\Events\promotion.h"
 
 
-Restaurant::Restaurant() 
+Restaurant::Restaurant()
 {
 	sercounter = 0; fincounter = 0; sum = 0;
 	pGUI = NULL;
@@ -21,7 +21,7 @@ void Restaurant::RunSimulation()
 	pGUI = new GUI;
 	PROG_MODE	mode = pGUI->getGUIMode();
 	load();
-	
+
 	switch (mode)	//Add a function for each mode in next phases
 	{
 	case MODE_INTR:
@@ -94,23 +94,23 @@ void::Restaurant::load() {
 	int numofevents;
 
 	file >> Normalcooks >> vegancooks >> vipcooks;
-	file >> Normalcooksspeed >> vegancooksspeed >> vipcooksspeed; 
+	file >> Normalcooksspeed >> vegancooksspeed >> vipcooksspeed;
 	file >> breaktime>>normalbreaktime >> veganbreaktime >> vipbreaktime;
 	file >> autopromotionlimit;
 	file >> numofevents;//getting the information of the cook from file
 
 	sum = Normalcooks + vegancooks + vipcooks;
-	
+
 
 	for (int i = 0; i < Normalcooks; i++) {
 		Cook *pc=new Cook((i + 1) * 2 + sum, Normalcooksspeed, (ORD_TYPE)(TYPE_NRM), normalbreaktime);
-		NormalCQueue.enqueue(pc);//setting the id and type for the normal cooks 
+		NormalCQueue.enqueue(pc);//setting the id and type for the normal cooks
 	}
 	for (int i = Normalcooks; i < vegancooks+ Normalcooks; i++) {
 		Cook *pc=new Cook((i + 1) * 3 + sum, vegancooksspeed, (ORD_TYPE)(TYPE_VGAN), veganbreaktime);
 		VeganCQueue.enqueue(pc);//setting the id and type for the vegan cooks
 	}
-	
+
 	for (int i = vegancooks + Normalcooks; i < sum; i++) {
 		Cook* pc = new Cook((i + 1) * 5 + sum, vipcooksspeed, (ORD_TYPE)(TYPE_VIP), vipbreaktime);
 		VIPCQueue.enqueue(pc);//setting the id and type for the VIP cooks
@@ -138,9 +138,9 @@ void::Restaurant::load() {
 				speed = vegancooksspeed;
 				break;
 			case'V':typ= TYPE_VIP;
-				speed = vipcooksspeed;//to detemine the type 
+				speed = vipcooksspeed;//to detemine the type
 			}
-		
+
 			file >> timestep >> ID >> size >> money;
 
 			pEv = new ArrivalEvent(timestep,speed, ID, size,money,(ORD_TYPE)typ);
@@ -156,7 +156,7 @@ void::Restaurant::load() {
 		else if(event =='P') {
 			int timestep, ID, Exmoney;
 			file >> timestep >> ID >> Exmoney;
-			
+
 			pEv = new promotion(timestep, ID,Exmoney);
 			EventsQueue.enqueue(pEv);//adding the cancellation evevnt in a queue
 		}
@@ -166,7 +166,7 @@ void::Restaurant::load() {
 }
 void::Restaurant::interactive(){
 	int CurrentTimeStep = 1;
-	
+
 
 
 
@@ -191,14 +191,14 @@ void::Restaurant::interactive(){
 		Cook* pc;
 		Order* pOrd;
 		Cook **pc1 = NormalCQueue.toArray(Normalcooks);
-		
+
 		for (int j = 0; j < Normalcooks; j++)
 			pGUI->AddToDrawingList(pc1[j]);
 		Cook** pc2 = VeganCQueue.toArray(vegancooks);
 		for (int j = 0; j < vegancooks; j++)
 			pGUI->AddToDrawingList(pc2[j]);
 		Cook** pc3 = VIPCQueue.toArray(vipcooks);
-		for (int j = 0; j < vipcooks; j++) 
+		for (int j = 0; j < vipcooks; j++)
 			pGUI->AddToDrawingList(pc3[j]);
 		if (sercounter!= 0) {
 			Order** pc4 = serving.toArray(sercounter);
@@ -220,7 +220,7 @@ void::Restaurant::interactive(){
 			pGUI->AddToDrawingList(pOrd);
 		}*/
 		check(CurrentTimeStep);
-		
+
 	//	///////////////////////////////////////////////////////////////////////////////////////
 
 		pGUI->UpdateInterface();
@@ -232,7 +232,7 @@ void::Restaurant::interactive(){
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
-/// ==> 
+/// ==>
 ///  DEMO-related functions. Should be removed in phases 1&2
 
 //Begin of DEMO-related functions
@@ -241,12 +241,12 @@ void::Restaurant::interactive(){
 //It should be removed starting phase 1
 void Restaurant::Just_A_Demo()
 {
-	
+
 	//
 	// THIS IS JUST A DEMO FUNCTION
 	// IT SHOULD BE REMOVED IN PHASE 1 AND PHASE 2
-	
-	int EventCnt;	
+
+	int EventCnt;
 	Order* pOrd;
 	Event* pEv;
 	srand(time(NULL));
@@ -256,73 +256,73 @@ void Restaurant::Just_A_Demo()
 
 	pGUI->PrintMessage("Generating Events randomly... In next phases, Events should be loaded from a file...CLICK to continue");
 	pGUI->waitForClick();
-		
+
 	//Just for sake of demo, generate some cooks and add them to the drawing list
 	//In next phases, Cooks info should be loaded from input file
-	int C_count = 12;	
+	int C_count = 12;
 	Cook *pC = new Cook[C_count];
 	int cID = 1;
 
 	for(int i=0; i<C_count; i++)
 	{
-		cID+= (rand()%15+1);	
+		cID+= (rand()%15+1);
 		pC[i].setID(cID);
 		pC[i].setType((ORD_TYPE)(rand()%TYPE_CNT));
-	}	
+	}
 
-		
+
 	int EvTime = 0;
 
 	int O_id = 1;
-	
+
 	//Create Random events and fill them into EventsQueue
 	//All generated event will be "ArrivalEvents" for the demo
 	for(int i=0; i<EventCnt; i++)
 	{
-		O_id += (rand()%4+1);		
-		int OType = rand()%TYPE_CNT;	//Randomize order type		
+		O_id += (rand()%4+1);
+		int OType = rand()%TYPE_CNT;	//Randomize order type
 		EvTime += (rand()%5+1);			//Randomize event time
 		pEv = new ArrivalEvent(EvTime,O_id,(ORD_TYPE)OType);
 		EventsQueue.enqueue(pEv);
 
-	}	
+	}
 
 	// --->   In next phases, no random generation is done
 	// --->       EventsQueue should be filled from actual events loaded from input file
 
-	
-	
-	
-	
+
+
+
+
 	//Now We have filled EventsQueue (randomly)
 	int CurrentTimeStep = 1;
-	
+
 
 	//as long as events queue is not empty yet
 	while(!EventsQueue.isEmpty())
 	{
 		//print current timestep
 		char timestep[10];
-		itoa(CurrentTimeStep,timestep,10);	
+		itoa(CurrentTimeStep,timestep,10);
 		pGUI->PrintMessage(timestep);
 
 
 		//The next line may add new orders to the DEMO_Queue
 		ExecuteEvents(CurrentTimeStep);	//execute all events at current time step
-		
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 		/// The next code section should be done through function "FillDrawingList()" once you
 		/// decide the appropriate list type for Orders and Cooks
-		
+
 		//Let's add ALL randomly generated Cooks to GUI::DrawingList
 		for(int i=0; i<C_count; i++)
 			pGUI->AddToDrawingList(&pC[i]);
-		
+
 		//Let's add ALL randomly generated Ordes to GUI::DrawingList
 		int size = 0;
 		Order** Demo_Orders_Array = DEMO_Queue.toArray(size);
-		
+
 		for(int i=0; i<size; i++)
 		{
 			pOrd = Demo_Orders_Array[i];
@@ -334,7 +334,7 @@ void Restaurant::Just_A_Demo()
 		Order * *finp = finished.toArray(fincounter);
 		for (int j = 0; j < fincounter - 1; j++)
 			pGUI->AddToDrawingList(finp[j]);
-	
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 		pGUI->UpdateInterface();
@@ -349,7 +349,7 @@ void Restaurant::Just_A_Demo()
 	pGUI->PrintMessage("generation done, click to END program");
 	pGUI->waitForClick();
 
-	
+
 }
 ////////////////
 
@@ -397,11 +397,7 @@ void Restaurant::addorder(Order* pOrd, ORD_TYPE t) {
 
 	p->setorder(pOrd);
 	BusyCooks.InsertfromTail(p);
-	
+
 }
 /// ==> end of DEMO-related function
 //////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
