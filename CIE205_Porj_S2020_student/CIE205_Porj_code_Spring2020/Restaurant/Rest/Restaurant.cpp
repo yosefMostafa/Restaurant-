@@ -6,7 +6,7 @@ using namespace std;
 
 #include "Restaurant.h"
 #include "..\Events\ArrivalEvent.h"
-#include"..\Events\canellation.h"
+#include"../CancellationEvent.h"
 #include"..\Events\promotion.h"
 
 
@@ -144,7 +144,7 @@ void::Restaurant::load() {
 			int timestep, ID;
 			file >> timestep >> ID;
 
-			pEv = new cancellation(timestep, ID);
+			pEv = new CancellationEvent(timestep, ID);
 			EventsQueue.enqueue(pEv);//adding the cancellation evevnt in a queue
 		}
 		else if(event =='P') {
