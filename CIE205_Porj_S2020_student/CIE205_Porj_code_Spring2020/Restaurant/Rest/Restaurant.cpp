@@ -208,12 +208,6 @@ void::Restaurant::interactive(Queue < Cook*> np, Queue < Cook*> gp, Queue < Cook
 	}
 }
 
-Llist<Order*> Restaurant::GetNormal() const
-{
-	return NOwaiting;
-}
-
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 /// ==> 

@@ -3,10 +3,10 @@
 
 CancellationEvent::CancellationEvent(int eTime, int oID):Event(eTime, oID)
 {
-	
+
 }
 void CancellationEvent::Execute(Restaurant* pRest)
-{	
+{
 	Node<Order*>* P = pRest->GetNormal().getlisthead();
 	while (P)
 	{
