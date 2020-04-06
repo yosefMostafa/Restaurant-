@@ -65,6 +65,11 @@ Restaurant::~Restaurant()
 			delete pGUI;
 }
 
+GUI* Restaurant::GetGUI()
+{
+	return pGUI;
+}
+
 void Restaurant::FillDrawingList()
 {
 	//This function should be implemented in phase1

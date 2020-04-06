@@ -61,6 +61,7 @@ public:
 	Llist<Order*> GetNormal() const;
 
 
+	GUI* GetGUI();
 
 	void FillDrawingList();
 

@@ -111,9 +111,6 @@
     <ClInclude Include="CancellationEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
-    <ClInclude Include="Events\canellation.h">
-      <Filter>Restaurant</Filter>
-    </ClInclude>
     <ClInclude Include="Events\promotion.h">
       <Filter>Restaurant</Filter>
     </ClInclude>
@@ -249,7 +246,6 @@
     <ClCompile Include="CancellationEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
-    <ClCompile Include="Events\cancellation.cpp" />
     <ClCompile Include="Events\promotion.cpp" />
   </ItemGroup>
   <ItemGroup>
