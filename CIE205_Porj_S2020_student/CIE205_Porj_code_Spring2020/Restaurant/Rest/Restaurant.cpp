@@ -65,6 +65,14 @@ Restaurant::~Restaurant()
 		if (pGUI)
 			delete pGUI;
 }
+Llist<Order*> Restaurant::GetNormal() const
+{
+	return NOwaiting;
+}
+GUI* Restaurant::GetGUI()
+{
+	return pGUI;
+}
 
 void Restaurant::FillDrawingList()
 {
@@ -213,12 +221,6 @@ void::Restaurant::interactive(Queue < Cook*> np, Queue < Cook*> gp, Queue < Cook
 		pGUI->ResetDrawingList();
 	}
 }
-
-Llist<Order*> Restaurant::GetNormal() const
-{
-	return NOwaiting;
-}
-
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,13 +1,10 @@
 #include "Order.h"
 
-Order::Order(int id, ORD_TYPE r_Type,int ArrT, int ServT)
+Order::Order(int id, ORD_TYPE r_Type)
 {
 	ID = (id>0&&id<1000)?id:0;	//1<ID<999
 	type = r_Type;
 	status = WAIT;
-	ArrTime = ArrT;
-	ServTime = ServT;
-	
 }
 
 Order::~Order()
@@ -18,13 +15,6 @@ int Order::GetID()
 {
 	return ID;
 }
-
-
-ORD_TYPE Order::GetType() const
-{
-	return type;
-}
-
 void Order::SetArrTime(int Arr)
 {
 	ArrTime = Arr;
@@ -43,6 +33,12 @@ int Order::getServTime()
 int Order::getArrTime() const
 {
 	return ArrTime;
+}
+
+
+ORD_TYPE Order::GetType() const
+{
+	return type;
 }
 
 

@@ -60,9 +60,11 @@ public:
 	void RunSimulation();
 	void load();
 	void interactive(Queue < Cook*> np, Queue < Cook*> gp, Queue < Cook*> vp);
+
+	
 	Llist<Order*> GetNormal() const;
 
-
+	GUI* GetGUI();
 
 	void FillDrawingList();
 

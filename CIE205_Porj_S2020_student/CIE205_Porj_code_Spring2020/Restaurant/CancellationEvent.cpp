@@ -3,18 +3,21 @@
 
 CancellationEvent::CancellationEvent(int eTime, int oID):Event(eTime, oID)
 {
-	
+
 }
 void CancellationEvent::Execute(Restaurant* pRest)
-{	
-	/*Node<Order*>* ppRest = pRest->GetNormal().getlisthead()->getNext();
-	while (pRest->GetNormal().getlisthead()->getItem())
+{
+	Node<Order*>* P = pRest->GetNormal().getlisthead();
+	while (P)
 	{
-		if (pRest->GetNormal().getlisthead()->getItem()->GetID() == OrderID && pRest->GetNormal().getlisthead()->getItem()->getArrTime() == EventTime)
+		if (P->getItem()->GetID() == OrderID && P->getItem()->getArrTime() == EventTime)
 		{
-			pRest->GetNormal().deleteNode();
+			Order* DummyOrder;
+			pRest->GetNormal().deleteNode(P,DummyOrder);
+			GUI* pGUI = pRest->GetGUI();
+			pGUI->PrintMessage("Order Successfully Canceled");
 		}
 		else
-			pRest->GetNormal().getlisthead()->getNext();
-	}*/
+			P = P->getNext();
+	}
 }
