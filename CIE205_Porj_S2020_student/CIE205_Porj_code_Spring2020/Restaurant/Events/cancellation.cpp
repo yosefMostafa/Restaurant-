@@ -11,6 +11,3 @@ void cancellation::Execute(Restaurant* pRest)
 {
 
 }
-
-
-
