@@ -1,5 +1,5 @@
 #pragma once
-#include"../Generic_DS/Node.h"
+#include"./Generic_DS/Node.h"
 
 
 template<typename T>

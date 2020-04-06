@@ -5,7 +5,7 @@
 #include "..\CMUgraphicsLib\CMUgraphics.h"
 #include "..\GUI\GUI.h"
 #include "..\Generic_DS\Queue.h"
-#include"../Generic_DS/Llist.h"
+#include"../Llist.h"
 #include "..\Events\Event.h"
 
 

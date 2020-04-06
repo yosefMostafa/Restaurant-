@@ -1,4 +1,4 @@
-#include "../Restaurant"
+#include "CancellationEvent.h"
 
 
 CancellationEvent::CancellationEvent(int eTime, int oID):Event(eTime, oID)
