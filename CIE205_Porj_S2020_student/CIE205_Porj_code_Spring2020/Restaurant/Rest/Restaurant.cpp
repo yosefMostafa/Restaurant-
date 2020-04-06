@@ -84,7 +84,7 @@ void::Restaurant::load() {
 
 	file >> Normalcooks >> vegancooks >> vipcooks;
 	file >> Normalcooksspeed >> vegancooksspeed >> vipcooksspeed; 
-	file >> normalbreaktime >> veganbreaktime >> vipbreaktime;
+	file >> breaktime>>normalbreaktime >> veganbreaktime >> vipbreaktime;
 	file >> autopromotionlimit;
 	file >> numofevents;//getting the information of the cook from file
 
