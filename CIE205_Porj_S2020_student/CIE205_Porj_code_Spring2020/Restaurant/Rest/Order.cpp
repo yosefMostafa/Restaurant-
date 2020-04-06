@@ -15,6 +15,25 @@ int Order::GetID()
 {
 	return ID;
 }
+void Order::SetArrTime(int Arr)
+{
+	ArrTime = Arr;
+}
+
+void Order::SetServTime(int Serv)
+{
+	ServTime = Serv;
+}
+
+int Order::getServTime()
+{
+	return ServTime;
+}
+
+int Order::getArrTime() const
+{
+	return ArrTime;
+}
 
 
 ORD_TYPE Order::GetType() const

@@ -5,7 +5,7 @@
 #include "..\CMUgraphicsLib\CMUgraphics.h"
 #include "..\GUI\GUI.h"
 #include "..\Generic_DS\Queue.h"
-#include"../Llist.h"
+#include"../Generic_DS/Llist.h"
 #include "..\Events\Event.h"
 
 
@@ -60,6 +60,7 @@ public:
 	void interactive(Queue < Cook*> np, Queue < Cook*> gp, Queue < Cook*> vp);
 
 	
+	Llist<Order*> GetNormal() const;
 
 	GUI* GetGUI();
 

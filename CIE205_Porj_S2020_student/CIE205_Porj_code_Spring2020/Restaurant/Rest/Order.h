@@ -33,7 +33,10 @@ public:
 	int GetID();
 
 	ORD_TYPE GetType() const;
-
+	void SetArrTime(int Arr);
+	void SetServTime(int Serv);
+	int getServTime();
+	int getArrTime() const;
 	void SetDistance(int d);
 	int GetDistance() const;
 
