@@ -12,6 +12,7 @@ using namespace std;
 
 Restaurant::Restaurant() 
 {
+	sercounter = 0; fincounter = 0; sum = 0;
 	pGUI = NULL;
 }
 
@@ -115,21 +116,24 @@ void::Restaurant::load() {
 		file >> event;
 
 		if (event=='R') {
-			int timestep, ID, size,money;
+			int timestep, ID, size,money,speed=0;
 
 			file >> type;
 
 			switch (type) {
 			case 'N':typ = TYPE_NRM;
+				speed = Normalcooksspeed;
 				break;
 			case 'G':typ = TYPE_VGAN;
+				speed = vegancooksspeed;
 				break;
-			case'V':typ= TYPE_VIP; //to detemine the type 
+			case'V':typ= TYPE_VIP;
+				speed = vipcooksspeed;//to detemine the type 
 			}
 		
 			file >> timestep >> ID >> size >> money;
 
-			pEv = new ArrivalEvent(timestep, ID, size,money,(ORD_TYPE)typ);
+			pEv = new ArrivalEvent(timestep,speed, ID, size,money,(ORD_TYPE)typ);
 			EventsQueue.enqueue(pEv);//adding the arrival evevnt in a queue
 		}
 		else if (event == 'X') {
@@ -194,6 +198,13 @@ void::Restaurant::interactive(Queue < Cook*> np, Queue < Cook*> gp, Queue < Cook
 			pOrd = Demo_Orders_Array[i];
 			pGUI->AddToDrawingList(pOrd);
 		}
+		check(CurrentTimeStep);
+		Order** serp = serving.toArray(sercounter);
+		for (int j = 0; j < sercounter; j++)
+			pGUI->AddToDrawingList(serp[j]);
+		Order** finp = finished.toArray(fincounter);
+		for (int j = 0; j < fincounter; j++)
+			pGUI->AddToDrawingList(finp[j]);
 	//	///////////////////////////////////////////////////////////////////////////////////////
 
 		pGUI->UpdateInterface();
@@ -330,7 +341,27 @@ void Restaurant::AddtoDemoQueue(Order *pOrd)
 
 	DEMO_Queue.enqueue(pOrd);
 }
-
+void Restaurant::Addtoserving(Order* pOrd) {
+	serving.enqueue(pOrd); sercounter++;
+}
+void Restaurant::check(int timestep) {
+	Order *p;
+	Queue<Order*> newser;
+	while (serving.dequeue(p)) {
+		int a, b;
+		a = p->getArrTime(); b = p->getServTime();
+		if (a + b == timestep) {
+			p->setStatus(DONE);
+			finished.enqueue(p);
+			fincounter++;
+		}
+		else {
+			newser.enqueue(p);
+		}
+	}
+	while (newser.dequeue(p))
+		serving.enqueue(p);
+}
 /// ==> end of DEMO-related function
 //////////////////////////////////////////////////////////////////////////////////////////////
 

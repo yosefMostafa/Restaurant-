@@ -1,10 +1,11 @@
 #include "ArrivalEvent.h"
 #include "..\Rest\Restaurant.h"
+#include"..\Rest\Order.h"
 
 
-ArrivalEvent::ArrivalEvent(int eTime, int oID, int s,double o,ORD_TYPE oType):Event(eTime, oID)
+ArrivalEvent::ArrivalEvent(int eTime, int s2, int oID, int s, double o, ORD_TYPE oType) :Event(eTime, oID)
 {
-	OrdType = oType; size = s; OrdMoney = o;
+	OrdType = oType; size = s; OrdMoney = o; OrdServ = s2;
 }
 
 ArrivalEvent::ArrivalEvent(int eTime, int oID, ORD_TYPE oType) : Event(eTime, oID)
@@ -21,6 +22,8 @@ void ArrivalEvent::Execute(Restaurant* pRest)
 	
 	///For the sake of demo, this function will just create an order and add it to DemoQueue
 	///Remove the next code lines in phases 1&2
-	Order* pOrd = new Order(OrderID,OrdType, OrdArriv, OrdServ);
+	Order* pOrd = new Order(OrderID, (ORD_TYPE)(OrdType), EventTime, OrdServ);
+	pOrd->setStatus((ORD_STATUS)(WAIT));
 	pRest->AddtoDemoQueue(pOrd);
+	pRest->Addtoserving(pOrd);
 }
