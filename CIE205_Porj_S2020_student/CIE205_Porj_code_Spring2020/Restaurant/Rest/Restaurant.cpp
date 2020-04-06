@@ -64,7 +64,10 @@ Restaurant::~Restaurant()
 		if (pGUI)
 			delete pGUI;
 }
-
+Llist<Order*> Restaurant::GetNormal() const
+{
+	return NOwaiting;
+}
 GUI* Restaurant::GetGUI()
 {
 	return pGUI;
