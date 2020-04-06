@@ -1,5 +1,5 @@
 #pragma once
-#include"./Generic_DS/Node.h"
+#include"./Node.h"
 
 
 template<typename T>
@@ -7,7 +7,7 @@ class Llist
 {
 	Node<T>* Head;
 	Node<T>* Tail;
-public: 
+public:
 	Llist();
 	bool isEmpty() const;
 	bool begInset(const T& newEntry);
@@ -36,14 +36,14 @@ inline bool Llist<T>::isEmpty() const
 	if (Head == nullptr)
 		return true;
 	else
-		return false; 
+		return false;
 }
 
 template<typename T>
 inline bool Llist<T>::begInset(const T& newEntry)
 {
 	Node<T>* newNodePtr = new Node<T>(newEntry);
-    
+
 	if (isEmpty())
 	{
 		Head = newNodePtr;
@@ -63,9 +63,9 @@ inline bool Llist<T>::begInset(const T& newEntry)
 template<typename T>
 inline bool Llist<T>::InsertfromTail(const T& newEntry)
 {
- 
+
 	Node<T>* newNodePtr = new Node<T>(newEntry);
-	if (isEmpty()) 
+	if (isEmpty())
 	{
 		Head = newNodePtr;
 		Tail = newNodePtr;
@@ -81,19 +81,19 @@ inline bool Llist<T>::InsertfromTail(const T& newEntry)
 
 
 template<typename T>
-inline bool Llist<T>::delLast(T& rtnNode) 
+inline bool Llist<T>::delLast(T& rtnNode)
 {
 	if (isEmpty())
 		return false;
-	
+
 	rtnNode = Tail->getItem();
 
 
-	if (Head == Tail)   //case where there is only one node 
+	if (Head == Tail)   //case where there is only one node
 	{
-		delete Head; 
+		delete Head;
 	}
-	else  
+	else
 	{
 		Node<T>* newNodePtr = Head;
 
@@ -102,7 +102,7 @@ inline bool Llist<T>::delLast(T& rtnNode)
 		{
 			newNodePtr = newNodePtr->getNext();
 		}
-	
+
 		delete Tail;
 		Tail = newNodePtr;
 	}
@@ -151,7 +151,7 @@ inline bool Llist<T>::delHead(T& rtnNode)
 	if (isEmpty())
 		return false;
 
-	
+
 	rtnNode = Head->getItem();
 	if (Head == Tail)         // case I have only one node
 		delete Head;
@@ -176,5 +176,3 @@ template<typename T>
 inline Llist<T>::~Llist()
 {
 }
-
-
