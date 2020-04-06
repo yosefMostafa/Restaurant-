@@ -11,9 +11,11 @@ public:
 	Llist();
 	bool isEmpty() const;
 	bool begInset(const T& newEntry);
+	bool InsertfromTail(const T& newEntry);
 	bool delLast(T& newEntry);
 	bool deleteNode(Node<T>* ptr);
 	bool delHead(T& rtnNode);
+	
 	~Llist();
 
 };
@@ -53,6 +55,25 @@ inline bool Llist<T>::begInset(const T& newEntry)
 	}
 
 	return true;
+
+}
+
+template<typename T>
+inline bool Llist<T>::InsertfromTail(const T& newEntry)
+{
+ 
+	Node<T>* newNodePtr = new Node<T>(newEntry);
+	if (isempty()) 
+	{
+		Head = newNodePtr;
+		Tail = newNodePtr;
+	}
+	else
+	{
+		Tail->setNext(newNodePtr);
+		Tail = newNodePtr;
+	}
+
 
 }
 
@@ -124,6 +145,8 @@ inline bool Llist<T>::delHead(T& rtnNode)
 	}
 	return true;
 }
+
+
 
 template<typename T>
 inline Llist<T>::~Llist()
