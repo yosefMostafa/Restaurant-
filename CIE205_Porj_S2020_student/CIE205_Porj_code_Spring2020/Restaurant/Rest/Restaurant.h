@@ -49,7 +49,7 @@ private:
 	Queue<Order*> finished;
 	// linked list or array list
 
-	int sum; int sercounter; int fincounter;
+	int sum; int sercounter; int fincounter; int Normalcooks, vegancooks, vipcooks;
 
 public:
 	
@@ -59,10 +59,10 @@ public:
 	void ExecuteEvents(int TimeStep);	//executes all events at current timestep
 	void RunSimulation();
 	void load();
-	void interactive(Queue < Cook*> np, Queue < Cook*> gp, Queue < Cook*> vp);
+	void interactive();
 
 	
-	Llist<Order*> GetNormal() const;
+	Queue<Order*> GetNormal() const;
 
 	GUI* GetGUI();
 
@@ -79,6 +79,8 @@ public:
 	void AddtoDemoQueue(Order* po);	//adds an order to the demo queue
 	void Addtoserving(Order* po);
 	void check(int timestep);
+	void addorder(Order* po,ORD_TYPE t);
+	void getservcount(int& s);
 
 /// ================================================================================================== 
 

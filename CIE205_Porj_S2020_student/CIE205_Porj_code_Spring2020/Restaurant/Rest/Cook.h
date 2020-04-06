@@ -27,6 +27,7 @@ public:
 	int GetID() const;
 	ORD_TYPE GetType() const;
 	void setID(int);
+	void setorder(Order* p);
 	void setspeed(int);
 	void setStatue(AVAIL_TYPE t);
 	bool Isavail(AVAIL_TYPE t);
