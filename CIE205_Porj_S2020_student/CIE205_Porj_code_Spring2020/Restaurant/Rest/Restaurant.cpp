@@ -18,13 +18,14 @@ Restaurant::Restaurant()
 void Restaurant::RunSimulation()
 {
 	pGUI = new GUI;
-	load();
 	PROG_MODE	mode = pGUI->getGUIMode();
-
+	
+	load();
 		
 	switch (mode)	//Add a function for each mode in next phases
 	{
 	case MODE_INTR:
+		interactive(NormalCQueue,VeganCQueue,VIPCQueue);
 		break;
 	case MODE_STEP:
 		break;
@@ -82,26 +83,26 @@ void::Restaurant::load() {
 	int numofevents;
 
 	file >> Normalcooks >> vegancooks >> vipcooks;
-	file >> Normalcooksspeed >> vegancooksspeed >> vipcooksspeed;//getting the information of the cook from file 
+	file >> Normalcooksspeed >> vegancooksspeed >> vipcooksspeed; 
 	file >> normalbreaktime >> veganbreaktime >> vipbreaktime;
 	file >> autopromotionlimit;
-	file >> numofevents;
+	file >> numofevents;//getting the information of the cook from file
 
-	int sum = Normalcooks + vegancooks + vipcooks;
+	sum = Normalcooks + vegancooks + vipcooks;
 	
 
 	for (int i = 0; i < Normalcooks; i++) {
-		Cook pc((i + 1) * 2 + sum, Normalcooksspeed, (ORD_TYPE)(TYPE_NRM), normalbreaktime);
-		NormalCQueue.enqueue(&pc);//setting the id and type for the normal cooks 
+		Cook *pc=new Cook((i + 1) * 2 + sum, Normalcooksspeed, (ORD_TYPE)(TYPE_NRM), normalbreaktime);
+		NormalCQueue.enqueue(pc);//setting the id and type for the normal cooks 
 	}
 	for (int i = Normalcooks; i < vegancooks+ Normalcooks; i++) {
-		Cook pc((i + 1) * 3 + sum, vegancooksspeed, (ORD_TYPE)(TYPE_VGAN), veganbreaktime);
-		VeganCQueue.enqueue(&pc);//setting the id and type for the vegan cooks
+		Cook *pc=new Cook((i + 1) * 3 + sum, vegancooksspeed, (ORD_TYPE)(TYPE_VGAN), veganbreaktime);
+		VeganCQueue.enqueue(pc);//setting the id and type for the vegan cooks
 	}
 	
 	for (int i = vegancooks + Normalcooks; i < sum; i++) {
-		Cook pc((i + 1) * 5 + sum, vipcooksspeed, (ORD_TYPE)(TYPE_VIP), vipbreaktime);
-		VIPCQueue.enqueue(&pc);//setting the id and type for the VIP cooks
+		Cook* pc = new Cook((i + 1) * 5 + sum, vipcooksspeed, (ORD_TYPE)(TYPE_VIP), vipbreaktime);
+		VIPCQueue.enqueue(pc);//setting the id and type for the VIP cooks
 	}
 
 	//a break event should be created here
@@ -148,7 +149,58 @@ void::Restaurant::load() {
 
 	}
 
+}
+void::Restaurant::interactive(Queue < Cook*> np, Queue < Cook*> gp, Queue < Cook*> vp){
+	int CurrentTimeStep = 1;
+	
+	
 
+	//as long as events queue is not empty yet
+	while (!EventsQueue.isEmpty())
+	{
+		//print current timestep
+		char timestep[10];
+		itoa(CurrentTimeStep, timestep, 10);
+		pGUI->PrintMessage(timestep);
+
+
+		//The next line may add new orders to the DEMO_Queue
+		ExecuteEvents(CurrentTimeStep);	//execute all events at current time step
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+		/// The next code section should be done through function "FillDrawingList()" once you
+		/// decide the appropriate list type for Orders and Cooks
+
+		//Let's add ALL randomly generated Cooks to GUI::DrawingList7
+		Cook* pc;
+		Order* pOrd;
+		while (np.dequeue(pc))
+			vp.enqueue(pc);
+		while (gp.dequeue(pc))
+			vp.enqueue(pc);
+		Cook** pc2 = vp.toArray(sum);
+		
+		for (int j = 0; j < sum; j++) {
+			pGUI->AddToDrawingList(pc2[j]);
+		}
+
+		//Let's add ALL randomly generated Ordes to GUI::DrawingList
+		int size = 0;
+		Order **Demo_Orders_Array = DEMO_Queue.toArray(size);
+
+		for (int i = 0; i < size; i++)
+		{
+			pOrd = Demo_Orders_Array[i];
+			pGUI->AddToDrawingList(pOrd);
+		}
+	//	///////////////////////////////////////////////////////////////////////////////////////
+
+		pGUI->UpdateInterface();
+		Sleep(1000);
+		CurrentTimeStep++;	//advance timestep
+		pGUI->ResetDrawingList();
+	}
 }
 
 

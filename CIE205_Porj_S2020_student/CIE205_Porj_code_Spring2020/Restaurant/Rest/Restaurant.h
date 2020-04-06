@@ -47,7 +47,7 @@ private:
 	//finsihed orders bs lsa ha4of how we are going to implement it
 	// linked list or array list
 
-
+	int sum;
 
 public:
 	
@@ -57,6 +57,7 @@ public:
 	void ExecuteEvents(int TimeStep);	//executes all events at current timestep
 	void RunSimulation();
 	void load();
+	void interactive(Queue < Cook*> np, Queue < Cook*> gp, Queue < Cook*> vp);
 
 	
 
