@@ -1,14 +1,24 @@
 #include "Cook.h"
+#include "..\Defs.h"
 
 
-Cook::Cook(int id,int s,ORD_TYPE t)
-{
-	ID = id, speed = s; type = t;
-}
 
 Cook::Cook()
 {
 }
+
+Cook::Cook(int id, int spd, ORD_TYPE t, int breakDur)
+{
+	ID = id; 
+	speed = spd;
+	type = t; 
+	statue= Avail;
+	breakduration = breakDur; 
+	completedOrders = 0;
+	assignedOrder = nullptr;
+}
+
+
 
 
 Cook::~Cook()
@@ -40,5 +50,16 @@ void Cook::setType(ORD_TYPE t)
 void Cook::setspeed(int s) {
 	speed = s;
 }
-
+void Cook::setStatue(AVAIL_TYPE t)
+{
+	statue = t;
+}
+bool Cook::Isavail(AVAIL_TYPE t)
+{
+	if (t==AVAIL_TYPE::Avail)
+	{
+		return true;
+	}
+	return false;
+}
 

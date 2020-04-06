@@ -3,7 +3,12 @@
 
 
 
-
+enum  AVAIL_TYPE //Statue of the cook
+{
+	Avail,
+	Break,
+	Neither
+};
 
 enum ORD_TYPE	//types of orders
 {

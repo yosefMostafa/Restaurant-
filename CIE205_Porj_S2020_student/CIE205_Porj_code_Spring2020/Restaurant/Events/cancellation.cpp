@@ -1,8 +1,13 @@
-#include"..\Events\canellation.h"
+#include"../Events/cancellation.h"
 
-cancellation::cancellation(int eTime, int oID) :Event(eTime, oID) {
+
+
+cancellation::cancellation(int eTime, int ordID): Event(eTime,ordID)
+{
 
 }
-void cancellation::Execute(Restaurant* pRest) {
+
+void cancellation::Execute(Restaurant* pRest)
+{
 
 }
