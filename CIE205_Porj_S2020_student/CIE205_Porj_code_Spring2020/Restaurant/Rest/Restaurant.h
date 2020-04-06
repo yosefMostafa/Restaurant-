@@ -44,7 +44,7 @@ private:
 	Queue<Order*> VOWaiting;        //those three have all orders On the waiting list
 	Llist<Order*> NOwaiting;              
 	Llist<Order*> VOwaiting;
-	//finsihed orders bs lsa ha4of how we are going to implement it
+	Llist<Order*> finishedOrders; 
 	// linked list or array list
 
 

@@ -13,9 +13,11 @@ public:
 	bool begInset(const T& newEntry);
 	bool InsertfromTail(const T& newEntry);
 	bool delLast(T& newEntry);
-	bool deleteNode(Node<T>* ptr);
+	bool deleteNode(Node<T>* ptr, T& delNode);
 	bool delHead(T& rtnNode);
-	
+	Node<T>* getlisthead();
+
+
 	~Llist();
 
 };
@@ -63,7 +65,7 @@ inline bool Llist<T>::InsertfromTail(const T& newEntry)
 {
  
 	Node<T>* newNodePtr = new Node<T>(newEntry);
-	if (isempty()) 
+	if (isEmpty()) 
 	{
 		Head = newNodePtr;
 		Tail = newNodePtr;
@@ -73,14 +75,15 @@ inline bool Llist<T>::InsertfromTail(const T& newEntry)
 		Tail->setNext(newNodePtr);
 		Tail = newNodePtr;
 	}
-
+	return true;
 
 }
+
 
 template<typename T>
 inline bool Llist<T>::delLast(T& rtnNode) 
 {
-	if (isempty())
+	if (isEmpty())
 		return false;
 	
 	rtnNode = Tail->getItem();
@@ -92,7 +95,7 @@ inline bool Llist<T>::delLast(T& rtnNode)
 	}
 	else  
 	{
-		Node<T>* newNodePtr = new Node<T>(Head);
+		Node<T>* newNodePtr = Head;
 
 
 		while (newNodePtr->getNext() != Tail)
@@ -109,17 +112,32 @@ inline bool Llist<T>::delLast(T& rtnNode)
 }
 
 template<typename T>
-inline bool Llist<T>::deleteNode(Node<T>* ptr)
+inline bool Llist<T>::deleteNode(Node<T>* ptr, T& delNode)
 {
-	if (ptr == Tail->getItem())
+	if (ptr == Tail)
 	{
-		delLast();
+		delLast(delNode);
+		return true;
 	}
+
+	Node<T>* temp = ptr->getNext();
+
+	if (ptr->getNext() == Tail)
+	{
+
+		delNode = ptr->getItem();
+		ptr->setItem(temp->getItem());
+		ptr->setNext(temp->getNext());
+
+		delete Tail;
+		Tail = ptr;
+	}
+
 	else
 	{
-		Node<T>* temp = ptr->getNext();
-		ptr->getItem() = temp->getItem();          
-		ptr->setNext() = temp->setNext();     
+		delNode = ptr->getItem();
+		ptr->setItem(temp->getItem());
+		ptr->setNext(temp->getNext());
 		delete temp;
 	}
 
@@ -138,7 +156,7 @@ inline bool Llist<T>::delHead(T& rtnNode)
 	if (Head == Tail)         // case I have only one node
 		delete Head;
 	else {                    // case I have more than one node
-		Node<T>* newNodePtr = new Node<T>(Head);
+		Node<T>* newNodePtr = Head;
 
 		Head = newNodePtr->getNext();
 		delete newNodePtr;
@@ -147,6 +165,12 @@ inline bool Llist<T>::delHead(T& rtnNode)
 }
 
 
+
+template<typename T>
+inline Node<T>* Llist<T>::getlisthead()
+{
+	return Head;
+}
 
 template<typename T>
 inline Llist<T>::~Llist()

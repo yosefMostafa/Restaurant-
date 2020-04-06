@@ -76,6 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\..\..\zewail%27s curriculum\CIE\CIE_21_second\Data structure and algorithms\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Llist.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />
     <ClInclude Include="CMUgraphicsLib\colors.h" />
     <ClInclude Include="CMUgraphicsLib\error.h" />
