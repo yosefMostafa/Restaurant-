@@ -2,7 +2,7 @@
 #pragma once
 
 #include"..\Events\Event.h"
-
+#include"../Rest/Restaurant.h"
 class promotion:public Event {
 private:
 	int EXmoney;
