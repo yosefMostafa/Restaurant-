@@ -53,16 +53,6 @@ int Order::GetDistance() const
 	return Distance;
 }
 
-void Order::SetTotalMoney(int Mon)
-{
-	totalMoney = Mon;
-}
-
-int Order::GetTotalMoney()
-{
-	return totalMoney;
-}
-
 
 void Order::setStatus(ORD_STATUS s)
 {
