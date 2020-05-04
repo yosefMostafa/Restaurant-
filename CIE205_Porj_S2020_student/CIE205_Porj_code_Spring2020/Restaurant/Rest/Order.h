@@ -39,7 +39,8 @@ public:
 	int getArrTime() const;
 	void SetDistance(int d);
 	int GetDistance() const;
-
+	void SetTotalMoney(int Mon);
+	int GetTotalMoney();
 	void setStatus(ORD_STATUS s);
 	ORD_STATUS getStatus() const;
 	
