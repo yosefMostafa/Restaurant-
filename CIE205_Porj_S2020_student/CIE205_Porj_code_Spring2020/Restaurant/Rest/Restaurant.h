@@ -36,6 +36,7 @@ private:
 	Queue<Cook*> VeganCQueue;        //those three queues have all the available cooks
 	Queue<Cook*> VIPCQueue;
 	Llist<Cook*> BusyCooks;    // this list contains all the cook who are preparing orders or in the break duration
+	Queue<Order*> serving;
 	//
 	//
 
@@ -45,9 +46,10 @@ private:
 	Llist<Order*> NOwaiting;              
 	Llist<Order*> VOwaiting;
 	Llist<Order*> finishedOrders; 
+	Queue<Order*> finished;
 	// linked list or array list
 
-	int sum;
+	int sum; int sercounter; int fincounter; int Normalcooks, vegancooks, vipcooks;
 
 public:
 	
@@ -57,10 +59,10 @@ public:
 	void ExecuteEvents(int TimeStep);	//executes all events at current timestep
 	void RunSimulation();
 	void load();
-	void interactive(Queue < Cook*> np, Queue < Cook*> gp, Queue < Cook*> vp);
+	void interactive();
 
 	
-	Llist<Order*> GetNormal() const;
+	Queue<Order*> GetNormal() const;
 
 	GUI* GetGUI();
 
@@ -75,6 +77,9 @@ public:
 
 	void Just_A_Demo();	//just to show a demo and should be removed in phase1 1 & 2
 	void AddtoDemoQueue(Order* po);	//adds an order to the demo queue
+	void Addtoserving(Order* po);
+	void check(int timestep);
+	void addorder(Order* po,ORD_TYPE t);
 
 /// ================================================================================================== 
 

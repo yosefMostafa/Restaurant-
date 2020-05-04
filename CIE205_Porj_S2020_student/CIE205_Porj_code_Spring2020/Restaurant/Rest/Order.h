@@ -27,7 +27,7 @@ protected:
 	int waitTime; // time consumed from AT to assign the order for a chief I need it as it is important in case we want it to promote the order
 	
 public:
-	Order(int ID, ORD_TYPE r_Type);
+	Order(int ID, ORD_TYPE r_Type,int a,int s);
 	virtual ~Order();
 
 	int GetID();

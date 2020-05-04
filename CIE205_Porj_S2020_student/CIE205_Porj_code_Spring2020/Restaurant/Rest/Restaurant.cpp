@@ -6,12 +6,13 @@ using namespace std;
 
 #include "Restaurant.h"
 #include "..\Events\ArrivalEvent.h"
-#include"../CancellationEvent.h"
+#include"..\CancellationEvent.h"
 #include"..\Events\promotion.h"
 
 
 Restaurant::Restaurant() 
 {
+	sercounter = 0; fincounter = 0; sum = 0;
 	pGUI = NULL;
 }
 
@@ -19,13 +20,12 @@ void Restaurant::RunSimulation()
 {
 	pGUI = new GUI;
 	PROG_MODE	mode = pGUI->getGUIMode();
-	
 	load();
-		
+	
 	switch (mode)	//Add a function for each mode in next phases
 	{
 	case MODE_INTR:
-		interactive(NormalCQueue,VeganCQueue,VIPCQueue);
+		interactive();
 		break;
 	case MODE_STEP:
 		break;
@@ -33,6 +33,7 @@ void Restaurant::RunSimulation()
 		break;
 	case MODE_DEMO:
 		Just_A_Demo();
+		break;
 
 	};
 
@@ -64,9 +65,9 @@ Restaurant::~Restaurant()
 		if (pGUI)
 			delete pGUI;
 }
-Llist<Order*> Restaurant::GetNormal() const
+Queue<Order*> Restaurant::GetNormal() const
 {
-	return NOwaiting;
+	return DEMO_Queue;
 }
 GUI* Restaurant::GetGUI()
 {
@@ -84,7 +85,6 @@ void Restaurant::FillDrawingList()
 }
 void::Restaurant::load() {
 	ifstream file("data.txt");
-	int Normalcooks, vegancooks, vipcooks;
 	int Normalcooksspeed, vegancooksspeed, vipcooksspeed;
 	int breaktime, normalbreaktime, veganbreaktime, vipbreaktime;
 	int autopromotionlimit;
@@ -92,7 +92,7 @@ void::Restaurant::load() {
 
 	file >> Normalcooks >> vegancooks >> vipcooks;
 	file >> Normalcooksspeed >> vegancooksspeed >> vipcooksspeed; 
-	file >> normalbreaktime >> veganbreaktime >> vipbreaktime;
+	file >> breaktime>>normalbreaktime >> veganbreaktime >> vipbreaktime;
 	file >> autopromotionlimit;
 	file >> numofevents;//getting the information of the cook from file
 
@@ -123,21 +123,24 @@ void::Restaurant::load() {
 		file >> event;
 
 		if (event=='R') {
-			int timestep, ID, size,money;
+			int timestep, ID, size,money,speed=0;
 
 			file >> type;
 
 			switch (type) {
 			case 'N':typ = TYPE_NRM;
+				speed = Normalcooksspeed;
 				break;
 			case 'G':typ = TYPE_VGAN;
+				speed = vegancooksspeed;
 				break;
-			case'V':typ= TYPE_VIP; //to detemine the type 
+			case'V':typ= TYPE_VIP;
+				speed = vipcooksspeed;//to detemine the type 
 			}
 		
 			file >> timestep >> ID >> size >> money;
 
-			pEv = new ArrivalEvent(timestep, ID, size,money,(ORD_TYPE)typ);
+			pEv = new ArrivalEvent(timestep,speed, ID, size,money,(ORD_TYPE)typ);
 			EventsQueue.enqueue(pEv);//adding the arrival evevnt in a queue
 		}
 		else if (event == 'X') {
@@ -158,10 +161,11 @@ void::Restaurant::load() {
 	}
 
 }
-void::Restaurant::interactive(Queue < Cook*> np, Queue < Cook*> gp, Queue < Cook*> vp){
+void::Restaurant::interactive(){
 	int CurrentTimeStep = 1;
 	
-	
+
+
 
 	//as long as events queue is not empty yet
 	while (!EventsQueue.isEmpty())
@@ -183,25 +187,37 @@ void::Restaurant::interactive(Queue < Cook*> np, Queue < Cook*> gp, Queue < Cook
 		//Let's add ALL randomly generated Cooks to GUI::DrawingList7
 		Cook* pc;
 		Order* pOrd;
-		while (np.dequeue(pc))
-			vp.enqueue(pc);
-		while (gp.dequeue(pc))
-			vp.enqueue(pc);
-		Cook** pc2 = vp.toArray(sum);
+		Cook **pc1 = NormalCQueue.toArray(Normalcooks);
 		
-		for (int j = 0; j < sum; j++) {
+		for (int j = 0; j < Normalcooks; j++)
+			pGUI->AddToDrawingList(pc1[j]);
+		Cook** pc2 = VeganCQueue.toArray(vegancooks);
+		for (int j = 0; j < vegancooks; j++)
 			pGUI->AddToDrawingList(pc2[j]);
+		Cook** pc3 = VIPCQueue.toArray(vipcooks);
+		for (int j = 0; j < vipcooks; j++) 
+			pGUI->AddToDrawingList(pc3[j]);
+		if (sercounter!= 0) {
+			Order** pc4 = serving.toArray(sercounter);
+			for (int j = 0; j < sercounter; j++)
+				pGUI->AddToDrawingList(pc4[j]);
+		}if (fincounter!=0) {
+			Order** pc5 = finished.toArray(sercounter);
+			for (int j = 0; j < fincounter; j++)
+				pGUI->AddToDrawingList(pc5[j]);
 		}
 
 		//Let's add ALL randomly generated Ordes to GUI::DrawingList
-		int size = 0;
+		/*int size = 0;
 		Order **Demo_Orders_Array = DEMO_Queue.toArray(size);
 
 		for (int i = 0; i < size; i++)
 		{
 			pOrd = Demo_Orders_Array[i];
 			pGUI->AddToDrawingList(pOrd);
-		}
+		}*/
+		check(CurrentTimeStep);
+		
 	//	///////////////////////////////////////////////////////////////////////////////////////
 
 		pGUI->UpdateInterface();
@@ -309,6 +325,13 @@ void Restaurant::Just_A_Demo()
 			pOrd = Demo_Orders_Array[i];
 			pGUI->AddToDrawingList(pOrd);
 		}
+		Order** serp = serving.toArray(sercounter);
+		for (int j = 0; j < sercounter - 1; j++)
+			pGUI->AddToDrawingList(serp[j]);
+		Order * *finp = finished.toArray(fincounter);
+		for (int j = 0; j < fincounter - 1; j++)
+			pGUI->AddToDrawingList(finp[j]);
+	
 /////////////////////////////////////////////////////////////////////////////////////////
 
 		pGUI->UpdateInterface();
@@ -316,7 +339,7 @@ void Restaurant::Just_A_Demo()
 		CurrentTimeStep++;	//advance timestep
 		pGUI->ResetDrawingList();
 	}
-
+	Sleep(1000);
 	delete []pC;
 
 
@@ -332,7 +355,47 @@ void Restaurant::AddtoDemoQueue(Order *pOrd)
 
 	DEMO_Queue.enqueue(pOrd);
 }
+void Restaurant::Addtoserving(Order* pOrd) {
+	serving.enqueue(pOrd); sercounter++;
+}
+void Restaurant::check(int timestep) {
+	Order* p;
+	Queue<Order*> newser;
+	while (serving.dequeue(p)) {
+		int a, b;
+		a = p->getArrTime(); b = p->getServTime();
+		if (a + b == timestep) {
+			p->setStatus(DONE);
+			finished.enqueue(p);
+			fincounter++;
+		}
+		else {
+			newser.enqueue(p);
+		}
+	}
+	while (newser.dequeue(p))
+		serving.enqueue(p);
 
+}
+void Restaurant::addorder(Order* pOrd, ORD_TYPE t) {
+	Cook* p;
+	if (t == TYPE_NRM) {
+		NormalCQueue.dequeue(p);
+		Normalcooks--;
+	}
+	if (t == TYPE_VGAN) {
+		VeganCQueue.dequeue(p);
+		vegancooks--;
+	}
+	if (t == TYPE_VIP) {
+		VIPCQueue.dequeue(p);
+		vipcooks--;
+	}
+
+	p->setorder(pOrd);
+	BusyCooks.InsertfromTail(p);
+	
+}
 /// ==> end of DEMO-related function
 //////////////////////////////////////////////////////////////////////////////////////////////
 

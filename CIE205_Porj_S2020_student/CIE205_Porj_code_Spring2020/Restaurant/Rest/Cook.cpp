@@ -18,7 +18,9 @@ Cook::Cook(int id, int spd, ORD_TYPE t, int breakDur)
 	assignedOrder = nullptr;
 }
 
-
+void Cook::setorder(Order* p) {
+	assignedOrder = p;
+}
 
 
 Cook::~Cook()

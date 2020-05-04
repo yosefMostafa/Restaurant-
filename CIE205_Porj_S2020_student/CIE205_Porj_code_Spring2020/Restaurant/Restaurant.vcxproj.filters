@@ -114,7 +114,7 @@
     <ClInclude Include="Events\promotion.h">
       <Filter>Restaurant</Filter>
     </ClInclude>
-    <ClInclude Include="Generic_DS\Llist.h">
+    <ClInclude Include="Generic_DS\List.h">
       <Filter>Generic_DS</Filter>
     </ClInclude>
   </ItemGroup>
