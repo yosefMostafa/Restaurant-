@@ -74,3 +74,10 @@ ORD_STATUS Order::getStatus() const
 	return status;
 }
 
+Order::Order(int AT, int id, ORD_TYPE r_Type, double tMoney, int size, int dist)
+{
+	ArrTime = AT; ID = id; type = r_Type; totalMoney = tMoney;
+	OrderSize = size; Distance = dist;
+	status = WAIT;
+}
+
