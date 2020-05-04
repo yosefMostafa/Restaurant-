@@ -6,11 +6,11 @@ CancellationEvent::CancellationEvent(int eTime, int oID):Event(eTime, oID)
 
 }
 void CancellationEvent::Execute(Restaurant* pRest)
-{
+{	
 	//Order* op;
 	//Queue<Order*> p=pRest->GetNormal();
 	//Queue<Order*> p2;
-	//while (p.dequeue(op))
+	//while (p.dequeue(op)) 
 	//{
 	//	int a, b;
 	//	a = op->GetID(); b = op->getArrTime();

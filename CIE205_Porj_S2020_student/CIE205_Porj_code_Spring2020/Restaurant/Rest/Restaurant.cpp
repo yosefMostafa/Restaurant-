@@ -19,7 +19,7 @@ Restaurant::Restaurant()
 void Restaurant::RunSimulation()
 {
 	pGUI = new GUI;
-	PROG_MODE	mode = pGUI->getGUIMode();
+	PROG_MODE mode = pGUI->getGUIMode();
 	load();
 	
 	switch (mode)	//Add a function for each mode in next phases
@@ -65,10 +65,7 @@ Restaurant::~Restaurant()
 		if (pGUI)
 			delete pGUI;
 }
-Queue<Order*> Restaurant::GetNormal() const
-{
-	return DEMO_Queue;
-}
+
 GUI* Restaurant::GetGUI()
 {
 	return pGUI;
@@ -92,7 +89,7 @@ void::Restaurant::load() {
 
 	file >> Normalcooks >> vegancooks >> vipcooks;
 	file >> Normalcooksspeed >> vegancooksspeed >> vipcooksspeed; 
-	file >> breaktime>>normalbreaktime >> veganbreaktime >> vipbreaktime;
+	file >> this->BO >> normalbreaktime >> veganbreaktime >> vipbreaktime;
 	file >> autopromotionlimit;
 	file >> numofevents;//getting the information of the cook from file
 
@@ -140,7 +137,9 @@ void::Restaurant::load() {
 		
 			file >> timestep >> ID >> size >> money;
 
-			pEv = new ArrivalEvent(timestep,speed, ID, size,money,(ORD_TYPE)typ);
+			pEv = new ArrivalEvent(timestep, ID, size,money,(ORD_TYPE)typ,0);
+			//	ArrivalEvent(int eTime, int oID, int s, double o, ORD_TYPE oType, int distance);
+
 			EventsQueue.enqueue(pEv);//adding the arrival evevnt in a queue
 		}
 		else if (event == 'X') {
@@ -189,23 +188,23 @@ void::Restaurant::interactive(){
 		Order* pOrd;
 		Cook **pc1 = NormalCQueue.toArray(Normalcooks);
 		
-		for (int j = 0; j < Normalcooks; j++)
-			pGUI->AddToDrawingList(pc1[j]);
-		Cook** pc2 = VeganCQueue.toArray(vegancooks);
-		for (int j = 0; j < vegancooks; j++)
-			pGUI->AddToDrawingList(pc2[j]);
-		Cook** pc3 = VIPCQueue.toArray(vipcooks);
-		for (int j = 0; j < vipcooks; j++) 
-			pGUI->AddToDrawingList(pc3[j]);
-		if (sercounter!= 0) {
-			Order** pc4 = serving.toArray(sercounter);
-			for (int j = 0; j < sercounter; j++)
-				pGUI->AddToDrawingList(pc4[j]);
-		}if (fincounter!=0) {
-			Order** pc5 = finished.toArray(sercounter);
-			for (int j = 0; j < fincounter; j++)
-				pGUI->AddToDrawingList(pc5[j]);
-		}
+		///////*for (int j = 0; j < Normalcooks; j++)
+		//////	pGUI->AddToDrawingList(pc1[j]);
+		//////Cook** pc2 = VeganCQueue.toArray(vegancooks);
+		//////for (int j = 0; j < vegancooks; j++)
+		//////	pGUI->AddToDrawingList(pc2[j]);
+		//////Cook** pc3 = VIPCQueue.toArray(vipcooks);
+		//////for (int j = 0; j < vipcooks; j++) 
+		//////	pGUI->AddToDrawingList(pc3[j]);
+		//////if (sercounter!= 0) {
+		//////	Order** pc4 = serving.toArray(sercounter);
+		//////	for (int j = 0; j < sercounter; j++)
+		//////		pGUI->AddToDrawingList(pc4[j]);
+		//////}if (fincounter!=0) {
+		//////	Order** pc5 = finished.toArray(sercounter);
+		//////	for (int j = 0; j < fincounter; j++)
+		//////		pGUI->AddToDrawingList(pc5[j]);
+		//////}*/
 
 		//Let's add ALL randomly generated Ordes to GUI::DrawingList
 		/*int size = 0;
@@ -225,6 +224,16 @@ void::Restaurant::interactive(){
 		CurrentTimeStep++;	//advance timestep
 		pGUI->ResetDrawingList();
 	}
+}
+
+void Restaurant::AddtoNormal(Order* po)
+{
+	NOwaiting.enqueue(po);
+}
+
+void Restaurant::AddtoVGN(Order* po)
+{
+	VGNWaiting.enqueue(po);
 }
 
 
@@ -320,18 +329,18 @@ void Restaurant::Just_A_Demo()
 		int size = 0;
 		Order** Demo_Orders_Array = DEMO_Queue.toArray(size);
 		
-		for(int i=0; i<size; i++)
+		for (int i = 0; i < size; i++)
 		{
 			pOrd = Demo_Orders_Array[i];
 			pGUI->AddToDrawingList(pOrd);
+			//////}/*
+			//////Order** serp = serving.toArray(sercounter);
+			//////for (int j = 0; j < sercounter - 1; j++)
+			//////	pGUI->AddToDrawingList(serp[j]);
+			//////Order * *finp = finished.toArray(fincounter);
+			//////for (int j = 0; j < fincounter - 1; j++)
+			//////	pGUI->AddToDrawingList(finp[j]);*/
 		}
-		Order** serp = serving.toArray(sercounter);
-		for (int j = 0; j < sercounter - 1; j++)
-			pGUI->AddToDrawingList(serp[j]);
-		Order * *finp = finished.toArray(fincounter);
-		for (int j = 0; j < fincounter - 1; j++)
-			pGUI->AddToDrawingList(finp[j]);
-	
 /////////////////////////////////////////////////////////////////////////////////////////
 
 		pGUI->UpdateInterface();
@@ -350,52 +359,52 @@ void Restaurant::Just_A_Demo()
 }
 ////////////////
 
-void Restaurant::AddtoDemoQueue(Order *pOrd)
-{
-
-	DEMO_Queue.enqueue(pOrd);
-}
-void Restaurant::Addtoserving(Order* pOrd) {
-	serving.enqueue(pOrd); sercounter++;
-}
-void Restaurant::check(int timestep) {
-	Order* p;
-	Queue<Order*> newser;
-	while (serving.dequeue(p)) {
-		int a, b;
-		a = p->getArrTime(); b = p->getServTime();
-		if (a + b == timestep) {
-			p->setStatus(DONE);
-			finished.enqueue(p);
-			fincounter++;
-		}
-		else {
-			newser.enqueue(p);
-		}
-	}
-	while (newser.dequeue(p))
-		serving.enqueue(p);
-
-}
-void Restaurant::addorder(Order* pOrd, ORD_TYPE t) {
-	Cook* p;
-	if (t == TYPE_NRM) {
-		NormalCQueue.dequeue(p);
-		Normalcooks--;
-	}
-	if (t == TYPE_VGAN) {
-		VeganCQueue.dequeue(p);
-		vegancooks--;
-	}
-	if (t == TYPE_VIP) {
-		VIPCQueue.dequeue(p);
-		vipcooks--;
-	}
-
-	p->setorder(pOrd);
-	BusyCooks.InsertfromTail(p);
-	
-}
+//////void Restaurant::AddtoDemoQueue(Order *pOrd)
+//////{
+//////
+//////	DEMO_Queue.enqueue(pOrd);
+//////}
+////////void Restaurant::Addtoserving(Order* pOrd) {
+////////	serving.enqueue(pOrd); sercounter++;
+////////}
+//void Restaurant::check(int timestep) {
+//	Order* p;
+//	Queue<Order*> newser;
+//	while (serving.dequeue(p)) {
+//		int a, b;
+//		a = p->getArrTime(); b = p->getServTime();
+//		if (a + b == timestep) {
+//			p->setStatus(DONE);
+//			finished.enqueue(p);
+//			fincounter++;
+//		}
+//		else {
+//			newser.enqueue(p);
+//		}
+//	}
+//	while (newser.dequeue(p))
+//		serving.enqueue(p);
+//
+//}
+//void Restaurant::addorder(Order* pOrd, ORD_TYPE t) {
+//	Cook* p;
+//	if (t == TYPE_NRM) {
+//		NormalCQueue.dequeue(p);
+//		Normalcooks--;
+//	}
+//	if (t == TYPE_VGAN) {
+//		VeganCQueue.dequeue(p);
+//		vegancooks--;
+//	}
+//	if (t == TYPE_VIP) {
+//		VIPCQueue.dequeue(p);
+//		vipcooks--;
+//	}
+//
+//	p->setorder(pOrd);
+//	BusyCooks.InsertfromTail(p);
+//	
+//}
 /// ==> end of DEMO-related function
 //////////////////////////////////////////////////////////////////////////////////////////////
 
