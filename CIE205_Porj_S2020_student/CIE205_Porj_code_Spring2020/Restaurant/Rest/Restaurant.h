@@ -36,19 +36,20 @@ private:
 	Queue<Cook*> VeganCQueue;        //those three queues have all the available cooks
 	Queue<Cook*> VIPCQueue;
 	Llist<Cook*> BusyCooks;    // this list contains all the cook who are preparing orders or in the break duration
+	Queue<Order*> serving;
 	//
 	//
 
 	//
 	//for the orders 
-	Queue<Order*> VGNWaiting;        //those three have all orders On the waiting list
-	Queue<Order*> NOwaiting;              
-	Llist<Order*> VIPwaiting;
+	Queue<Order*> VOWaiting;        //those three have all orders On the waiting list
+	Llist<Order*> NOwaiting;              
+	Llist<Order*> VOwaiting;
+	Llist<Order*> finishedOrders; 
 	Queue<Order*> finished;
 	// linked list or array list
 
 	int sum; int sercounter; int fincounter; int Normalcooks, vegancooks, vipcooks;
-	int BO; // repersent restaurnat rules to give a cook a break after n orders 
 
 public:
 	
@@ -60,10 +61,8 @@ public:
 	void load();
 	void interactive();
 
-	void AddtoNormal(Order* po);
-	void AddtoVGN(Order* po);
-
-
+	
+	Queue<Order*> GetNormal() const;
 
 	GUI* GetGUI();
 

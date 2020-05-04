@@ -7,7 +7,7 @@ class Order
 {
 
 protected:
-	int ID;         //Each order has a unique ID (from 1 --> 999 ) 
+	int ID;         //Each order has a unique ID (from 1 --> 999 )
 	ORD_TYPE type;		//order type: Normal, vegan, VIP
 	ORD_STATUS status;	//waiting, in-service, done
 	int Distance;	//The distance (in meters) between the order location and the resturant 
@@ -26,7 +26,6 @@ protected:
 	int OrderSize; // no of dishes of each order need it to calc the SV
 	int waitTime; // time consumed from AT to assign the order for a chief I need it as it is important in case we want it to promote the order
 	
-
 public:
 	Order(int ID, ORD_TYPE r_Type,int a,int s);
 	virtual ~Order();
@@ -47,8 +46,6 @@ public:
 	//
 	// TODO: Add More Member Functions As Needed
 	//
-
-	Order(int AT, int id, ORD_TYPE r_Type, double tMoney, int size, int dist = 0);
 
 };
 
