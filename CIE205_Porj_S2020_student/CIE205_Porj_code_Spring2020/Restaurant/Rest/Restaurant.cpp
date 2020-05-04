@@ -215,7 +215,7 @@ void::Restaurant::interactive(){
 			pOrd = Demo_Orders_Array[i];
 			pGUI->AddToDrawingList(pOrd);
 		}*/
-		check(CurrentTimeStep);
+		//check(CurrentTimeStep);
 		
 	//	///////////////////////////////////////////////////////////////////////////////////////
 
