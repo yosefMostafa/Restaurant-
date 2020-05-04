@@ -6,15 +6,15 @@ CancellationEvent::CancellationEvent(int eTime, int oID):Event(eTime, oID)
 
 }
 void CancellationEvent::Execute(Restaurant* pRest)
-{
+{	
 	Order* op;
 	Queue<Order*> p=pRest->GetNormal();
 	Queue<Order*> Temp;
-	while (p.dequeue(op))
+	while (p.dequeue(op)) 
 	{
 		int a;
 		a = op->GetID();
-		if (!(a == OrderID ))
+		if (!(a == OrderID )) 
 		{
 			Temp.enqueue(op);
 		}

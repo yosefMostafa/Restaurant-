@@ -49,12 +49,6 @@ void Cook::setType(ORD_TYPE t)
 {
 	type = t;
 }
-bool Cook::isbreak(int x)
-{
-	if (completedOrders % x == 0)
-		return true;
-	return false;
-}
 void Cook::setspeed(int s) {
 	speed = s;
 }

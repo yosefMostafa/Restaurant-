@@ -16,7 +16,7 @@ class Cook
 	//  Break time  after n orders   I may put it in chief_status                    Breaktime   
 	// number of orders done                         completed orders
 	int breakduration; 
-	int completedOrders;  //number of completed orders
+	int completedOrders;  //number of completed orders 
 	Order* assignedOrder; // those orders come from waiting lists and then  
 
 
@@ -32,7 +32,5 @@ public:
 	void setStatue(AVAIL_TYPE t);
 	bool Isavail(AVAIL_TYPE t);
 	void setType(ORD_TYPE) ;
-	///// new funtions //////
-	bool isbreak(int x);
 
 };
