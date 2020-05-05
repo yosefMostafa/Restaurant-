@@ -1,7 +1,6 @@
 ﻿  CancellationEvent.cpp
   Demo_Main.cpp
   ArrivalEvent.cpp
-  promotion.cpp
   GUI.cpp
   Cook.cpp
   Order.cpp

@@ -8,7 +8,7 @@ class Cook
 	int ID;
 	ORD_TYPE type;	//for each order type there is a corresponding type (VIP, Normal, Vegan)
 	int speed;		//dishes it can prepare in one clock tick (in one timestep)
-<<<<<<< HEAD
+
 	AVAIL_TYPE statue; //The statue of the cook (in break, availble, non availble)
 
          //
@@ -20,8 +20,6 @@ class Cook
 	int completedOrders;  //number of completed orders
 	Order* assignedOrder; // those orders come from waiting lists and then  
 
-=======
->>>>>>> parent of b506982... Merge branch 'master' of https://github.com/yosefMostafa/Restaurant-
 
 public:
 	Cook();

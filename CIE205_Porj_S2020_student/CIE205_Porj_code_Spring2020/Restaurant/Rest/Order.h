@@ -21,13 +21,12 @@ protected:
 	// TODO: Add More Data Members As Needed
 	//
 
-<<<<<<< HEAD
+
 	int OrderSize; // no of dishes of each order need it to calc the SV
 	int waitTime; // time consumed from AT to assign the order for a chief I need it as it is important in case we want it to promote the order
 	
 
-=======
->>>>>>> parent of b506982... Merge branch 'master' of https://github.com/yosefMostafa/Restaurant-
+
 public:
 	Order(int ID, ORD_TYPE r_Type,int a,int s);
 	virtual ~Order();
