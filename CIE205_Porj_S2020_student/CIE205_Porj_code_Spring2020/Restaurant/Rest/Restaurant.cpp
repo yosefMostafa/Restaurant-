@@ -82,6 +82,7 @@ void Restaurant::FillDrawingList()
 }
 void::Restaurant::load() {
 	ifstream file("data.txt");
+	int Normalcooks, vegancooks, vipcooks;
 	int Normalcooksspeed, vegancooksspeed, vipcooksspeed;
 	int breaktime, normalbreaktime, veganbreaktime, vipbreaktime;
 	int autopromotionlimit;
@@ -177,7 +178,8 @@ void::Restaurant::interactive(){
 
 		//The next line may add new orders to the DEMO_Queue
 		ExecuteEvents(CurrentTimeStep);	//execute all events at current time step
-
+		finished(CurrentTimeStep);//checking if there is any order is done in this time step
+		serveorders(CurrentTimeStep);//assigning orders to cooks 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 		/// The next code section should be done through function "FillDrawingList()" once you
@@ -185,15 +187,44 @@ void::Restaurant::interactive(){
 
 		//Let's add ALL randomly generated Cooks to GUI::DrawingList7
 		Cook* pc;
-		Order* pOrd;
-		int ncount, vegancount; ncount = NormalCQueue.getcount(); vegancount = VeganCQueue.getcount();
-		Cook **pc1 = NormalCQueue.toArray(ncount);
-		Cook** pc2 = VeganCQueue.toArray(vegancount);
+		//Order* pOrdn;
+		int ncount, vegancount, orncount, orvegcount; ncount = NormalCQueue.getcount(); vegancount = VeganCQueue.getcount();
+		orncount = NOwaiting.getcount(); orvegcount = VGNWaiting.getcount();//getting the count of the queues to draw
 		
+		Cook **pcn = NormalCQueue.toArray(ncount);
+		Cook** pcv = VeganCQueue.toArray(vegancount);
+		//waiting
+		if (orncount != 0) {
+			Order** orn = NOwaiting.toArray(orncount);
+			for (int j = 0; j < orncount; j++)
+				pGUI->AddToDrawingList(orn[j]);
+		}
+		if (orvegcount != 0) {
+			Order** orveg = VGNWaiting.toArray(orvegcount);
+			for (int j = 0; j < orvegcount; j++)
+				pGUI->AddToDrawingList(orveg[j]);
+		}
+		//Cooks
 		for (int j = 0; j < ncount; j++)
-			pGUI->AddToDrawingList(pc1[j]);
+			pGUI->AddToDrawingList(pcn[j]);
 		for (int j = 0; j < vegancount; j++)
-			pGUI->AddToDrawingList(pc2[j]);
+			pGUI->AddToDrawingList(pcv[j]);
+		//serving
+		int busycount = BusyCooks.getcount();
+		Cook** busyc = BusyCooks.toArray(busycount);
+		Order* p;
+		for (int j = 0; j < busycount; j++) {
+			p = busyc[j]->getorder();
+				if(p)
+					pGUI->AddToDrawingList(p);
+		}
+		//finished
+		int finishedcount = finishedqueue.getcount();
+		if (finishedcount != 0) {
+			Order** finishedord = finishedqueue.toArray(orncount);
+			for (int j = 0; j < finishedcount; j++)
+				pGUI->AddToDrawingList(finishedord[j]);
+		}
 		//////Cook** pc3 = VIPCQueue.toArray(vipcooks);
 		//////for (int j = 0; j < vipcooks; j++) 
 		//////	pGUI->AddToDrawingList(pc3[j]);
@@ -263,49 +294,80 @@ void Restaurant::RemoveVGN(int Id)
 	while (tempq.dequeue(temp))
 		VGNWaiting.enqueue(temp);
 }
+void Restaurant::finished(int timestep) {
+	Cook* temp;
+	Queue<Cook*> tempqc;
+	while (BusyCooks.dequeue(temp)) {
+		if (timestep == temp->getorder()->getfinishedtime())
+		{
+			Order* p;
+			p = temp->getorder();
+			p->setStatus(DONE);
+			AddCook(temp);
+			finishedqueue.enqueue(p);
+		}
+		else
+			tempqc.enqueue(temp);
+	}
+	while (tempqc.dequeue(temp))
+		BusyCooks.enqueue(temp);
+}
+void Restaurant::AddCook(Cook* C) {
+	ORD_TYPE type;
+	type = C->GetType();
+	C->setStatue(Avail);
+	C->setorder(nullptr);
+	switch (type) {
+	case TYPE_NRM:NormalCQueue.enqueue(C);
+		break;
+	case TYPE_VGAN:VeganCQueue.enqueue(C);
+		break;
+	}
+}
 void Restaurant::serveorders(int timestep) 
 {
 	Order* tempo;
 	Cook* tempc;
 	Queue<Order*> tempqo;//for orders
 	Queue<Cook*> tempqc;//for cook
-	while (NormalCQueue.dequeue(tempc)) {
+	while (NormalCQueue.peekFront(tempc)) {
 		if (NOwaiting.dequeue(tempo)) {	
-			int cspeed, dishes, servtime, finished;
+			NormalCQueue.dequeue(tempc);
+			float cspeed, dishes, servtime, finished;
 			cspeed = tempc->getspeed();
 			dishes = tempo->getsize();
 			servtime = ceil(dishes / cspeed);//calculating serving time 
 			finished = servtime + timestep;//calculating finishing time for this order
 			tempo->SetServTime(servtime);
 			tempo->setfinishedtime(finished);
+			tempo->setStatus(SRV);
 			tempc->setorder(tempo);
+			tempc->setStatue(Not_Avail);
+			BusyCooks.enqueue(tempc);
 		}
-		else {
-			tempqc.enqueue(tempc);//if there is no availabe orders put the cook in the temp queue
+		else 
 			break;
-		}
+		
 	}
-	while (tempqc.dequeue(tempc))
-		NormalCQueue.enqueue(tempc);//return cook to it's queue again
 
-	while (VeganCQueue.dequeue(tempc)) {
+	while (VeganCQueue.peekFront(tempc)) {
 		if (VGNWaiting.dequeue(tempo)) {
-			int cspeed, dishes, servtime, finished;
+			VeganCQueue.dequeue(tempc);
+			float cspeed, dishes, servtime, finished;
 			cspeed = tempc->getspeed();
 			dishes = tempo->getsize();
 			servtime = ceil(dishes / cspeed);//calculating serving time 
 			finished = servtime + timestep;//calculating finishing time for this order
 			tempo->SetServTime(servtime);
 			tempo->setfinishedtime(finished);
+			tempo->setStatus(SRV);
 			tempc->setorder(tempo);
+			tempc->setStatue(Not_Avail);
+			BusyCooks.enqueue(tempc);
 		}
-		else {
-			tempqc.enqueue(tempc);//if there is no availabe orders put the cook in the temp queue
+		else 
 			break;
-		}
 	}
-	while (tempqc.dequeue(tempc))
-		VeganCQueue.enqueue(tempc);//return cook to it's queue again
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////

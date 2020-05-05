@@ -38,6 +38,7 @@ public:
 	void SetServTime(int Serv);
 	int getServTime();
 	void setfinishedtime(int f);
+	int getfinishedtime()const;
 	int getArrTime() const;
 	void SetDistance(int d);
 	int GetDistance() const;

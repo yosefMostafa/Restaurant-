@@ -76,3 +76,6 @@ int Order::getsize() const {
 void Order::setfinishedtime(int f) {
 	FinishTime = f;
 }
+int Order::getfinishedtime() const {
+	return FinishTime;
+}
