@@ -1,5 +1,3 @@
 Debug
 .vs
-*.log
-*.tlog
-.obj
+CIE205_Porj_S2020_student/CIE205_Porj_code_Spring2020/Restaurant/Debug/*
