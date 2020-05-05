@@ -317,6 +317,7 @@ void Restaurant::AddCook(Cook* C) {
 	type = C->GetType();
 	C->setStatue(Avail);
 	C->setorder(nullptr);
+	C->increasecomporders();
 	switch (type) {
 	case TYPE_NRM:NormalCQueue.enqueue(C);
 		break;

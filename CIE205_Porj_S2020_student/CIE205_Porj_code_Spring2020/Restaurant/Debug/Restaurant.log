@@ -1,17 +1,23 @@
-﻿  Restaurant.cpp
+﻿  CancellationEvent.cpp
+  Demo_Main.cpp
+  ArrivalEvent.cpp
+  GUI.cpp
+  Cook.cpp
+  Restaurant.cpp
 D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(87): warning C4101: 'breaktime': unreferenced local variable
 D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(175): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdlib.h(1323): note: see declaration of 'itoa'
 D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(189): warning C4101: 'pc': unreferenced local variable
-D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(337): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(338): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(341): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(339): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(342): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(357): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(343): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(358): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(361): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(359): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(362): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(391): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(445): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
+D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(363): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(392): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\Rest\Restaurant.cpp(446): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdlib.h(1323): note: see declaration of 'itoa'
+  Generating Code...
   Restaurant.vcxproj -> D:\zewail\Semsters\Y2 Spring\Data structure\project\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Debug\Restaurant.exe

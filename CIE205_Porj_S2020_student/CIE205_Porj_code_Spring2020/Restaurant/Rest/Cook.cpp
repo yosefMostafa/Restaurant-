@@ -78,3 +78,9 @@ Order* Cook::getorder() {
 int Cook::getspeed() {
 	return speed;
 }
+void Cook::increasecomporders() {
+	completedOrders++;
+}
+int Cook::getcomporders() {
+	return completedOrders;
+}

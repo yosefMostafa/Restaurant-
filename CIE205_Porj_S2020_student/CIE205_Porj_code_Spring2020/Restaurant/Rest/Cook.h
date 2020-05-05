@@ -34,6 +34,8 @@ public:
 	void setType(ORD_TYPE) ;
 	void setorder(Order* po);
 	int getspeed();
+	void increasecomporders();
+	int getcomporders();
 	Order* getorder();
 	///// new funtions //////
 	bool isbreak(int x);
