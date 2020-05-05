@@ -70,4 +70,9 @@ Order::Order(int AT, int id, ORD_TYPE r_Type, double tMoney, int size, int dist)
 	OrderSize = size; Distance = dist;
 	status = WAIT;
 }
-
+int Order::getsize() const {
+	return OrderSize;
+}
+void Order::setfinishedtime(int f) {
+	FinishTime = f;
+}

@@ -48,11 +48,12 @@ template <typename T>
 class Queue
 {
 private :
-	
+	int count;
 	Node<T>* backPtr;
 	Node<T>* frontPtr;
 public :
-	Queue();	
+	Queue();
+	int getcount();
 	bool isEmpty() const ;
 	bool enqueue(const T& newEntry);
 	bool dequeue(T& frntEntry);  
@@ -73,7 +74,7 @@ Queue<T>::Queue()
 {
 	backPtr=nullptr;
 	frontPtr=nullptr;
-
+	count = 0;
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -93,6 +94,10 @@ bool Queue<T>::isEmpty() const
 		return false;
 }
 
+template <typename T>
+int Queue<T>::getcount() {
+	return count;
+}
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /*Function:enqueue
@@ -111,6 +116,7 @@ bool Queue<T>::enqueue( const T& newEntry)
 		frontPtr = newNodePtr; // The queue is empty
 	else
 		backPtr->setNext(newNodePtr); // The queue was not empty
+	count++;
 	backPtr = newNodePtr; // New node is at back
 	return true ;
 } // end enqueue
@@ -141,7 +147,7 @@ bool Queue<T>:: dequeue(T& frntEntry)
 		
 	// Free memory reserved by the dequeued node
 	delete nodeToDeletePtr;
-
+	count--;
 
 	return true;
 

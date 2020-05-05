@@ -18,9 +18,6 @@ Cook::Cook(int id, int spd, ORD_TYPE t, int breakDur)
 	assignedOrder = nullptr;
 }
 
-void Cook::setorder(Order* p) {
-	assignedOrder = p;
-}
 
 
 Cook::~Cook()
@@ -71,3 +68,13 @@ bool Cook::Isavail(AVAIL_TYPE t)
 	return false;
 }
 
+void Cook::setorder(Order* po) {
+	assignedOrder = po;
+}
+
+Order* Cook::getorder() {
+	return assignedOrder;
+}
+int Cook::getspeed() {
+	return speed;
+}

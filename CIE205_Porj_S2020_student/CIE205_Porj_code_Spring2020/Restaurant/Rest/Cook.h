@@ -28,11 +28,13 @@ public:
 	int GetID() const;
 	ORD_TYPE GetType() const;
 	void setID(int);
-	void setorder(Order* p);
 	void setspeed(int);
 	void setStatue(AVAIL_TYPE t);
 	bool Isavail(AVAIL_TYPE t);
 	void setType(ORD_TYPE) ;
+	void setorder(Order* po);
+	int getspeed();
+	Order* getorder();
 	///// new funtions //////
 	bool isbreak(int x);
 

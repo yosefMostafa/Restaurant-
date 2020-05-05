@@ -37,9 +37,11 @@ public:
 	void SetArrTime(int Arr);
 	void SetServTime(int Serv);
 	int getServTime();
+	void setfinishedtime(int f);
 	int getArrTime() const;
 	void SetDistance(int d);
 	int GetDistance() const;
+	int getsize() const;
 
 	void setStatus(ORD_STATUS s);
 	ORD_STATUS getStatus() const;

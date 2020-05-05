@@ -47,7 +47,7 @@ private:
 	Queue<Order*> finished;
 	// linked list or array list
 
-	int sum; int sercounter; int fincounter; int Normalcooks, vegancooks, vipcooks;
+	int sum,sercounter,fincounter, Normalcooks, vegancooks, vipcooks,Busycooks;
 	int BO; // repersent restaurnat rules to give a cook a break after n orders 
 
 public:
@@ -63,6 +63,8 @@ public:
 	void AddtoNormal(Order* po);
 	void AddtoVGN(Order* po);
 
+	void RemoveNormal(int Id);
+	void RemoveVGN(int Id);
 
 
 	GUI* GetGUI();
@@ -78,9 +80,10 @@ public:
 
 	void Just_A_Demo();	//just to show a demo and should be removed in phase1 1 & 2
 	void AddtoDemoQueue(Order* po);	//adds an order to the demo queue
-	void Addtoserving(Order* po);
-	void check(int timestep);
-	void addorder(Order* po,ORD_TYPE t);
+	void serveorders(int timestep);
+	//void Addtoserving(Order* po);
+	//void check(int timestep);
+	//void addorder(Order* po,ORD_TYPE t);
 
 /// ================================================================================================== 
 
