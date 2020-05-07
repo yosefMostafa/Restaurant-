@@ -41,5 +41,6 @@ public:
 	Order* getorder();
 	///// new funtions //////
 	bool isbreak(int x,int bo);
+	bool Breakd(int x);
 
 };

@@ -12,7 +12,6 @@ using namespace std;
 
 Restaurant::Restaurant()
 {
-	sercounter = 0; fincounter = 0; sum = 0;
 	pGUI = NULL;
 }
 
@@ -176,7 +175,7 @@ void::Restaurant::load() {
 	file >> autopromotionlimit;
 	file >> numofevents;//getting the information of the cook from file
 
-	sum = Normalcooks + vegancooks + vipcooks;
+	int sum = Normalcooks + vegancooks + vipcooks;
 
 
 	for (int i = 0; i < Normalcooks; i++) {
@@ -259,7 +258,7 @@ void::Restaurant::interactive(){
 
 		ExecuteEvents(CurrentTimeStep);	//execute all events at current time step
 		finished(CurrentTimeStep);//checking if there is any order is done in this time step
-		//serveorders(CurrentTimeStep);//assigning orders to cooks
+		serveorders(CurrentTimeStep);//assigning orders to cooks
 		FillDrawingList();
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -318,6 +317,7 @@ void Restaurant::AddVIP(Order* po)
 void Restaurant::finished(int timestep) {
 	Cook* temp;
 	Queue<Cook*> tempqc;
+	//Queue<Order*>dummy;
 	while (BusyCooks.dequeue(temp)) {
 		if (temp->getavail() != Break) {
 			if (timestep == temp->getorder()->getfinishedtime())
@@ -326,17 +326,22 @@ void Restaurant::finished(int timestep) {
 				p = temp->getorder();
 				p->setStatus(DONE);
 				temp->increasecomporders();
+				temp->setorder(nullptr);
+				finishedqueue.enqueue(p);
 				if (!temp->isbreak(timestep, BO)) {
 					AddCook(temp);
-					finishedqueue.enqueue(p);
 				}
+				else
+					tempqc.enqueue(temp);
 			}
 			else
 				tempqc.enqueue(temp);
 		}
 		else {
-			temp->isbreak(timestep, BO);
-			tempqc.enqueue(temp);
+			if (temp->Breakd(timestep)) {
+				AddCook(temp);
+			}else
+				tempqc.enqueue(temp);
 		}
 	}
 	while (tempqc.dequeue(temp))
@@ -360,7 +365,6 @@ void Restaurant::AddCook(Cook* C) {
 	ORD_TYPE type;
 	type = C->GetType();
 	C->setStatue(Avail);
-	C->setorder(nullptr);
 	switch (type) {
 	case TYPE_NRM:NormalCQueue.enqueue(C);
 		break;

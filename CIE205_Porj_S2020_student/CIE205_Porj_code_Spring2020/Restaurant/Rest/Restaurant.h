@@ -47,7 +47,6 @@ private:
 	Queue<Order*> finishedqueue;
 	// linked list or array list
 
-	int sum,sercounter,fincounter, Busycooks;
 	int BO; // repersent restaurnat rules to give a cook a break after n orders 
 
 public:

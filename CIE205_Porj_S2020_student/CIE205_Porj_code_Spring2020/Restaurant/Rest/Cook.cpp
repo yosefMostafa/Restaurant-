@@ -47,18 +47,19 @@ void Cook::setType(ORD_TYPE t)
 {
 	type = t;
 }
+bool Cook::Breakd(int x) {
+	if (x == breakfinishtime) {
+		setStatue(Avail);
+		return true;
+	}
+	return false;
+}
 bool Cook::isbreak(int x,int bo)
 {
-	if (x != breakfinishtime) {
-		if (completedOrders % bo == 0) {
-			setStatue(Break); breakfinishtime = x + breakduration;
-			return true;
-		}
-		else
-			return false;
-	}
-	else {
-		setStatue(Avail);
+	if (completedOrders % bo == 0) {
+		setStatue(Break); 
+		breakfinishtime = x + breakduration;
+		return true;
 	}
 	return false;
 }
