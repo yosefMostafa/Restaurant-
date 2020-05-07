@@ -13,13 +13,14 @@ using namespace std;
 Restaurant::Restaurant()
 {
 	pGUI = NULL;
+	load();
 }
 
 void Restaurant::RunSimulation()
 {
 	pGUI = new GUI;
 	PROG_MODE mode = pGUI->getGUIMode();
-	load();
+	
 
 	switch (mode)	//Add a function for each mode in next phases
 	{
@@ -259,10 +260,10 @@ void Restaurant::stepbystep() {
 
 void Restaurant::silent() {
 	int CurrentTimeStep = 1;
-	while (CurrentTimeStep!=100)
+	while (CurrentTimeStep!=100)//should be updated 
 		Run(CurrentTimeStep);
 
-
+	//the func for calling the output file should be called here 
 }
 void Restaurant::Run(int &time) {
 	char timestep[10];
