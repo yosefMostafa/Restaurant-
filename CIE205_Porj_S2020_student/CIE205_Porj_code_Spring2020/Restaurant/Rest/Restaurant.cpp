@@ -156,7 +156,8 @@ bool Restaurant::promoteOrder(int id, int extra)
 		{
 			x = true;
 			temp->incTotalmoney(extra);
-			VIPwaiting.enqueue(temp);
+			temp->setordertype(TYPE_VIP);
+			VIPwaiting.pushToPQ(temp);
 		}
 	}
 	return x;
@@ -258,7 +259,7 @@ void::Restaurant::interactive(){
 
 		ExecuteEvents(CurrentTimeStep);	//execute all events at current time step
 		finished(CurrentTimeStep);//checking if there is any order is done in this time step
-		serveorders(CurrentTimeStep);//assigning orders to cooks
+		//serveorders(CurrentTimeStep);//assigning orders to cooks
 		FillDrawingList();
 
 /////////////////////////////////////////////////////////////////////////////////////////

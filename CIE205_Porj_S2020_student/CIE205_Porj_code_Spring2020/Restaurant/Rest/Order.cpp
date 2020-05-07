@@ -81,6 +81,10 @@ void Order::incTotalmoney(int x)
 {
 	totalMoney += x;
 }
+void Order::setordertype(ORD_TYPE x)
+{
+	type = x;
+}
 void Order::setfinishedtime(int f) {
 	FinishTime = f;
 }

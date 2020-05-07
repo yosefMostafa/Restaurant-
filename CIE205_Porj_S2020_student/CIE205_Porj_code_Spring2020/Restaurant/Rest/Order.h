@@ -45,6 +45,7 @@ public:
 	int getsize() const;
 	double calcPirority () const;
 	void incTotalmoney(int x);
+	void setordertype(ORD_TYPE x);
 
 	void setStatus(ORD_STATUS s);
 	ORD_STATUS getStatus() const;
