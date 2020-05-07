@@ -48,6 +48,7 @@ void ArrivalEvent::Execute(Restaurant* pRest)
 		pRest->AddtoVGN(pOrd);
 		break;
 	case TYPE_VIP:
+		pRest->AddVIP(pOrd);
 		break;
 	
 

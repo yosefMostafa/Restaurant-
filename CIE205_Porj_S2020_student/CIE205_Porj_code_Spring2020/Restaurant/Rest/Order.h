@@ -43,6 +43,8 @@ public:
 	void SetDistance(int d);
 	int GetDistance() const;
 	int getsize() const;
+	double calcPirority () const;
+	
 
 	void setStatus(ORD_STATUS s);
 	ORD_STATUS getStatus() const;
@@ -50,6 +52,7 @@ public:
 	//
 	// TODO: Add More Member Functions As Needed
 	//
+
 
 	Order(int AT, int id, ORD_TYPE r_Type, double tMoney, int size, int dist = 0);
 

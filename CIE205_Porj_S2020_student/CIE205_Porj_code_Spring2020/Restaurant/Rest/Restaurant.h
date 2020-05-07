@@ -43,7 +43,7 @@ private:
 	//for the orders 
 	Queue<Order*> VGNWaiting;        //those three have all orders On the waiting list
 	Queue<Order*> NOwaiting;              
-	Llist<Order*> VIPwaiting;
+	Queue<Order*> VIPwaiting;
 	Queue<Order*> finishedqueue;
 	// linked list or array list
 
@@ -62,12 +62,12 @@ public:
 
 	void AddtoNormal(Order* po);
 	void AddtoVGN(Order* po);
+	void AddVIP(Order* po);
 
 	void AddCook(Cook* C);
 
 	void RemoveNormal(int Id);
 	void RemoveVGN(int Id);
-
 
 	GUI* GetGUI();
 
@@ -76,6 +76,7 @@ public:
 	//
 	// TODO: Add More Member Functions As Needed
 	//
+	bool cancelOrder(int id);
 
 
 /// ===================    DEMO-related functions. Should be removed in phases 1&2   ================= 

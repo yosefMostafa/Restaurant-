@@ -1,66 +1,24 @@
-#ifndef __QUEUE_H_
-#define __QUEUE_H_
+#pragma once
+#include "./Generic_DS/Node.h"
 
-/*This code is an updated version from "Data Abstraction & Problem Solving with C++,WALLS AND MIRRORS ,SIXTH EDITION"*/
-
-/*
-This is a program that implements the queue abstract data type using a linked list.
-The queue is implemented as a chain of linked nodes that has two pointers,
-a frontPtr pointer for the front of the queue and a backPtr pointer for the back of the queue.
-*/
-
-/*
-
-				The Node: item of type T and a "next" pointer
-					-------------
-					| item| next | --->
-					-------------
-General Queue case:
-
-				 frontPtr																backPtr
-					\											   						/
-					 \											  					   /
-					------------- 	  ------------- 	  ------------- 	  -------------
-					| item| next |--->| item| next |--->  | item| next |--->  | item| next |---> NULL
-					------------- 	  ------------- 	  ------------- 	  -------------
-
-Empty Case:
-
-				 frontptr	 backptr
-						\	 /
-						 \	/
-					---- NULL ------
-
-
-Single Node Case:
-				 frontPtr	 backPtr
-					\		/
-					 \	   /
-					--------
-					|	|nxt -->NULL
-					--------
-
-*/
-
-#include "Node.h"
-#include"../Rest/Order.h"
 template <typename T>
-class Queue
+class pirQueue
 {
-private:
+protected:
 	int count;
+	int pir;
 	Node<T>* backPtr;
 	Node<T>* frontPtr;
+
 public:
-	Queue();
+	pirQueue();
 	int getcount();
 	bool isEmpty() const;
-	virtual bool enqueue(const T& newEntry);
+	bool enqueue(const T& newEntry, int x);
 	bool dequeue(T& frntEntry);
 	bool peekFront(T& frntEntry)  const;
-	bool pushToPQ(Order*& frntEntry);
 	T* toArray(int& count);	//returns array of T (array if items)
-	~Queue();
+	~pirQueue();
 };
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -71,11 +29,12 @@ The constructor of the Queue class.
 */
 
 template <typename T>
-Queue<T>::Queue()
+pirQueue<T>::pirQueue()
 {
 	backPtr = nullptr;
 	frontPtr = nullptr;
 	count = 0;
+	pir=0
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -87,7 +46,7 @@ Input: None.
 Output: True if the queue is empty; otherwise false.
 */
 template <typename T>
-bool Queue<T>::isEmpty() const
+bool pirQueue<T>::isEmpty() const
 {
 	if (frontPtr == nullptr)
 		return true;
@@ -96,7 +55,7 @@ bool Queue<T>::isEmpty() const
 }
 
 template <typename T>
-int Queue<T>::getcount() {
+int pirQueue<T>::getcount() {
 	return count;
 }
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -109,8 +68,9 @@ Output: True if the operation is successful; otherwise false.
 */
 
 template <typename T>
-bool Queue<T>::enqueue(const T& newEntry)
+bool pirQueue<T>::enqueue(const T& newEntry, int x)
 {
+	pir = x;
 	Node<T>* newNodePtr = new Node<T>(newEntry);
 	// Insert the new node
 	if (isEmpty())
@@ -134,7 +94,7 @@ Output: True if the operation is successful; otherwise false.
 */
 
 template <typename T>
-bool Queue<T>::dequeue(T& frntEntry)
+bool pirQueue<T>::dequeue(T& frntEntry)
 {
 	if (isEmpty())
 		return false;
@@ -165,7 +125,7 @@ Output: The front of the queue.
 return: flase if Queue is empty
 */
 template <typename T>
-bool Queue<T>::peekFront(T& frntEntry) const
+bool pirQueue<T>::peekFront(T& frntEntry) const
 {
 	if (isEmpty())
 		return false;
@@ -174,51 +134,10 @@ bool Queue<T>::peekFront(T& frntEntry) const
 	return true;
 
 }
-template<typename T>
-inline bool Queue<T>::pushToPQ(Order*& newEntry)
-{
-	Node<Order*>* newNodePtr = new Node<Order*>(newEntry);
-	// Insert the new node
-	if (isEmpty())  // The queue is empty
-	{
-		frontPtr = newNodePtr;
-		backPtr = newNodePtr;
-	}
-	else   // the pirority queue is not empty 
-	{
-
-		Order* lowestP = backPtr->getItem();
-		Order* highestP = frontPtr->getItem();
-		if (newEntry->calcPirority() <= lowestP->calcPirority()) // check whether the lowest pirority in our queue has a pirority higher than the upcoming order
-		{
-			backPtr->setNext(newNodePtr);
-			backPtr = newNodePtr;    /// it is the same as normal enqueuing this may not be so useful however it reduces the complexity of the code
-		}
-		else if (highestP->calcPirority() < newEntry->calcPirority())
-		{
-			newNodePtr->setNext(frontPtr);
-			frontPtr = newNodePtr;
-		}
-		else
-		{
-			Node<Order*>* temp = frontPtr;
-			while (temp->getNext()->getItem()->calcPirority() > newEntry->calcPirority())
-			{
-				temp = temp->getNext();
-			}
-			newNodePtr->setNext(temp->getNext());
-			temp->setNext(newNodePtr);
-
-		}
-
-	} // The queue was not empty
-	count++;
-	return true;
-}
 ///////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
-Queue<T>::~Queue()
+pirQueue<T>::~pirQueue()
 {
 }
 
@@ -232,7 +151,7 @@ returns: The array of T. (nullptr if Queue is empty)
 */
 
 template <typename T>
-T* Queue<T>::toArray(int& count)
+T* pirQueue<T>::toArray(int& count)
 {
 	count = 0;
 
@@ -257,4 +176,4 @@ T* Queue<T>::toArray(int& count)
 	return Arr;
 }
 
-#endif
+

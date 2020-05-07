@@ -73,6 +73,10 @@ Order::Order(int AT, int id, ORD_TYPE r_Type, double tMoney, int size, int dist)
 int Order::getsize() const {
 	return OrderSize;
 }
+double Order::calcPirority() const
+{
+	return 3*totalMoney - OrderSize -Distance;
+}
 void Order::setfinishedtime(int f) {
 	FinishTime = f;
 }

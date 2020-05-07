@@ -80,6 +80,23 @@ void Restaurant::FillDrawingList()
 	//To add Cooks it should call function  void GUI::AddToDrawingList(Cook* pCc);
 
 }
+bool Restaurant::cancelOrder(int id)
+{
+	Order* temp; bool x=false;
+	for (int i = 0; i < NOwaiting.getcount(); i++)
+	{
+		NOwaiting.dequeue(temp);
+		if(temp->GetID()!=id)
+		  NOwaiting.enqueue(temp);
+	
+		else
+		{
+			x = true;
+			delete temp;
+		}
+	}
+	return x;
+}
 void::Restaurant::load() {
 	ifstream file("data.txt");
 	int Normalcooks, vegancooks, vipcooks;
@@ -266,6 +283,10 @@ void Restaurant::AddtoNormal(Order* po)
 void Restaurant::AddtoVGN(Order* po)
 {
 	VGNWaiting.enqueue(po);
+}
+void Restaurant::AddVIP(Order* po)
+{
+	VIPwaiting.pushToPQ(po);
 }
 void Restaurant::RemoveNormal(int Id)
 {

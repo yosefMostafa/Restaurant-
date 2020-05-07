@@ -7,6 +7,10 @@ CancellationEvent::CancellationEvent(int eTime, int oID):Event(eTime, oID)
 }
 void CancellationEvent::Execute(Restaurant* pRest)
 {	
+
+
+	pRest->cancelOrder(OrderID);
+
 	//Order* op;
 	//Queue<Order*> p=pRest->GetNormal();
 	//Queue<Order*> p2;
