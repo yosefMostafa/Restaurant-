@@ -16,6 +16,7 @@ Cook::Cook(int id, int spd, ORD_TYPE t, int breakDur)
 	breakduration = breakDur; 
 	completedOrders = 0;
 	assignedOrder = nullptr;
+	breakfinishtime = 0;
 }
 
 
@@ -46,10 +47,19 @@ void Cook::setType(ORD_TYPE t)
 {
 	type = t;
 }
-bool Cook::isbreak(int x)
+bool Cook::isbreak(int x,int bo)
 {
-	if (completedOrders % x == 0)
-		return true;
+	if (x != breakfinishtime) {
+		if (completedOrders % bo == 0) {
+			setStatue(Break); breakfinishtime = x + breakduration;
+			return true;
+		}
+		else
+			return false;
+	}
+	else {
+		setStatue(Avail);
+	}
 	return false;
 }
 void Cook::setspeed(int s) {
@@ -66,6 +76,11 @@ bool Cook::Isavail(AVAIL_TYPE t)
 		return true;
 	}
 	return false;
+}
+
+AVAIL_TYPE Cook::getavail()
+{
+	return statue;
 }
 
 void Cook::setorder(Order* po) {
