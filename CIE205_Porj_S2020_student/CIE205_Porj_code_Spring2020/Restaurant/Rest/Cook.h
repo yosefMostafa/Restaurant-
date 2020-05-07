@@ -16,6 +16,7 @@ class Cook
 	//
 	//  Break time  after n orders   I may put it in chief_status                    Breaktime   
 	// number of orders done                         completed orders
+	int breakfinishtime;
 	int breakduration; 
 	int completedOrders;  //number of completed orders
 	Order* assignedOrder; // those orders come from waiting lists and then  
@@ -31,6 +32,7 @@ public:
 	void setspeed(int);
 	void setStatue(AVAIL_TYPE t);
 	bool Isavail(AVAIL_TYPE t);
+	AVAIL_TYPE getavail();
 	void setType(ORD_TYPE) ;
 	void setorder(Order* po);
 	int getspeed();
@@ -38,6 +40,6 @@ public:
 	int getcomporders();
 	Order* getorder();
 	///// new funtions //////
-	bool isbreak(int x);
+	bool isbreak(int x,int bo);
 
 };

@@ -66,8 +66,8 @@ public:
 
 	void AddCook(Cook* C);
 
-	void RemoveNormal(int Id);
-	void RemoveVGN(int Id);
+	//void RemoveNormal(int Id);
+	//void RemoveVGN(int Id);
 
 	GUI* GetGUI();
 
@@ -82,10 +82,10 @@ public:
 
 /// ===================    DEMO-related functions. Should be removed in phases 1&2   ================= 
 
-	void Just_A_Demo();	//just to show a demo and should be removed in phase1 1 & 2
-	void AddtoDemoQueue(Order* po);	//adds an order to the demo queue
+	
 	void serveorders(int timestep);
 	void finished(int timestep);
+	void assigncook(Order* tempo, Cook* tempc,int timestep);
 	//void Addtoserving(Order* po);
 	//void check(int timestep);
 	//void addorder(Order* po,ORD_TYPE t);
