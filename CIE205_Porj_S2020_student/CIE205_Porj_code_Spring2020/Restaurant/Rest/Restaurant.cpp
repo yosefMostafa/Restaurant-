@@ -97,6 +97,24 @@ bool Restaurant::cancelOrder(int id)
 	}
 	return x;
 }
+bool Restaurant::promoteOrder(int id, int extra)
+{
+	Order* temp; bool x = false;
+	for (int i = 0; i < NOwaiting.getcount(); i++)
+	{
+		NOwaiting.dequeue(temp);
+		if (temp->GetID() != id)
+			NOwaiting.enqueue(temp);
+
+		else
+		{
+			x = true;
+			temp->incTotalmoney(extra);
+			VIPwaiting.enqueue(temp);
+		}
+	}
+	return x;
+}
 void::Restaurant::load() {
 	ifstream file("data.txt");
 	int Normalcooks, vegancooks, vipcooks;
@@ -196,7 +214,7 @@ void::Restaurant::interactive(){
 		//The next line may add new orders to the DEMO_Queue
 		ExecuteEvents(CurrentTimeStep);	//execute all events at current time step
 		finished(CurrentTimeStep);//checking if there is any order is done in this time step
-		serveorders(CurrentTimeStep);//assigning orders to cooks 
+		//serveorders(CurrentTimeStep);//assigning orders to cooks 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 		/// The next code section should be done through function "FillDrawingList()" once you

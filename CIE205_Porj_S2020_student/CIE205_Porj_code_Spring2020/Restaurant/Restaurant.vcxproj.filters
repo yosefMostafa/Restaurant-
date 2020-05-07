@@ -111,11 +111,11 @@
     <ClInclude Include="CancellationEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
-    <ClInclude Include="Events\promotion.h">
-      <Filter>Restaurant</Filter>
-    </ClInclude>
     <ClInclude Include="Generic_DS\List.h">
       <Filter>Generic_DS</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\promotion.h">
+      <Filter>Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -246,7 +246,9 @@
     <ClCompile Include="CancellationEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
-    <ClCompile Include="Events\promotion.cpp" />
+    <ClCompile Include="Events\promotion.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMUgraphicsLib\Manual.txt">

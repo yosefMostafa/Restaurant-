@@ -6,5 +6,6 @@ promotion::promotion(int eTime, int oID , int Exm) :Event(eTime, oID)
 }
 void promotion::Execute(Restaurant* pRest)
 {
+	pRest->promoteOrder(OrderID, EXmoney);
 
 }

@@ -44,7 +44,7 @@ public:
 	int GetDistance() const;
 	int getsize() const;
 	double calcPirority () const;
-	
+	void incTotalmoney(int x);
 
 	void setStatus(ORD_STATUS s);
 	ORD_STATUS getStatus() const;

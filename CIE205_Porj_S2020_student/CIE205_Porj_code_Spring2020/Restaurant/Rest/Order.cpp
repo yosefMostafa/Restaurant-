@@ -77,6 +77,10 @@ double Order::calcPirority() const
 {
 	return 3*totalMoney - OrderSize -Distance;
 }
+void Order::incTotalmoney(int x)
+{
+	totalMoney += x;
+}
 void Order::setfinishedtime(int f) {
 	FinishTime = f;
 }
