@@ -62,8 +62,9 @@ void Restaurant::ExecuteEvents(int CurrentTimeStep)
 
 Restaurant::~Restaurant()
 {
-		if (pGUI)
-			delete pGUI;
+	freememory();
+	if (pGUI)
+		delete pGUI;
 }
 
 GUI* Restaurant::GetGUI()
@@ -152,7 +153,7 @@ bool Restaurant::promoteOrder(int id, int extra)
 			x = true;
 			temp->incTotalmoney(extra);
 			temp->setordertype(TYPE_VIP);
-			VIPwaiting.pushToPQ(temp);
+			VIPwaiting.enqueue(temp, temp->calcPirority());
 		}
 	}
 	return x;
@@ -344,8 +345,7 @@ void Restaurant::AddtoVGN(Order* po)
 }
 void Restaurant::AddVIP(Order* po)
 {
-	VIPwaiting.pushToPQ(po);
-
+	VIPwaiting.enqueue(po, po->calcPirority());
 }
 int Restaurant::Autop(int timestep)
 {
@@ -357,7 +357,7 @@ int Restaurant::Autop(int timestep)
 		{
 			NOwaiting.dequeue(po);
 			po->setordertype(TYPE_VIP);
-			VIPwaiting.pushToPQ(po);
+			VIPwaiting.enqueue(po,po->calcPirority());
 			y = true;
 			x++;
 		}
@@ -370,10 +370,68 @@ int Restaurant::Autop(int timestep)
 
 void Restaurant::finished(int timestep) {
 	Cook* temp;
-	Queue<Cook*> tempqc;
-	Queue<Order*>dummy;
-	while (BusyCooks.dequeue(temp)) {
-		if (temp->getavail() != Break) {
+	PQueue<Order*>dummy;
+	bool x = true;
+	while (BusyCooks.peekFront(temp)&&x)
+	{
+		if (temp->getFT() == timestep)
+		{
+			BusyCooks.dequeue(temp);
+			if (temp->getavail() == Break)
+			{
+				temp->setStatue(Avail);
+				AddCook(temp);
+
+			}
+			else
+			{
+				Order* p;
+				p = temp->getorder();
+				p->setStatus(DONE);
+				temp->increasecomporders();
+				temp->setorder(nullptr);
+				//dummy.enqueue(p,);
+				finishedqueue.enqueue(p);
+				if (!temp->isbreak(timestep, BO)) {
+					AddCook(temp);
+				}
+				else
+					BusyCooks.enqueue(temp, temp->getFT() * -1);
+
+
+
+			}
+
+		}
+		else
+			x = false;
+	}
+
+	//int dcount; bool flag = true;  Order* temporder;
+	//Order** Arr = dummy.toArray(dcount);
+	//while (flag)
+	//{
+	//	flag = false;
+	//	for (int i = 0; i < dcount - 1; i++)
+	//	{
+	//		if (Arr[i]->getServTime() > Arr[i + 1]->getServTime())  // arrange where less serving time exists first
+	//		{
+	//			flag = true; // the while loop will have another iteration
+	//			temporder = Arr[i + 1];    // here I have to make a swap between the two orderes
+	//			Arr[i + 1] = Arr[i];
+	//			Arr[i] = temporder;
+
+	//		}
+	//	}
+	//}
+
+	//for (int i = 0; i < dcount; i++)
+	//	finishedqueue.enqueue(Arr[i]);
+	//delete Arr;
+
+}
+
+/*if (temp->getavail() != Break) {
 			if (timestep == temp->getorder()->getfinishedtime())
 			{
 				Order* p;
@@ -399,32 +457,10 @@ void Restaurant::finished(int timestep) {
 		}
 	}
 	while (tempqc.dequeue(temp))
-		BusyCooks.enqueue(temp);
+		BusyCooks.enqueue(temp,temp->getFT());*/
 
 
-	int dcount; bool flag = true;  Order* temporder;
-	Order** Arr = dummy.toArray(dcount);
-	while (flag)
-	{
-		flag = false;
-		for (int i = 0; i < dcount-1; i++)
-		{
-			if (Arr[i]->getServTime() > Arr[i + 1]->getServTime())  // arrange where less serving time exists first
-			{
-				flag = true; // the while loop will have another iteration
-				temporder = Arr[i+1];    // here I have to make a swap between the two orderes
-				Arr[i + 1] = Arr[i];
-				Arr[i] = temporder;
-
-			}
-		}
-	}
-
-	for (int i = 0; i < dcount; i++)
-		finishedqueue.enqueue(Arr[i]);
-	delete Arr;
-
-}
+	
 void Restaurant::assigncook(Order* tempo, Cook* tempc,int timestep,int count)
 {
 	float cspeed, dishes, servtime, finished;
@@ -432,13 +468,31 @@ void Restaurant::assigncook(Order* tempo, Cook* tempc,int timestep,int count)
 			dishes = tempo->getsize();
 			servtime = ceil(dishes / cspeed);//calculating serving time
 			finished = servtime + timestep;//calculating finishing time for this order
+			tempc->setFT(finished);
 			tempo->SetServTime(servtime);
 			tempo->setfinishedtime(finished);
 			tempo->setStatus(SRV);
 			tempc->setorder(tempo);
 			tempc->setStatue(Not_Avail);
 			pGUI->PrintMessage2(typetostring(tempc) +to_string(tempc->GetID()) + "("+typetostring(tempo)+to_string(tempo->GetID())+")",count);
-			BusyCooks.enqueue(tempc);
+			BusyCooks.enqueue(tempc,finished*-1);
+}
+void Restaurant::freememory()
+{
+	///// deleting all alocated orders //////
+	Order* tempo;
+	while (finishedqueue.dequeue(tempo))
+		delete tempo;
+	
+	////// deleteing all cooks ////
+	Cook * tempc;
+	while (NormalCQueue.dequeue(tempc))
+		delete tempc;
+	while (VeganCQueue.dequeue(tempc))
+		delete tempc;
+	while (VIPCQueue.dequeue(tempc))
+		delete tempc;
+
 }
 string Restaurant::typetostring(Order* tempo)
 {

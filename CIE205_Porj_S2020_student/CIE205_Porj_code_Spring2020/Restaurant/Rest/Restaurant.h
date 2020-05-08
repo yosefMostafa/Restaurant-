@@ -24,14 +24,14 @@ private:
 	Queue<Cook*> NormalCQueue;
 	Queue<Cook*> VeganCQueue;        //those three queues have all the available cooks
 	Queue<Cook*> VIPCQueue;
-	Queue<Cook*> BusyCooks;    // this list contains all the cook who are preparing orders or in the break duration
+	PQueue<Cook*> BusyCooks;    // this list contains all the cook who are preparing orders or in the break duration
 	//
 
 	//
 	//for the orders
 	Queue<Order*> VGNWaiting;        //those three have all orders On the waiting list
 	Queue<Order*> NOwaiting;
-	Queue<Order*> VIPwaiting;
+	PQueue<Order*> VIPwaiting;
 	Queue<Order*> finishedqueue;
 
 	int BO, AutoPT;// repersent restaurnat rules to give a cook a break after n orders
@@ -78,7 +78,7 @@ public:
 	void finished(int timestep);  // to check if a cook has finished coking
 	void assigncook(Order* tempo, Cook* tempc,int timestep,int count);   // helper function used inside servorders used to assaign cook to an aorder
 
-
+	void freememory();
 /// ==================================================================================================
 
 	bool isprogramfnished();

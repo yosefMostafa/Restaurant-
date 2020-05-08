@@ -53,7 +53,7 @@ public:
 };
 
 template<class T>
-inline PQueue<T>::PQueue():Queue()
+inline PQueue<T>::PQueue():Queue<T>()
 {
 }
 /*

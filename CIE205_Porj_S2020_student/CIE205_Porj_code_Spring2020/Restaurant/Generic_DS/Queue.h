@@ -58,7 +58,6 @@ public:
     bool enqueue(const T& newEntry);
 	bool dequeue(T& frntEntry);
 	bool peekFront(T& frntEntry)  const;
-	bool pushToPQ(Order*& frntEntry);
 	T* toArray(int& count);	//returns array of T (array if items)
 	~Queue();
 };
@@ -89,7 +88,7 @@ Output: True if the queue is empty; otherwise false.
 template <typename T>
 bool Queue<T>::isEmpty() const
 {
-	if (frontPtr == nullptr)
+	if (backPtr == nullptr)
 		return true;
 	else
 		return false;
@@ -174,47 +173,7 @@ bool Queue<T>::peekFront(T& frntEntry) const
 	return true;
 
 }
-template<typename T>
-inline bool Queue<T>::pushToPQ(Order*& newEntry)
-{
-	Node<Order*>* newNodePtr = new Node<Order*>(newEntry);
-	// Insert the new node
-	if (isEmpty())  // The queue is empty
-	{
-		frontPtr = newNodePtr;
-		backPtr = newNodePtr;
-	}
-	else   // the pirority queue is not empty 
-	{
 
-		Order* lowestP = backPtr->getItem();
-		Order* highestP = frontPtr->getItem();
-		if (newEntry->calcPirority() <= lowestP->calcPirority()) // check whether the lowest pirority in our queue has a pirority higher than the upcoming order
-		{
-			backPtr->setNext(newNodePtr);
-			backPtr = newNodePtr;    /// it is the same as normal enqueuing this may not be so useful however it reduces the complexity of the code
-		}
-		else if (highestP->calcPirority() < newEntry->calcPirority())
-		{
-			newNodePtr->setNext(frontPtr);
-			frontPtr = newNodePtr;
-		}
-		else
-		{
-			Node<Order*>* temp = frontPtr;
-			while (temp->getNext()->getItem()->calcPirority() > newEntry->calcPirority())
-			{
-				temp = temp->getNext();
-			}
-			newNodePtr->setNext(temp->getNext());
-			temp->setNext(newNodePtr);
-
-		}
-
-	} // The queue was not empty
-	count++;
-	return true;
-}
 ///////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
@@ -234,21 +193,14 @@ returns: The array of T. (nullptr if Queue is empty)
 template <typename T>
 T* Queue<T>::toArray(int& count)
 {
-	count = 0;
-
+	count = this->count;
 	if (!frontPtr)
 		return nullptr;
 	//counting the no. of items in the Queue
 	Node<T>* p = frontPtr;
-	while (p)
-	{
-		count++;
-		p = p->getNext();
-	}
-
+	
 
 	T* Arr = new T[count];
-	p = frontPtr;
 	for (int i = 0; i < count; i++)
 	{
 		Arr[i] = p->getItem();

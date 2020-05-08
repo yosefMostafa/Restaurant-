@@ -13,7 +13,7 @@ class Cook
 
          //
 	
-	int breakfinishtime;
+	int finishtime;
 	int breakduration; 
 	int completedOrders;  //number of completed orders
 	Order* assignedOrder; // those orders come from waiting lists and then  
@@ -45,5 +45,8 @@ public:
 	
 	bool isbreak(int x,int bo);
 	bool Breakd(int x);
+
+	int getFT();
+	void setFT(int x);
 
 };
