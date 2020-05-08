@@ -63,7 +63,7 @@ public:
 	void FillDrawingList();
 	void print(int time);
 
-	
+
 	bool cancelOrder(int id);
 	bool promoteOrder(int id , int extra);
 	int Autop(int timestep);
@@ -75,11 +75,11 @@ public:
 	void serveorders(int timestep); //   adding cooks to serving list
 	void finished(int timestep);  // to check if a cook has finished coking
 	void assigncook(Order* tempo, Cook* tempc,int timestep);   // helper function used inside servorders used to assaign cook to an aorder
-	
+
 
 /// ==================================================================================================
 
-
+	bool isprogramfnished();
 
 };
 

@@ -22,7 +22,7 @@ void Restaurant::RunSimulation()
 {
 	pGUI = new GUI;
 	PROG_MODE mode = pGUI->getGUIMode();
-	
+
 
 	switch (mode)	//Add a function for each mode in next phases
 	{
@@ -119,7 +119,7 @@ void Restaurant::FillDrawingList()
 		for (int j = 0; j < finishedcount; j++)
 			pGUI->AddToDrawingList(finishedord[j]);
 	}
-	
+
 }
 bool Restaurant::cancelOrder(int id)
 {
@@ -240,7 +240,7 @@ void::Restaurant::load() {
 void::Restaurant::interactive(){
 	int CurrentTimeStep = 1;
 	//as long as events queue is not empty yet
-	while (true)
+	while (!isprogramfnished())
 	{
 		Run(CurrentTimeStep);
 		pGUI->waitForClick();
@@ -249,7 +249,7 @@ void::Restaurant::interactive(){
 }
 void Restaurant::stepbystep() {
 	int CurrentTimeStep = 1;
-	while (true) {
+	while (!isprogramfnished()) {
 		Run(CurrentTimeStep);
 		Sleep(1000);
 	}
@@ -258,11 +258,11 @@ void Restaurant::stepbystep() {
 
 void Restaurant::silent() {
 	int CurrentTimeStep = 1;
-	
-	while (CurrentTimeStep!=100)//should be updated
+
+	while (!isprogramfnished())//should be updated
 		Run(CurrentTimeStep);
 	OutPut();
-	
+
 	//the func for calling the output file should be called here
 }
 void Restaurant::OutPut()
@@ -306,7 +306,7 @@ void Restaurant::OutPut()
 	Output.close();
 
 }
-void Restaurant::print(int time) 
+void Restaurant::print(int time)
 {
 	string cooks = "    Normal cook avail: " + to_string(NormalCQueue.getcount()) + "    Vegan cook avail: " + to_string(VeganCQueue.getcount()) + "    VIP cook avail: " + to_string(VIPCQueue.getcount());
 	string orders ="    Normal waiting: " + to_string(NOwaiting.getcount()) + "    " + "Vegan waiting: " + to_string(VGNWaiting.getcount()) + "    " + "VIP waiting: " + to_string(VIPwaiting.getcount());
@@ -401,17 +401,17 @@ void Restaurant::finished(int timestep) {
 	int dcount; bool flag = true;  Order* temporder;
 	Order** Arr = dummy.toArray(dcount);
 	while (flag)
-	{ 
+	{
 		flag = false;
 		for (int i = 0; i < dcount-1; i++)
 		{
 			if (Arr[i]->getServTime() > Arr[i + 1]->getServTime())  // arrange where less serving time exists first
 			{
-				flag = true; // the while loop will have another iteration 
+				flag = true; // the while loop will have another iteration
 				temporder = Arr[i+1];    // here I have to make a swap between the two orderes
 				Arr[i + 1] = Arr[i];
 				Arr[i] = temporder;
-			
+
 			}
 		}
 	}
@@ -434,6 +434,10 @@ void Restaurant::assigncook(Order* tempo, Cook* tempc,int timestep)
 			tempc->setorder(tempo);
 			tempc->setStatue(Not_Avail);
 			BusyCooks.enqueue(tempc);
+}
+bool Restaurant::isprogramfnished()
+{
+	return EventsQueue.isEmpty()&&NOwaiting.isEmpty()&&VIPwaiting.isEmpty()&&VGNWaiting.isEmpty()&&BusyCooks.isEmpty();
 }
 void Restaurant::AddCook(Cook* C) {
 	ORD_TYPE type;
@@ -500,5 +504,5 @@ void Restaurant::serveorders(int timestep)
 		else
 			flag = false;
 	}
-	
+
 }
