@@ -19,24 +19,11 @@ private:
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
 
 
-	/// ==>
-	//	DEMO-related members. Should be removed in phases 1&2
-	Queue<Order*> DEMO_Queue;	//Important: This is just for demo
-
-	/// ==>
-
-
-
-	//
-	// TODO: Add More Data Members As Needed
-	//
-	//
 	// for the cooks
 	Queue<Cook*> NormalCQueue;
 	Queue<Cook*> VeganCQueue;        //those three queues have all the available cooks
 	Queue<Cook*> VIPCQueue;
 	Queue<Cook*> BusyCooks;    // this list contains all the cook who are preparing orders or in the break duration
-	//
 	//
 
 	//
@@ -45,7 +32,6 @@ private:
 	Queue<Order*> NOwaiting;
 	Queue<Order*> VIPwaiting;
 	Queue<Order*> finishedqueue;
-	// linked list or array list
 
 	int BO, AutoPT;// repersent restaurnat rules to give a cook a break after n orders
 	int TOTALautoP;
@@ -55,42 +41,41 @@ public:
 	~Restaurant();
 
 	void ExecuteEvents(int TimeStep);	//executes all events at current timestep
+
 	void RunSimulation();
 	void load();
+
 	void interactive();
 	void Run(int& time);
 	void stepbystep();
 	void silent();
 	void OutPut();
+
 	void AddtoNormal(Order* po);
 	void AddtoVGN(Order* po);
 	void AddVIP(Order* po);
-	int Autop(int timestep);
+
 	void AddCook(Cook* C);
 
-	//void RemoveNormal(int Id);
-	//void RemoveVGN(int Id);
 
 	GUI* GetGUI();
 
 	void FillDrawingList();
+	void print(int time);
 
-	//
-	// TODO: Add More Member Functions As Needed
-	//
+	
 	bool cancelOrder(int id);
 	bool promoteOrder(int id , int extra);
+	int Autop(int timestep);
 
 
-/// ===================    DEMO-related functions. Should be removed in phases 1&2   =================
+/// ===================       =================
 
 
-	void serveorders(int timestep);
-	void finished(int timestep);
-	void assigncook(Order* tempo, Cook* tempc,int timestep);
-	//void Addtoserving(Order* po);
-	//void check(int timestep);
-	//void addorder(Order* po,ORD_TYPE t);
+	void serveorders(int timestep); //   adding cooks to serving list
+	void finished(int timestep);  // to check if a cook has finished coking
+	void assigncook(Order* tempo, Cook* tempc,int timestep);   // helper function used inside servorders used to assaign cook to an aorder
+	
 
 /// ==================================================================================================
 
