@@ -23,7 +23,7 @@ protected:
 
 
 	int OrderSize; // no of dishes of each order need it to calc the SV
-	int waitTime; // time consumed from AT to assign the order for a chief I need it as it is important in case we want it to promote the order
+	//  int currentwaitTime; // time consumed from AT to assign the order for a chief I need it as it is important in case we want it to promote the order
 	
 
 
@@ -32,10 +32,11 @@ public:
 	virtual ~Order();
 
 	int GetID();
-
+	
 	ORD_TYPE GetType() const;
 	void SetArrTime(int Arr);
 	void SetServTime(int Serv);
+	void SettotalMoney(double T_Money);
 	int getServTime();
 	void setfinishedtime(int f);
 	int getfinishedtime()const;
@@ -46,10 +47,11 @@ public:
 	double calcPirority () const;
 	void incTotalmoney(int x);
 	void setordertype(ORD_TYPE x);
-
+	double gettotalMoney();
 	void setStatus(ORD_STATUS s);
 	ORD_STATUS getStatus() const;
-	
+	int getcurrentwaittime(int x);
+	int gettotalwaittime()const;
 	//
 	// TODO: Add More Member Functions As Needed
 	//

@@ -26,6 +26,11 @@ void Order::SetServTime(int Serv)
 	ServTime = Serv;
 }
 
+void Order::SettotalMoney(double T_Money)
+{
+	totalMoney = T_Money;
+}
+
 int Order::getServTime()
 {
 	return ServTime;
@@ -64,6 +69,16 @@ ORD_STATUS Order::getStatus() const
 	return status;
 }
 
+int Order::getcurrentwaittime(int x)
+{
+	return x - ArrTime;
+}
+
+int Order::gettotalwaittime() const
+{
+	return FinishTime - ArrTime - ServTime;
+}
+
 Order::Order(int AT, int id, ORD_TYPE r_Type, double tMoney, int size, int dist)
 {
 	ArrTime = AT; ID = id; type = r_Type; totalMoney = tMoney;
@@ -84,6 +99,10 @@ void Order::incTotalmoney(int x)
 void Order::setordertype(ORD_TYPE x)
 {
 	type = x;
+}
+double Order::gettotalMoney()
+{
+	return totalMoney;
 }
 void Order::setfinishedtime(int f) {
 	FinishTime = f;

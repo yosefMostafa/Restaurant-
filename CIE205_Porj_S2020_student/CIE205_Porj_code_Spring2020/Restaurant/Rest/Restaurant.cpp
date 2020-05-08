@@ -262,8 +262,70 @@ void Restaurant::silent() {
 	int CurrentTimeStep = 1;
 	while (CurrentTimeStep!=100)//should be updated 
 		Run(CurrentTimeStep);
+	int  Normal = 0, Vip = 0, Vegan = 0, totalmoney = 0, totalserv = 0, N_Cook = 0, V_Cook = 0, VI_Cook = 0, WaitTime = 0, ID = 0, ArrivalTime = 0;
+	int FinishTime = 0, serving = 0;
+	Order* Order;
+	Cook* Cook;
+	while (finishedqueue.dequeue(Order)) 
+	{
+		
+		cout << Order->GetID() << endl;
+		ArrivalTime = Order->getArrTime();
+		cout << ArrivalTime << endl;
+		FinishTime = Order->getfinishedtime();
+		//cout << "Total Money";
+		cout << FinishTime << endl;
+		//totalserv =
+		cout << Order->getServTime() << endl;
+		totalmoney += Order->gettotalMoney();
+		cout << Order->gettotalwaittime() << endl;
+		string type;
+		ORD_TYPE typ = Order->GetType();
+		switch (typ) {
+		case TYPE_NRM:
+			Normal++;	
+			break;
+		case TYPE_VGAN:
+			Vegan++;
+			break;
+		case TYPE_VIP:
+			Vip++;
+			break;
+		}
+		totalserv += Order->getServTime();
+		WaitTime += Order->gettotalwaittime();
 
+	}
+	NormalCQueue.toArray(N_Cook);
+	VeganCQueue.toArray(V_Cook);
+	VIPCQueue.toArray(VI_Cook);
+	cout << "Total number of Cooks : ";
+	cout << VI_Cook + V_Cook + N_Cook << endl;
+	cout << "Normal Cooks : ";
+	cout <<  N_Cook << endl;
+	cout << "Vegan Cooks : ";
+	cout << V_Cook << endl;
+	cout << "VIP Cooks : ";
+	cout << VI_Cook << endl;
+	cout << "Total Money : ";
+	cout << totalmoney << endl;
+	cout << "Total number of Orders :";
+	cout << Normal + Vegan + Vip << endl;
+	cout << "Normal Orders : ";
+	cout << Normal << endl;
+	cout << "Vegan Orders : ";
+	cout << Vegan << endl;
+	cout << "VIP Orders : ";
+	cout << Vip << endl;
+	cout << "Avg Serv : ";
+	cout << totalserv / (Normal + Vegan + Vip)<< endl;
+	cout << "Avg Wait : ";
+	cout << WaitTime / (Normal + Vegan + Vip) << endl;
 	//the func for calling the output file should be called here 
+}
+void Restaurant::OutPut()
+{
+
 }
 void Restaurant::Run(int &time) {
 	char timestep[10];

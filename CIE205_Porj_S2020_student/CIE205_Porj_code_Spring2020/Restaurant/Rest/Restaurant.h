@@ -61,7 +61,7 @@ public:
 	void interactive();
 	void stepbystep();
 	void silent();
-
+	void OutPut();
 	void AddtoNormal(Order* po);
 	void AddtoVGN(Order* po);
 	void AddVIP(Order* po);
