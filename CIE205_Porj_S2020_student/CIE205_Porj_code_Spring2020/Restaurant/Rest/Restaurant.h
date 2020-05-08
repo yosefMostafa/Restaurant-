@@ -57,7 +57,10 @@ public:
 	void ExecuteEvents(int TimeStep);	//executes all events at current timestep
 	void RunSimulation();
 	void load();
+	void Run(int &time);
 	void interactive();
+	void stepbystep();
+	void silent();
 
 	void AddtoNormal(Order* po);
 	void AddtoVGN(Order* po);
