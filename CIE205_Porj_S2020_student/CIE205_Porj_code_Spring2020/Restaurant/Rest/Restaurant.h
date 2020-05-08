@@ -58,6 +58,7 @@ public:
 	void RunSimulation();
 	void load();
 	void interactive();
+	void Run(int& time);
 	void stepbystep();
 	void silent();
 	void OutPut();
