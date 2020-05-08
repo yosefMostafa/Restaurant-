@@ -239,7 +239,7 @@ void::Restaurant::load() {
 void::Restaurant::interactive(){
 	int CurrentTimeStep = 1;
 	//as long as events queue is not empty yet
-	while (true)
+	while (!isprogramfnished())
 	{
 		Run(CurrentTimeStep);
 		pGUI->waitForClick();
@@ -248,7 +248,7 @@ void::Restaurant::interactive(){
 }
 void Restaurant::stepbystep() {
 	int CurrentTimeStep = 1;
-	while (true) {
+	while (!isprogramfnished()) {
 		Run(CurrentTimeStep);
 		Sleep(1000);
 	}
@@ -258,7 +258,7 @@ void Restaurant::stepbystep() {
 void Restaurant::silent() {
 	int CurrentTimeStep = 1;
 	
-	while (CurrentTimeStep!=100)//should be updated
+	while (!isprogramfnished())//should be updated
 		Run(CurrentTimeStep);
 	OutPut();
 	
@@ -426,6 +426,10 @@ void Restaurant::assigncook(Order* tempo, Cook* tempc,int timestep)
 			tempc->setorder(tempo);
 			tempc->setStatue(Not_Avail);
 			BusyCooks.enqueue(tempc);
+}
+bool Restaurant::isprogramfnished()
+{
+	return EventsQueue.isEmpty()&&NOwaiting.isEmpty()&&VIPwaiting.isEmpty()&&VGNWaiting.isEmpty()&&BusyCooks.isEmpty();
 }
 void Restaurant::AddCook(Cook* C) {
 	ORD_TYPE type;
