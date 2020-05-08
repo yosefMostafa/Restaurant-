@@ -1,5 +1,7 @@
+#include<iostream>
 #include "GUI.h"
 
+using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////
 GUI::GUI()
 {
@@ -13,7 +15,8 @@ GUI::GUI()
 	DrawingColors[TYPE_VGAN] = DARKBLUE;		//vegan-order color
 	DrawingColors[TYPE_VIP] = 	VIOLET;		//VIP-order color					
 
-	ClearStatusBar();
+	ClearStatusBar(1);
+	ClearStatusBar(2);
 	ClearDrawingArea(); 
 	DrawRestArea();  
 	
@@ -60,12 +63,30 @@ string GUI::GetString() const
 
 void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 {
-	ClearStatusBar();	//First clear the status bar
+	ClearStatusBar(1);	//First clear the status bar
 	
 	pWind->SetPen(DARKRED);
 	pWind->SetFont(18, BOLD , BY_NAME, "Arial");   
-	pWind->DrawString(10, WindHeight - (int) (StatusBarHeight/1.5), msg); // You may need to change these coordinates later 
+	pWind->DrawString(10, WindHeight - (int) (150/1.5), msg); // You may need to change these coordinates later 
 	                                                                      // to be able to write multi-line
+}
+void GUI::PrintMessage2(string msg,int c) 	//Prints a message on status bar
+{
+	string msgprinted = "";
+	if (!(c > 10)) {
+		s[c] = msg;
+		
+		for (int i = 0; i <= c; i++)
+			msgprinted = msgprinted + "   " + s[i];
+	}
+	else
+		msgprinted = "error index excedded number of orders in this time step";
+	//ClearStatusBar(2);	//First clear the status bar
+
+	pWind->SetPen(DARKRED);
+	pWind->SetFont(18, BOLD, BY_NAME, "Arial");
+	pWind->DrawString(10, WindHeight - (int)(75 / 1.5), msgprinted); // You may need to change these coordinates later 
+																		  // to be able to write multi-line
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 void GUI::DrawString(const int iX, const int iY, const string Text)
@@ -76,12 +97,14 @@ void GUI::DrawString(const int iX, const int iY, const string Text)
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-void GUI::ClearStatusBar() const
+void GUI::ClearStatusBar(int x) const
 {
 	pWind->SetPen(WHITE, 3);
 	pWind->SetBrush(WHITE);
-	pWind->DrawRectangle(0, WindHeight - StatusBarHeight , WindWidth, WindHeight);	
-
+	if (x==1)
+		pWind->DrawRectangle(0, WindHeight - StatusBarHeight , WindWidth, WindHeight-75);	
+	else
+		pWind->DrawRectangle(0, WindHeight - 75, WindWidth, WindHeight);
 	pWind->SetPen(BROWN, 3);
 	pWind->DrawLine(0, WindHeight - StatusBarHeight , WindWidth, WindHeight - StatusBarHeight);	
 }

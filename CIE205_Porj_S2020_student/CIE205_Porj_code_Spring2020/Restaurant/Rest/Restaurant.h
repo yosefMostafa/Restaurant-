@@ -20,18 +20,11 @@ private:
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
 
 
-
-
-	//
-	// TODO: Add More Data Members As Needed
-	//
-	//
 	// for the cooks
 	Queue<Cook*> NormalCQueue;
 	Queue<Cook*> VeganCQueue;        //those three queues have all the available cooks
 	Queue<Cook*> VIPCQueue;
 	Queue<Cook*> BusyCooks;    // this list contains all the cook who are preparing orders or in the break duration
-	//
 	//
 
 	//
@@ -40,9 +33,7 @@ private:
 	Queue<Order*> NOwaiting;
 	Queue<Order*> VIPwaiting;
 	Queue<Order*> finishedqueue;
-	// linked list or array list
-	PQueue<Order*> VIP;
-	
+
 	int BO, AutoPT;// repersent restaurnat rules to give a cook a break after n orders
 	int TOTALautoP;
 public:
@@ -71,8 +62,10 @@ public:
 	GUI* GetGUI();
 
 	void FillDrawingList();
+	void print(int time);
+	string typetostring(Order* tempo);
+	string typetostring(Cook* tempc);
 
-	
 	bool cancelOrder(int id);
 	bool promoteOrder(int id , int extra);
 	int Autop(int timestep);
@@ -83,8 +76,8 @@ public:
 
 	void serveorders(int timestep); //   adding cooks to serving list
 	void finished(int timestep);  // to check if a cook has finished coking
-	void assigncook(Order* tempo, Cook* tempc,int timestep);   // helper function used inside servorders used to assaign cook to an aorder
-	
+	void assigncook(Order* tempo, Cook* tempc,int timestep,int count);   // helper function used inside servorders used to assaign cook to an aorder
+
 
 /// ==================================================================================================
 

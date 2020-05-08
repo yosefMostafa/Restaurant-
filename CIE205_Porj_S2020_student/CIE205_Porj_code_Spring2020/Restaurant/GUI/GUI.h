@@ -43,7 +43,7 @@ private:
 
 	static const int	
 		WindWidth=1200, WindHeight=650,		//Window width and height
-		StatusBarHeight = 150,	//Status Bar Height
+		StatusBarHeight = 150,//Status Bar Height
 		MenuBarHeight = 0,		//Menu Bar Height (distance from top of window to bottom line of menu bar)
 		MenuItemWidth = 80,		//Width of each item in menu bar menu
 		
@@ -82,7 +82,7 @@ private:
 	static const int maxItemCnt = MaxPossibleOrdCnt+MaxPossibleMcCnt;
 	DrawingItem* DrawingList[maxItemCnt] ;	 //List of items pointers to be drawn every timestep
 	int DrawingItemsCount;	//actual no. of items in the drawing list
-	
+	string s[10];
 	//NOTES: 
 	//Orders are assumed to be sorted by arrival time
 	// At every time step, you should update those pointers 
@@ -101,7 +101,7 @@ private:
 	void DrawString(const int iX, const int iY, const string Text); // prints a message in the passed coordinates
 	void DrawRestArea() const;	    // draws the restaurant area
 
-	void ClearStatusBar() const;    // clears the status bar
+	
 	void ClearDrawingArea() const;	// clears the Drawing area from all drawings
 
 public:
@@ -114,6 +114,8 @@ public:
 
 	// Output Functions  ---------------------------
 	void PrintMessage(string msg) const; // prints a message in the status bar
+	void PrintMessage2(string msg,int c);
+	void ClearStatusBar(int x) const;    // clears the status bar
 
 
 	void UpdateInterface();
