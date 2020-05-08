@@ -47,7 +47,7 @@ Single Node Case:
 template <typename T>
 class Queue
 {
-private:
+protected:
 	int count;
 	Node<T>* backPtr;
 	Node<T>* frontPtr;
@@ -55,7 +55,7 @@ public:
 	Queue();
 	int getcount();
 	bool isEmpty() const;
-	virtual bool enqueue(const T& newEntry);
+    bool enqueue(const T& newEntry);
 	bool dequeue(T& frntEntry);
 	bool peekFront(T& frntEntry)  const;
 	bool pushToPQ(Order*& frntEntry);

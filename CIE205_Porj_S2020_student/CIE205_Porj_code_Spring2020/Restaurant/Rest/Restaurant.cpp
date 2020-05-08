@@ -334,6 +334,8 @@ void Restaurant::AddtoVGN(Order* po)
 void Restaurant::AddVIP(Order* po)
 {
 	VIPwaiting.pushToPQ(po);
+	VIP.enqueue(po,po->calcPirority() );
+
 }
 int Restaurant::Autop(int timestep)
 {

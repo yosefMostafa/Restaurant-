@@ -7,6 +7,7 @@
 #include "..\Generic_DS\Queue.h"
 #include"../Generic_DS/Llist.h"
 #include "..\Events\Event.h"
+#include"../PQueue.h"
 
 
 #include "Order.h"
@@ -40,7 +41,8 @@ private:
 	Queue<Order*> VIPwaiting;
 	Queue<Order*> finishedqueue;
 	// linked list or array list
-
+	PQueue<Order*> VIP;
+	
 	int BO, AutoPT;// repersent restaurnat rules to give a cook a break after n orders
 	int TOTALautoP;
 public:
