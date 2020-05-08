@@ -2,7 +2,7 @@
 #include <time.h>
 #include <iostream>
 #include <fstream>
-using namespace std;	
+using namespace std;
 
 #include "Restaurant.h"
 #include "..\Events\ArrivalEvent.h"
@@ -13,14 +13,13 @@ using namespace std;
 Restaurant::Restaurant()
 {
 	pGUI = NULL;
-	load();
 }
 
 void Restaurant::RunSimulation()
 {
 	pGUI = new GUI;
 	PROG_MODE mode = pGUI->getGUIMode();
-	
+	load();
 
 	switch (mode)	//Add a function for each mode in next phases
 	{
@@ -28,11 +27,13 @@ void Restaurant::RunSimulation()
 		interactive();
 		break;
 	case MODE_STEP:
-		stepbystep();
 		break;
 	case MODE_SLNT:
-		silent();
 		break;
+	case MODE_DEMO:
+		//Just_A_Demo();
+		break;
+
 	};
 
 }
@@ -243,44 +244,36 @@ void::Restaurant::load() {
 }
 void::Restaurant::interactive(){
 	int CurrentTimeStep = 1;
+
+
+
+
 	//as long as events queue is not empty yet
-	while (true)
+	while (!EventsQueue.isEmpty())
 	{
-		Run(CurrentTimeStep);
-		pGUI->waitForClick();
-	}
-}
-void Restaurant::stepbystep() {
-	int CurrentTimeStep = 1;
-	while (true) {
-		Run(CurrentTimeStep);
+		//print current timestep
+		char timestep[10];
+		itoa(CurrentTimeStep, timestep, 10);
+		pGUI->PrintMessage(timestep);
+
+		ExecuteEvents(CurrentTimeStep);	//execute all events at current time step
+		finished(CurrentTimeStep);//checking if there is any order is done in this time step
+		serveorders(CurrentTimeStep);//assigning orders to cooks
+		FillDrawingList();
+
+/////////////////////////////////////////////////////////////////////////////////////////
+		/// The next code section should be done through function "FillDrawingList()" once you
+		/// decide the appropriate list type for Orders and Cooks
+
+
+
+		pGUI->UpdateInterface();
 		Sleep(1000);
+		CurrentTimeStep++;	//advance timestep
+		pGUI->ResetDrawingList();
 	}
 }
 
-void Restaurant::silent() {
-	int CurrentTimeStep = 1;
-	while (CurrentTimeStep!=100)//should be updated 
-		Run(CurrentTimeStep);
-
-	//the func for calling the output file should be called here 
-}
-void Restaurant::Run(int &time) {
-	char timestep[10];
-	itoa(time, timestep, 10);
-	pGUI->PrintMessage(timestep);
-
-	ExecuteEvents(time);	//execute all events at current time step
-	finished(time);//checking if there is any order is done in this time step
-	serveorders(time);//assigning orders to cooks
-	FillDrawingList();
-
-	/// The next code section should be done through function "FillDrawingList()" once you
-	/// decide the appropriate list type for Orders and Cooks
-	pGUI->UpdateInterface();
-	time++;	//advance timestep
-	pGUI->ResetDrawingList();
-}
 void Restaurant::AddtoNormal(Order* po)
 {
 	NOwaiting.enqueue(po);
