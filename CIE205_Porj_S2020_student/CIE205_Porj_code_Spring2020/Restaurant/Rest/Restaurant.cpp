@@ -311,6 +311,7 @@ void Restaurant::print(int time)
 	string cooks = "    Normal cook avail: " + to_string(NormalCQueue.getcount()) + "    Vegan cook avail: " + to_string(VeganCQueue.getcount()) + "    VIP cook avail: " + to_string(VIPCQueue.getcount());
 	string orders ="    Normal waiting: " + to_string(NOwaiting.getcount()) + "    " + "Vegan waiting: " + to_string(VGNWaiting.getcount()) + "    " + "VIP waiting: " + to_string(VIPwaiting.getcount());
 	string served = "    served: " + to_string(finishedqueue.getcount());
+
 	pGUI->PrintMessage("Ts:" + to_string(time) +orders +cooks+served);
 }
 void Restaurant::Run(int &time) {
@@ -433,7 +434,31 @@ void Restaurant::assigncook(Order* tempo, Cook* tempc,int timestep)
 			tempo->setStatus(SRV);
 			tempc->setorder(tempo);
 			tempc->setStatue(Not_Avail);
+			pGUI->PrintMessage2(typetostring(tempc) + " cook#" + to_string(tempc->GetID()) + " to order "+typetostring(tempo)+" #"+to_string(tempo->GetID())+" at time step: "+to_string(timestep));
+			Sleep(200);
 			BusyCooks.enqueue(tempc);
+}
+string Restaurant::typetostring(Order* tempo)
+{
+	switch (tempo->GetType()) {
+	case TYPE_NRM:
+		return "Normal";
+	case TYPE_VGAN:
+		return "Vegan";
+	case TYPE_VIP:
+		return "VIP";
+	}
+}
+string Restaurant::typetostring(Cook* tempc)
+{
+	switch (tempc->GetType()) {
+	case TYPE_NRM:
+		return "Normal";
+	case TYPE_VGAN:
+		return "Vegan";
+	case TYPE_VIP:
+		return "VIP";
+	}
 }
 bool Restaurant::isprogramfnished()
 {

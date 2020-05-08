@@ -62,7 +62,8 @@ public:
 
 	void FillDrawingList();
 	void print(int time);
-
+	string typetostring(Order* tempo);
+	string typetostring(Cook* tempc);
 
 	bool cancelOrder(int id);
 	bool promoteOrder(int id , int extra);
