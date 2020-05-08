@@ -13,6 +13,7 @@ using namespace std;
 Restaurant::Restaurant()
 {
 	pGUI = NULL;
+
 	load();
 }
 
@@ -165,17 +166,16 @@ void::Restaurant::load() {
 	int Normalcooks, vegancooks, vipcooks;
 	int Normalcooksspeed, vegancooksspeed, vipcooksspeed;
 	int breaktime, normalbreaktime, veganbreaktime, vipbreaktime;
-	int autopromotionlimit;
 	int numofevents;
 
 	file >> Normalcooks >> vegancooks >> vipcooks;
 	file >> Normalcooksspeed >> vegancooksspeed >> vipcooksspeed;
 	file >> this->BO >> normalbreaktime >> veganbreaktime >> vipbreaktime;
-	file >> autopromotionlimit;
+	file >> AutoPT;
 	file >> numofevents;//getting the information of the cook from file
 
 	int sum = Normalcooks + vegancooks + vipcooks;
-
+	TOTALautoP = 0; // We Added this to count the total number of auto promoted orders (can be changed)
 
 	for (int i = 0; i < Normalcooks; i++) {
 		Cook *pc=new Cook((i + 1) * 2 + sum, Normalcooksspeed, (ORD_TYPE)(TYPE_NRM), normalbreaktime);
@@ -260,28 +260,24 @@ void Restaurant::stepbystep() {
 
 void Restaurant::silent() {
 	int CurrentTimeStep = 1;
+	fstream Output;
 	while (CurrentTimeStep!=100)//should be updated 
 		Run(CurrentTimeStep);
-	int  Normal = 0, Vip = 0, Vegan = 0, totalmoney = 0, totalserv = 0, N_Cook = 0, V_Cook = 0, VI_Cook = 0, WaitTime = 0, ID = 0, ArrivalTime = 0;
-	int FinishTime = 0, serving = 0;
+	int  Normal = 0, Vip = 0, Vegan = 0, N_Cook = 0, V_Cook = 0, VI_Cook = 0;
+	double WaitTime = 0.0;
+	double  totalserv = 0.00;
+	//int AP = 0;
+	Output.open("Output.txt", ios::out);
 	Order* Order;
-	Cook* Cook;
+	string type;
+	Output << "FT" << "    " << "ID" << "    " << "AT" << "    " << "WT" << "    " << "ST" << endl;
 	while (finishedqueue.dequeue(Order)) 
 	{
-		
-		cout << Order->GetID() << endl;
-		ArrivalTime = Order->getArrTime();
-		cout << ArrivalTime << endl;
-		FinishTime = Order->getfinishedtime();
-		//cout << "Total Money";
-		cout << FinishTime << endl;
-		//totalserv =
-		cout << Order->getServTime() << endl;
-		totalmoney += Order->gettotalMoney();
-		cout << Order->gettotalwaittime() << endl;
-		string type;
+		Output << Order->getfinishedtime() << "    " << Order->GetID() << "     " << Order->getArrTime() << "     " << Order->gettotalwaittime() << "     "
+		<< Order->getServTime() << endl;
 		ORD_TYPE typ = Order->GetType();
-		switch (typ) {
+		switch (typ)
+		{
 		case TYPE_NRM:
 			Normal++;	
 			break;
@@ -294,33 +290,15 @@ void Restaurant::silent() {
 		}
 		totalserv += Order->getServTime();
 		WaitTime += Order->gettotalwaittime();
-
 	}
 	NormalCQueue.toArray(N_Cook);
 	VeganCQueue.toArray(V_Cook);
 	VIPCQueue.toArray(VI_Cook);
-	cout << "Total number of Cooks : ";
-	cout << VI_Cook + V_Cook + N_Cook << endl;
-	cout << "Normal Cooks : ";
-	cout <<  N_Cook << endl;
-	cout << "Vegan Cooks : ";
-	cout << V_Cook << endl;
-	cout << "VIP Cooks : ";
-	cout << VI_Cook << endl;
-	cout << "Total Money : ";
-	cout << totalmoney << endl;
-	cout << "Total number of Orders :";
-	cout << Normal + Vegan + Vip << endl;
-	cout << "Normal Orders : ";
-	cout << Normal << endl;
-	cout << "Vegan Orders : ";
-	cout << Vegan << endl;
-	cout << "VIP Orders : ";
-	cout << Vip << endl;
-	cout << "Avg Serv : ";
-	cout << totalserv / (Normal + Vegan + Vip)<< endl;
-	cout << "Avg Wait : ";
-	cout << WaitTime / (Normal + Vegan + Vip) << endl;
+	Output << "Orders: " << Vip + Normal + Vegan << "  [Norm: " << Normal << ", Veg: " << Vegan << ", VIP: " << Vip << " ]" << endl;
+	Output << "Cooks:" << VI_Cook + V_Cook + N_Cook << "  [Norm: " << N_Cook << ", Veg: " << V_Cook << ", VIP: " << VI_Cook << " ]" << endl;
+	Output << "Avg Wait= " << WaitTime / (Normal + Vegan + Vip) << ", Avg Serv= " << totalserv / (Normal + Vegan + Vip) << endl;
+	Output << "Auto-Promoted: " << TOTALautoP;
+	Output.close();
 	//the func for calling the output file should be called here 
 }
 void Restaurant::OutPut()
@@ -335,6 +313,7 @@ void Restaurant::Run(int &time) {
 	ExecuteEvents(time);	//execute all events at current time step
 	finished(time);//checking if there is any order is done in this time step
 	serveorders(time);//assigning orders to cooks
+	TOTALautoP += Autop(time);
 	FillDrawingList();
 
 	/// The next code section should be done through function "FillDrawingList()" once you
@@ -355,6 +334,26 @@ void Restaurant::AddtoVGN(Order* po)
 void Restaurant::AddVIP(Order* po)
 {
 	VIPwaiting.pushToPQ(po);
+}
+int Restaurant::Autop(int timestep)
+{
+	bool y = true; Order* po;
+	int x = 0;
+	while (NOwaiting.peekFront(po) && y)
+	{
+		if (po->getcurrentwaittime(timestep) == AutoPT)
+		{
+			NOwaiting.dequeue(po);
+			po->setordertype(TYPE_VIP);
+			VIPwaiting.pushToPQ(po);
+			y = true;
+			x++;
+		}
+		else
+			y = false;
+
+	}
+	return x;
 }
 //void Restaurant::RemoveNormal(int Id)
 //{

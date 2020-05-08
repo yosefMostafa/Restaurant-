@@ -47,8 +47,8 @@ private:
 	Queue<Order*> finishedqueue;
 	// linked list or array list
 
-	int BO; // repersent restaurnat rules to give a cook a break after n orders 
-
+	int BO, AutoPT;// repersent restaurnat rules to give a cook a break after n orders 
+	int TOTALautoP;
 public:
 	
 	Restaurant();
@@ -65,7 +65,7 @@ public:
 	void AddtoNormal(Order* po);
 	void AddtoVGN(Order* po);
 	void AddVIP(Order* po);
-
+	int Autop(int timestep);
 	void AddCook(Cook* C);
 
 	//void RemoveNormal(int Id);
