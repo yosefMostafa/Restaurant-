@@ -9,14 +9,10 @@ Cook::Cook()
 
 Cook::Cook(int id, int spd, ORD_TYPE t, int breakDur)
 {
-	ID = id; 
-	speed = spd;
-	type = t; 
-	statue= Avail;
-	breakduration = breakDur; 
-	completedOrders = 0;
-	assignedOrder = nullptr;
-	finishtime = 0;
+	ID = id;                            speed = spd;
+	type = t;                           statue= Avail;
+	breakduration = breakDur;           completedOrders = 0;
+	assignedOrder = nullptr;            finishtime = 0;
 }
 
 
@@ -38,47 +34,58 @@ ORD_TYPE Cook::GetType() const
 }
 
 
-void Cook::setID(int id)
+void Cook::SetID(int id)
 {
 	ID = id;
 }
 
-void Cook::setType(ORD_TYPE t)
+void Cook::SetType(ORD_TYPE t)
 {
 	type = t;
 }
-bool Cook::Breakd(int x) {
-	if (x == finishtime) {
-		setStatue(Avail);
+
+bool Cook::Breakd(int x) 
+{
+	if (x == finishtime) 
+	{
+		SetStatue(Avail);
 		return true;
 	}
 	return false;
 }
-int Cook::getFT()
+
+int Cook::GetFT()
 {
 	return finishtime;
 }
-void Cook::setFT(int x)
+
+void Cook::SetFT(int x)
 {
 	finishtime = x;
 }
-bool Cook::isbreak(int x,int bo)
+
+bool Cook::IsBreak(int x,int bo)
 {
-	if (completedOrders % bo == 0) {
-		setStatue(Break); 
+	if (completedOrders % bo == 0)
+	{
+		SetStatue(Break); 
 	    finishtime = x + breakduration;
 		return true;
 	}
 	return false;
 }
-void Cook::setspeed(int s) {
+
+void Cook::SetSpeed(int s) 
+{
 	speed = s;
 }
-void Cook::setStatue(AVAIL_TYPE t)
+
+void Cook::SetStatue(AVAIL_TYPE t)
 {
 	statue = t;
 }
-bool Cook::Isavail(AVAIL_TYPE t)
+
+bool Cook::IsAvail(AVAIL_TYPE t)
 {
 	if (t==AVAIL_TYPE::Avail)
 	{
@@ -87,24 +94,31 @@ bool Cook::Isavail(AVAIL_TYPE t)
 	return false;
 }
 
-AVAIL_TYPE Cook::getavail()
+AVAIL_TYPE Cook::GetAvail()
 {
 	return statue;
 }
 
-void Cook::setorder(Order* po) {
+void Cook::SetOrder(Order* po) {
 	assignedOrder = po;
 }
 
-Order* Cook::getorder() {
+Order* Cook::GetOrder() 
+{
 	return assignedOrder;
 }
-int Cook::getspeed() {
+
+int Cook::GetSpeed()
+{
 	return speed;
 }
-void Cook::increasecomporders() {
+
+void Cook::Increase_Completed_Orders() 
+{
 	completedOrders++;
 }
-int Cook::getcomporders() {
+
+int Cook::Get_Completed_Orders()
+{
 	return completedOrders;
 }

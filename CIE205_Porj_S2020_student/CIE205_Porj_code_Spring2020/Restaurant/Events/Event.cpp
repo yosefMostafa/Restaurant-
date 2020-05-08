@@ -4,9 +4,9 @@
 Event::Event(int eTime, int ordID)
 {
 	EventTime = eTime;
+	
 	OrderID	= ordID;
 }
-
 
 int Event::getEventTime()
 {
@@ -17,9 +17,6 @@ int Event::getOrderID()
 	return OrderID;
 }
 
-
 Event::~Event()
 {
-
 }
-

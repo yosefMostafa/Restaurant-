@@ -64,7 +64,7 @@ string GUI::GetString() const
 void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 {
 	ClearStatusBar(1);	//First clear the status bar
-	
+	//ClearStatusBar(2);
 	pWind->SetPen(DARKRED);
 	pWind->SetFont(18, BOLD , BY_NAME, "Arial");   
 	pWind->DrawString(10, WindHeight - (int) (150/1.5), msg); // You may need to change these coordinates later 
@@ -250,7 +250,7 @@ void GUI::AddToDrawingList(Order* pOrd)
 	DrawingItem *pDitem=new DrawingItem;
 	pDitem->ID = pOrd->GetID();
 	pDitem->clr = DrawingColors[pOrd->GetType()];
-	ORD_STATUS order_status = pOrd->getStatus();
+	ORD_STATUS order_status = pOrd->GetStatus();
 	GUI_REGION reg;
 
 	switch (order_status)

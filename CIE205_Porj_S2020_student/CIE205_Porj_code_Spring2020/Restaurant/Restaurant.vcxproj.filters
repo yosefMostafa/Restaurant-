@@ -114,11 +114,11 @@
     <ClInclude Include="Generic_DS\List.h">
       <Filter>Generic_DS</Filter>
     </ClInclude>
-    <ClInclude Include="Events\promotion.h">
-      <Filter>Events</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\..\..\zewail%27s curriculum\CIE\CIE_21_second\Data structure and algorithms\Restaurant-\CIE205_Porj_S2020_student\CIE205_Porj_code_Spring2020\Restaurant\PQueue.h">
       <Filter>Generic_DS</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\PromotionEvent.h">
+      <Filter>Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -248,10 +248,10 @@
     <ClCompile Include="CancellationEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
-    <ClCompile Include="Events\promotion.cpp">
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Events\PromotionEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMUgraphicsLib\Manual.txt">

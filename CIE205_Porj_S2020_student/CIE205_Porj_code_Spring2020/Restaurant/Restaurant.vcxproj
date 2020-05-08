@@ -100,7 +100,7 @@
     <ClInclude Include="Defs.h" />
     <ClInclude Include="Events\ArrivalEvent.h" />
     <ClInclude Include="Events\Event.h" />
-    <ClInclude Include="Events\promotion.h" />
+    <ClInclude Include="Events\PromotionEvent.h" />
     <ClInclude Include="Generic_DS\List.h" />
     <ClInclude Include="Generic_DS\Node.h" />
     <ClInclude Include="Generic_DS\Queue.h" />
@@ -149,7 +149,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\ArrivalEvent.cpp" />
-    <ClCompile Include="Events\promotion.cpp" />
+    <ClCompile Include="Events\PromotionEvent.cpp" />
     <ClCompile Include="GUI\GUI.cpp" />
     <ClCompile Include="Rest\Cook.cpp" />
     <ClCompile Include="Rest\Order.cpp" />

@@ -16,73 +16,83 @@
 class Restaurant
 {
 private:
-	GUI *pGUI;
-	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
+	GUI *pGUI; //Pointer to GUI
+	
+	Queue<Event*> Events_Queue;	//Queue of all events that will be loaded from file
 
+	Queue<Cook*> Normal_Cook_Queue; //Queue that contains the available normal cooks
+	
+	Queue<Cook*> Vegan_Cook_Queue;    //Queue that contains the available vegan cooks
+	
+	Queue<Cook*> VIP_Cook_Queue;      //Queue that contains the available VIP cooks
 
-	// for the cooks
-	Queue<Cook*> NormalCQueue;
-	Queue<Cook*> VeganCQueue;        //those three queues have all the available cooks
-	Queue<Cook*> VIPCQueue;
-	PQueue<Cook*> BusyCooks;    // this list contains all the cook who are preparing orders or in the break duration
-	//
+	PQueue<Cook*> BusyCooks;    // Queue that contains  contains all the cook who are preparing orders or in the break duration
+	
+	Queue<Order*> Vegan_Waiting;        //those three have all orders On the waiting list
+	
+	Queue<Order*> Normal_Waiting;      //Queue that contains the Noraml orders on the waiting list
+	
+	PQueue<Order*> VIP_Waiting;        //Queue that contains the vip ordesr on the waiting list
+	
+	Queue<Order*> Finished_Orders;     //Queue that contains the finished orders
 
-	//
-	//for the orders
-	Queue<Order*> VGNWaiting;        //those three have all orders On the waiting list
-	Queue<Order*> NOwaiting;
-	PQueue<Order*> VIPwaiting;
-	Queue<Order*> finishedqueue;
-
-	int BO, AutoPT;// repersent restaurnat rules to give a cook a break after n orders
-	int TOTALautoP;
+	int BO , AutoPT; // Represent restaurnat rules to give a cook a break after n orders, repersents promoted orders
+	
+	int T_AutoP; //Represent total promoted orders
 public:
-
 	Restaurant();
+
 	~Restaurant();
 
-	void ExecuteEvents(int TimeStep);	//executes all events at current timestep
+	void ExecuteEvents(int TimeStep);	////Function to executes all events at current timestep
+	
+	void RunSimulation(); //Function to  run the simulation
 
-	void RunSimulation();
-	void load();
+	void load(); //Function to load from a file
 
-	void interactive();
+	void Interactive();
+
 	void Run(int& time);
-	void stepbystep();
-	void silent();
-	void OutPut();
+	
+	void Step_By_Step(); 
+	
+	void Silent(); //function to implement mode silent
+	
+	void OutPut(); //Function to print the output
 
-	void AddtoNormal(Order* po);
-	void AddtoVGN(Order* po);
-	void AddVIP(Order* po);
+	void AddtoNormal(Order* po); //Function to add order to normal queue
+	
+	void AddtoVGN(Order* po); //Function to add order to vigan queue
+	
+	void AddVIP(Order* po); //Function to add order to VIP queue
 
-	void AddCook(Cook* C);
+	void AddCook(Cook* C); //Function to add Cooks
 
+	GUI* GetGUI(); //Function to get GUI pointer
 
-	GUI* GetGUI();
+	void Fill_Drawing_List(); //Function to fill the drawing list
+	
+	void Print(int time); // Function to print on the statues bar 
+	
+	string Type_To_String(Order* tempo); // Function to transfer type of Orders to string
+	
+	string Type_To_String(Cook* tempc); // Function to transfer type of Cooks to string
 
-	void FillDrawingList();
-	void print(int time);
-	string typetostring(Order* tempo);
-	string typetostring(Cook* tempc);
+	bool Cancel_Order(int id);  // Function to cancel order
+	
+	bool Promote_Order(int id , int extra); // Function to promote order
+	
+	int Auto_Promotion(int timestep); //Function to auto promote
 
-	bool cancelOrder(int id);
-	bool promoteOrder(int id , int extra);
-	int Autop(int timestep);
+	void ServOrders(int timestep); //   adding cooks to serving list
+	
+	void IsFinished(int timestep);  // to check if a cook has finished cooking
+	
+	void Assign_Cook(Order* tempo, Cook* tempc,int timestep,int count);   // helper function used inside servorders used to assaign cook to an aorder
 
+	void Free_Memory();
 
-/// ===================       =================
-
-
-	void serveorders(int timestep); //   adding cooks to serving list
-	void finished(int timestep);  // to check if a cook has finished coking
-	void assigncook(Order* tempo, Cook* tempc,int timestep,int count);   // helper function used inside servorders used to assaign cook to an aorder
-
-	void freememory();
-/// ==================================================================================================
-
-	bool isprogramfnished();
-
+	bool Is_Program_Finished();
 };
 
 #endif

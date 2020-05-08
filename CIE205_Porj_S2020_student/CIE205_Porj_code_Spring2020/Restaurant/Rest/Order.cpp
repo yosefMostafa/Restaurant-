@@ -26,17 +26,17 @@ void Order::SetServTime(int Serv)
 	ServTime = Serv;
 }
 
-void Order::SettotalMoney(double T_Money)
+void Order::SetTotal_Money(double T_Money)
 {
 	totalMoney = T_Money;
 }
 
-int Order::getServTime()
+int Order::GetServTime()
 {
 	return ServTime;
 }
 
-int Order::getArrTime() const
+int Order::GetArrTime() const
 {
 	return ArrTime;
 }
@@ -59,22 +59,22 @@ int Order::GetDistance() const
 }
 
 
-void Order::setStatus(ORD_STATUS s)
+void Order::SetStatus(ORD_STATUS s)
 {
 	status = s;
 }
 
-ORD_STATUS Order::getStatus() const
+ORD_STATUS Order::GetStatus() const
 {
 	return status;
 }
 
-int Order::getcurrentwaittime(int x)
+int Order::Get_Current_Wait_Time(int x)
 {
 	return x - ArrTime;
 }
 
-int Order::gettotalwaittime() const
+int Order::Get_Total_Wait_Time() const
 {
 	return FinishTime - ArrTime - ServTime;
 }
@@ -87,10 +87,10 @@ Order::Order(int AT, int id, ORD_TYPE r_Type, double tMoney, int size, int dist)
 	FinishTime = -1;
 	ServTime = -1;
 }
-int Order::getsize() const {
+int Order::GetSize() const {
 	return OrderSize;
 }
-double Order::calcPirority() const
+double Order::Calc_Pirority() const
 {
 	return 3*totalMoney - OrderSize -Distance;
 }
@@ -98,17 +98,17 @@ void Order::incTotalmoney(int x)
 {
 	totalMoney += x;
 }
-void Order::setordertype(ORD_TYPE x)
+void Order::SetOrderType(ORD_TYPE x)
 {
 	type = x;
 }
-double Order::gettotalMoney()
+double Order::GetTotalMoney()
 {
 	return totalMoney;
 }
-void Order::setfinishedtime(int f) {
+void Order::Set_Finished_Time(int f) {
 	FinishTime = f;
 }
-int Order::getfinishedtime() const {
+int Order::Get_Finished_Time() const {
 	return FinishTime;
 }

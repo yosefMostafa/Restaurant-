@@ -14,53 +14,56 @@ protected:
 	                
 	double totalMoney;	//Total order money
 
-	int ArrTime, ServTime, FinishTime;	//arrival, service start, and finish times
-	
-	
-	
-
+	int ArrTime, ServTime, FinishTime;	//arrival, service start, and finish times	
 
 	int OrderSize; // no of dishes of each order need it to calc the SV
-	
-
 
 public:
+
 	Order(int ID, ORD_TYPE r_Type,int a,int s);
+	
 	virtual ~Order();
 
 	int GetID();
 	
 	ORD_TYPE GetType() const;
 
-	int getArrTime() const;
 	void SetArrTime(int Arr);
 
+	int GetArrTime() const;
+	
 	void SetServTime(int Serv);
-	int getServTime();
+	
+	int GetServTime();
 
-	void SettotalMoney(double T_Money);
+	void SetTotal_Money(double T_Money);
 
-	void setfinishedtime(int f);
-	int getfinishedtime()const;
+	double GetTotalMoney();
+
+	void Set_Finished_Time(int f);
+	
+	int Get_Finished_Time()const;
 
 	void SetDistance(int d);
+	
 	int GetDistance() const;
 
-	int getsize() const;
+	int GetSize() const;
 
-	double calcPirority () const;
+	double Calc_Pirority () const;
 
 	void incTotalmoney(int x);
-	void setordertype(ORD_TYPE x);
-	double gettotalMoney();
 	
-	void setStatus(ORD_STATUS s);
-	ORD_STATUS getStatus() const;
+	void SetOrderType(ORD_TYPE x);
 	
-	int getcurrentwaittime(int x);
-	int gettotalwaittime()const;
+	void SetStatus(ORD_STATUS s);
 	
-
+	ORD_STATUS GetStatus() const;
+	
+	int Get_Current_Wait_Time(int x);
+	
+	int Get_Total_Wait_Time()const;
+	
 	Order(int AT, int id, ORD_TYPE r_Type, double tMoney, int size, int dist = 0);
 
 };

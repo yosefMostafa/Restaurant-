@@ -1,4 +1,4 @@
-#include"..\Events\promotion.h"
+#include"../Events/PromotionEvent.h"
 
 promotion::promotion(int eTime, int oID , int Exm) :Event(eTime, oID)
 {
@@ -6,6 +6,5 @@ promotion::promotion(int eTime, int oID , int Exm) :Event(eTime, oID)
 }
 void promotion::Execute(Restaurant* pRest)
 {
-	pRest->promoteOrder(OrderID, EXmoney);
-
+	pRest->Promote_Order(OrderID, EXmoney);
 }
