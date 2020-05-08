@@ -12,26 +12,26 @@
 #include "Order.h"
 
 // it is the maestro of the project
-class Restaurant  
-{	
+class Restaurant
+{
 private:
 	GUI *pGUI;
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
 
-	
-	/// ==> 
+
+	/// ==>
 	//	DEMO-related members. Should be removed in phases 1&2
 	Queue<Order*> DEMO_Queue;	//Important: This is just for demo
-	
+
 	/// ==>
-	
-	
-	
+
+
+
 	//
 	// TODO: Add More Data Members As Needed
 	//
 	//
-	// for the cooks 
+	// for the cooks
 	Queue<Cook*> NormalCQueue;
 	Queue<Cook*> VeganCQueue;        //those three queues have all the available cooks
 	Queue<Cook*> VIPCQueue;
@@ -40,24 +40,23 @@ private:
 	//
 
 	//
-	//for the orders 
+	//for the orders
 	Queue<Order*> VGNWaiting;        //those three have all orders On the waiting list
-	Queue<Order*> NOwaiting;              
+	Queue<Order*> NOwaiting;
 	Queue<Order*> VIPwaiting;
 	Queue<Order*> finishedqueue;
 	// linked list or array list
 
-	int BO, AutoPT;// repersent restaurnat rules to give a cook a break after n orders 
+	int BO, AutoPT;// repersent restaurnat rules to give a cook a break after n orders
 	int TOTALautoP;
 public:
-	
+
 	Restaurant();
 	~Restaurant();
-	
+
 	void ExecuteEvents(int TimeStep);	//executes all events at current timestep
 	void RunSimulation();
 	void load();
-	void Run(int &time);
 	void interactive();
 	void stepbystep();
 	void silent();
@@ -82,9 +81,9 @@ public:
 	bool promoteOrder(int id , int extra);
 
 
-/// ===================    DEMO-related functions. Should be removed in phases 1&2   ================= 
+/// ===================    DEMO-related functions. Should be removed in phases 1&2   =================
 
-	
+
 	void serveorders(int timestep);
 	void finished(int timestep);
 	void assigncook(Order* tempo, Cook* tempc,int timestep);
@@ -92,7 +91,7 @@ public:
 	//void check(int timestep);
 	//void addorder(Order* po,ORD_TYPE t);
 
-/// ================================================================================================== 
+/// ==================================================================================================
 
 
 
