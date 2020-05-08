@@ -244,6 +244,7 @@ void::Restaurant::interactive(){
 	{
 		Run(CurrentTimeStep);
 		pGUI->waitForClick();
+		pGUI->ClearStatusBar(2);
 	}
 	OutPut();
 }
@@ -252,6 +253,7 @@ void Restaurant::stepbystep() {
 	while (!isprogramfnished()) {
 		Run(CurrentTimeStep);
 		Sleep(1000);
+		pGUI->ClearStatusBar(2);
 	}
 	OutPut();
 }
@@ -422,7 +424,7 @@ void Restaurant::finished(int timestep) {
 	delete Arr;
 
 }
-void Restaurant::assigncook(Order* tempo, Cook* tempc,int timestep)
+void Restaurant::assigncook(Order* tempo, Cook* tempc,int timestep,int count)
 {
 	float cspeed, dishes, servtime, finished;
 			cspeed = tempc->getspeed();
@@ -434,30 +436,29 @@ void Restaurant::assigncook(Order* tempo, Cook* tempc,int timestep)
 			tempo->setStatus(SRV);
 			tempc->setorder(tempo);
 			tempc->setStatue(Not_Avail);
-			pGUI->PrintMessage2(typetostring(tempc) + " cook#" + to_string(tempc->GetID()) + " to order "+typetostring(tempo)+" #"+to_string(tempo->GetID())+" at time step: "+to_string(timestep));
-			Sleep(200);
+			pGUI->PrintMessage2(typetostring(tempc) +to_string(tempc->GetID()) + "("+typetostring(tempo)+to_string(tempo->GetID())+")",count);
 			BusyCooks.enqueue(tempc);
 }
 string Restaurant::typetostring(Order* tempo)
 {
 	switch (tempo->GetType()) {
 	case TYPE_NRM:
-		return "Normal";
+		return "N";
 	case TYPE_VGAN:
-		return "Vegan";
+		return "Veg";
 	case TYPE_VIP:
-		return "VIP";
+		return "V";
 	}
 }
 string Restaurant::typetostring(Cook* tempc)
 {
 	switch (tempc->GetType()) {
 	case TYPE_NRM:
-		return "Normal";
+		return "N";
 	case TYPE_VGAN:
-		return "Vegan";
+		return "Veg";
 	case TYPE_VIP:
-		return "VIP";
+		return "V";
 	}
 }
 bool Restaurant::isprogramfnished()
@@ -481,27 +482,28 @@ void Restaurant::serveorders(int timestep)
 {
 	Order* tempo;
 	Cook* tempc;
-	Queue<Order*> tempqo;//for orders
-	Queue<Cook*> tempqc;//for cook
+	int count = -1;
 	bool flag = true;
 	while (VIPwaiting.peekFront(tempo)&&flag)
 	{
+		count++;
 		if (VIPCQueue.dequeue(tempc)) {
 			VIPwaiting.dequeue(tempo);
-			assigncook(tempo, tempc, timestep);
+			assigncook(tempo, tempc, timestep,count);
 		}
 		else if (NormalCQueue.dequeue(tempc))
 		{
 			VIPwaiting.dequeue(tempo);
-			assigncook(tempo, tempc, timestep);
+			assigncook(tempo, tempc, timestep,count);
 		}
 		else if (VeganCQueue.dequeue(tempc))
 		{
 			VIPwaiting.dequeue(tempo);
-			assigncook(tempo, tempc, timestep);
+			assigncook(tempo, tempc, timestep,count);
 		}
-		else
-			flag = false;
+		else {
+			flag = false; count--;
+		}
 	}
 	flag = true;
 	while (VGNWaiting.peekFront(tempo)&&flag)
@@ -509,7 +511,8 @@ void Restaurant::serveorders(int timestep)
 		if (VeganCQueue.dequeue(tempc))
 		{
 		VGNWaiting.dequeue(tempo);
-		assigncook(tempo, tempc, timestep);
+		count++;
+		assigncook(tempo, tempc, timestep,count);
 		}
 		else
 		flag = false;
@@ -519,12 +522,13 @@ void Restaurant::serveorders(int timestep)
 	{
 		if (NormalCQueue.dequeue(tempc)) {
 			NOwaiting.dequeue(tempo);
-			assigncook(tempo, tempc, timestep);
+			count++;
+			assigncook(tempo, tempc, timestep,count);
 		}
 		else if (VIPCQueue.dequeue(tempc))
 		{
-			NOwaiting.dequeue(tempo);
-			assigncook(tempo, tempc, timestep);
+			NOwaiting.dequeue(tempo); count++;
+			assigncook(tempo, tempc, timestep,count);
 		}
 		else
 			flag = false;
