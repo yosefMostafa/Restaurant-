@@ -317,7 +317,7 @@ void Restaurant::AddVIP(Order* po)
 void Restaurant::finished(int timestep) {
 	Cook* temp;
 	Queue<Cook*> tempqc;
-	//Queue<Order*>dummy;
+	Queue<Order*>dummy;
 	while (BusyCooks.dequeue(temp)) {
 		if (temp->getavail() != Break) {
 			if (timestep == temp->getorder()->getfinishedtime())
@@ -327,6 +327,7 @@ void Restaurant::finished(int timestep) {
 				p->setStatus(DONE);
 				temp->increasecomporders();
 				temp->setorder(nullptr);
+	//			dummy.enqueue(p);
 				finishedqueue.enqueue(p);
 				if (!temp->isbreak(timestep, BO)) {
 					AddCook(temp);
@@ -346,6 +347,30 @@ void Restaurant::finished(int timestep) {
 	}
 	while (tempqc.dequeue(temp))
 		BusyCooks.enqueue(temp);
+	
+	
+	//int dcount; bool flag = true;  Order* temporder;
+	//Order** Arr = dummy.toArray(dcount);
+	//while (flag)
+	//{ 
+	//	flag = false;
+	//	for (int i = 0; i < dcount-1; i++)
+	//	{
+	//		if (Arr[i]->getServTime() > Arr[i + 1]->getServTime())  // arrange where less serving time exists first
+	//		{
+	//			flag = true; // the while loop will have another iteration 
+	//			temporder = Arr[i+1];    // here I have to make a swap between the two orderes
+	//			Arr[i + 1] = Arr[i];
+	//			Arr[i] = temporder;
+	//		
+	//		}
+	//	}
+	//}
+
+	//for (int i = 0; i < dcount; i++)
+	//	finishedqueue.enqueue(Arr[i]);
+	//delete Arr;
+
 }
 void Restaurant::assigncook(Order* tempo, Cook* tempc,int timestep)
 {
