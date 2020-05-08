@@ -118,12 +118,7 @@ void Restaurant::FillDrawingList()
 		for (int j = 0; j < finishedcount; j++)
 			pGUI->AddToDrawingList(finishedord[j]);
 	}
-	//This function should be implemented in phase1
-	//It should add ALL orders and Cooks to the drawing list
-	//It should get orders from orders lists/queues/stacks/whatever (same for Cooks)
-	//To add orders it should call function  void GUI::AddToDrawingList(Order* pOrd);
-	//To add Cooks it should call function  void GUI::AddToDrawingList(Cook* pCc);
-
+	
 }
 bool Restaurant::cancelOrder(int id)
 {
@@ -165,12 +160,12 @@ void::Restaurant::load() {
 	ifstream file("data.txt");
 	int Normalcooks, vegancooks, vipcooks;
 	int Normalcooksspeed, vegancooksspeed, vipcooksspeed;
-	int breaktime, normalbreaktime, veganbreaktime, vipbreaktime;
+	int  normalbreaktime, veganbreaktime, vipbreaktime;
 	int numofevents;
 
 	file >> Normalcooks >> vegancooks >> vipcooks;
 	file >> Normalcooksspeed >> vegancooksspeed >> vipcooksspeed;
-	file >> this->BO >> normalbreaktime >> veganbreaktime >> vipbreaktime;
+	file >>BO >> normalbreaktime >> veganbreaktime >> vipbreaktime;
 	file >> AutoPT;
 	file >> numofevents;//getting the information of the cook from file
 
@@ -249,6 +244,7 @@ void::Restaurant::interactive(){
 		Run(CurrentTimeStep);
 		pGUI->waitForClick();
 	}
+	OutPut();
 }
 void Restaurant::stepbystep() {
 	int CurrentTimeStep = 1;
@@ -256,13 +252,21 @@ void Restaurant::stepbystep() {
 		Run(CurrentTimeStep);
 		Sleep(1000);
 	}
+	OutPut();
 }
 
 void Restaurant::silent() {
 	int CurrentTimeStep = 1;
-	fstream Output;
+	
 	while (CurrentTimeStep!=100)//should be updated
 		Run(CurrentTimeStep);
+	OutPut();
+	
+	//the func for calling the output file should be called here
+}
+void Restaurant::OutPut()
+{
+	fstream Output;
 	int  Normal = 0, Vip = 0, Vegan = 0, N_Cook = 0, V_Cook = 0, VI_Cook = 0;
 	double WaitTime = 0.0;
 	double  totalserv = 0.00;
@@ -274,7 +278,7 @@ void Restaurant::silent() {
 	while (finishedqueue.dequeue(Order))
 	{
 		Output << Order->getfinishedtime() << "    " << Order->GetID() << "     " << Order->getArrTime() << "     " << Order->gettotalwaittime() << "     "
-		<< Order->getServTime() << endl;
+			<< Order->getServTime() << endl;
 		ORD_TYPE typ = Order->GetType();
 		switch (typ)
 		{
@@ -299,10 +303,6 @@ void Restaurant::silent() {
 	Output << "Avg Wait= " << WaitTime / (Normal + Vegan + Vip) << ", Avg Serv= " << totalserv / (Normal + Vegan + Vip) << endl;
 	Output << "Auto-Promoted: " << TOTALautoP;
 	Output.close();
-	//the func for calling the output file should be called here
-}
-void Restaurant::OutPut()
-{
 
 }
 void Restaurant::Run(int &time) {
@@ -312,8 +312,8 @@ void Restaurant::Run(int &time) {
 
 	ExecuteEvents(time);	//execute all events at current time step
 	finished(time);//checking if there is any order is done in this time step
-	serveorders(time);//assigning orders to cooks
 	TOTALautoP += Autop(time);
+	serveorders(time);//assigning orders to cooks
 	FillDrawingList();
 
 	/// The next code section should be done through function "FillDrawingList()" once you
@@ -355,33 +355,7 @@ int Restaurant::Autop(int timestep)
 	}
 	return x;
 }
-//void Restaurant::RemoveNormal(int Id)
-//{
-//	Order* temp;
-//	Queue<Order*> tempq;
-//	while (NOwaiting.dequeue(temp)) {
-//		if (Id == temp->GetID())
-//			delete temp;
-//		else
-//			tempq.enqueue(temp);
-//	}
-//	while (tempq.dequeue(temp))
-//		NOwaiting.enqueue(temp);
-//}
-//
-//void Restaurant::RemoveVGN(int Id)
-//{
-//	Order* temp;
-//	Queue<Order*> tempq;
-//	while (VGNWaiting.enqueue(temp)) {
-//		if (Id == temp->GetID())
-//			delete temp;
-//		else
-//			tempq.enqueue(temp);
-//	}
-//	while (tempq.dequeue(temp))
-//		VGNWaiting.enqueue(temp);
-//}
+
 void Restaurant::finished(int timestep) {
 	Cook* temp;
 	Queue<Cook*> tempqc;
@@ -395,7 +369,6 @@ void Restaurant::finished(int timestep) {
 				p->setStatus(DONE);
 				temp->increasecomporders();
 				temp->setorder(nullptr);
-	//			finishedqueue.enqueue(p);
 				dummy.enqueue(p);
 				if (!temp->isbreak(timestep, BO)) {
 					AddCook(temp);
@@ -519,50 +492,5 @@ void Restaurant::serveorders(int timestep)
 		else
 			flag = false;
 	}
-	//while (VIPCQueue.peekFront(tempc)) {
-	//	if (VIPwaiting.dequeue(tempo)) {
-	//		VIPCQueue.dequeue(tempc);
-	//	}
-	//	else
-	//		break;
-	//}
-	//while (NormalCQueue.peekFront(tempc)) {
-	//	if (NOwaiting.dequeue(tempo)) {
-	//		NormalCQueue.dequeue(tempc);
-	//		float cspeed, dishes, servtime, finished;
-	//		cspeed = tempc->getspeed();
-	//		dishes = tempo->getsize();
-	//		servtime = ceil(dishes / cspeed);//calculating serving time
-	//		finished = servtime + timestep;//calculating finishing time for this order
-	//		tempo->SetServTime(servtime);
-	//		tempo->setfinishedtime(finished);
-	//		tempo->setStatus(SRV);
-	//		tempc->setorder(tempo);
-	//		tempc->setStatue(Not_Avail);
-	//		BusyCooks.enqueue(tempc);
-	//	}
-	//	else
-	//		break;
-	//
-	//}
-
-	//while (VeganCQueue.peekFront(tempc)) {
-	//	if (VGNWaiting.dequeue(tempo)) {
-	//		VeganCQueue.dequeue(tempc);
-	//		float cspeed, dishes, servtime, finished;
-	//		cspeed = tempc->getspeed();
-	//		dishes = tempo->getsize();
-	//		servtime = ceil(dishes / cspeed);//calculating serving time
-	//		finished = servtime + timestep;//calculating finishing time for this order
-	//		tempo->SetServTime(servtime);
-	//		tempo->setfinishedtime(finished);
-	//		tempo->setStatus(SRV);
-	//		tempc->setorder(tempo);
-	//		tempc->setStatue(Not_Avail);
-	//		BusyCooks.enqueue(tempc);
-	//	}
-	//	else
-	//		break;
-	//}
-	//
+	
 }

@@ -19,12 +19,6 @@ private:
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
 
 
-	/// ==>
-	//	DEMO-related members. Should be removed in phases 1&2
-	Queue<Order*> DEMO_Queue;	//Important: This is just for demo
-
-	/// ==>
-
 
 
 	//
@@ -55,42 +49,40 @@ public:
 	~Restaurant();
 
 	void ExecuteEvents(int TimeStep);	//executes all events at current timestep
+
 	void RunSimulation();
 	void load();
+
 	void interactive();
 	void Run(int& time);
 	void stepbystep();
 	void silent();
 	void OutPut();
+
 	void AddtoNormal(Order* po);
 	void AddtoVGN(Order* po);
 	void AddVIP(Order* po);
-	int Autop(int timestep);
+
 	void AddCook(Cook* C);
 
-	//void RemoveNormal(int Id);
-	//void RemoveVGN(int Id);
 
 	GUI* GetGUI();
 
 	void FillDrawingList();
 
-	//
-	// TODO: Add More Member Functions As Needed
-	//
+	
 	bool cancelOrder(int id);
 	bool promoteOrder(int id , int extra);
+	int Autop(int timestep);
 
 
-/// ===================    DEMO-related functions. Should be removed in phases 1&2   =================
+/// ===================       =================
 
 
-	void serveorders(int timestep);
-	void finished(int timestep);
-	void assigncook(Order* tempo, Cook* tempc,int timestep);
-	//void Addtoserving(Order* po);
-	//void check(int timestep);
-	//void addorder(Order* po,ORD_TYPE t);
+	void serveorders(int timestep); //   adding cooks to serving list
+	void finished(int timestep);  // to check if a cook has finished coking
+	void assigncook(Order* tempo, Cook* tempc,int timestep);   // helper function used inside servorders used to assaign cook to an aorder
+	
 
 /// ==================================================================================================
 

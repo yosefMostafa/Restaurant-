@@ -17,13 +17,10 @@ protected:
 	int ArrTime, ServTime, FinishTime;	//arrival, service start, and finish times
 	
 	
-	//
-	// TODO: Add More Data Members As Needed
-	//
+	
 
 
 	int OrderSize; // no of dishes of each order need it to calc the SV
-	//  int currentwaitTime; // time consumed from AT to assign the order for a chief I need it as it is important in case we want it to promote the order
 	
 
 
@@ -34,28 +31,35 @@ public:
 	int GetID();
 	
 	ORD_TYPE GetType() const;
+
+	int getArrTime() const;
 	void SetArrTime(int Arr);
+
 	void SetServTime(int Serv);
-	void SettotalMoney(double T_Money);
 	int getServTime();
+
+	void SettotalMoney(double T_Money);
+
 	void setfinishedtime(int f);
 	int getfinishedtime()const;
-	int getArrTime() const;
+
 	void SetDistance(int d);
 	int GetDistance() const;
+
 	int getsize() const;
+
 	double calcPirority () const;
+
 	void incTotalmoney(int x);
 	void setordertype(ORD_TYPE x);
 	double gettotalMoney();
+	
 	void setStatus(ORD_STATUS s);
 	ORD_STATUS getStatus() const;
+	
 	int getcurrentwaittime(int x);
 	int gettotalwaittime()const;
-	//
-	// TODO: Add More Member Functions As Needed
-	//
-
+	
 
 	Order(int AT, int id, ORD_TYPE r_Type, double tMoney, int size, int dist = 0);
 

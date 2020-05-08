@@ -84,6 +84,8 @@ Order::Order(int AT, int id, ORD_TYPE r_Type, double tMoney, int size, int dist)
 	ArrTime = AT; ID = id; type = r_Type; totalMoney = tMoney;
 	OrderSize = size; Distance = dist;
 	status = WAIT;
+	FinishTime = -1;
+	ServTime = -1;
 }
 int Order::getsize() const {
 	return OrderSize;
