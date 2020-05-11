@@ -412,7 +412,7 @@ void Restaurant::Run(int &time)
 	
 	T_AutoP += Auto_Promotion(time);
 	
-	//ServOrders(time); //Assigning orders to cooks
+	ServOrders(time); //Assigning orders to cooks
 	
 	Fill_Drawing_List();
 
