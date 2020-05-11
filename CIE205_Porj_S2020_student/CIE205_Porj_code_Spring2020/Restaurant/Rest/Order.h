@@ -21,31 +21,26 @@ protected:
 public:
 
 	Order(int ID, ORD_TYPE r_Type,int a,int s);
-	
 	virtual ~Order();
+
 
 	int GetID();
 	
 	ORD_TYPE GetType() const;
 
 	void SetArrTime(int Arr);
-
 	int GetArrTime() const;
 	
 	void SetServTime(int Serv);
-	
 	int GetServTime();
 
 	void SetTotal_Money(double T_Money);
-
 	double GetTotalMoney();
 
 	void Set_Finished_Time(int f);
-	
 	int Get_Finished_Time()const;
 
 	void SetDistance(int d);
-	
 	int GetDistance() const;
 
 	int GetSize() const;
@@ -56,12 +51,12 @@ public:
 	
 	void SetOrderType(ORD_TYPE x);
 	
+
 	void SetStatus(ORD_STATUS s);
-	
 	ORD_STATUS GetStatus() const;
 	
+
 	int Get_Current_Wait_Time(int x);
-	
 	int Get_Total_Wait_Time()const;
 	
 	Order(int AT, int id, ORD_TYPE r_Type, double tMoney, int size, int dist = 0);

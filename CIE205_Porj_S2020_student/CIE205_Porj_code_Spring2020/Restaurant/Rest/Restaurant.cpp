@@ -12,13 +12,13 @@ using namespace std;
 
 Restaurant::Restaurant()
 {
-	pGUI = NULL;
+	pGUI = new GUI;
 	load();
 }
 
 void Restaurant::RunSimulation()
 {
-	pGUI = new GUI;
+	//pGUI = new GUI;
 	PROG_MODE mode = pGUI->getGUIMode();
 	switch (mode)	//Add a function for each mode in next phases
 	{
@@ -175,8 +175,27 @@ bool Restaurant::Promote_Order(int id, int extra)
 
 void::Restaurant::load() 
 {
-	ifstream file("data.txt");
+	ifstream Input;
 	
+	pGUI->ClearStatusBar(2);
+	
+	pGUI->PrintMessage("Write input filename : ");
+	
+	string filename = pGUI->GetString();
+	
+	Input.open(filename.c_str());
+	
+	while (Input.fail())
+	{
+		pGUI->ClearStatusBar(2);
+
+		pGUI->PrintMessage("Wrong filename, Please Enter the correct input filename : ");
+		
+		string filename = pGUI->GetString();
+
+		Input.open(filename.c_str());
+	}
+
 	int Normal_Cooks, Vegan_Cooks, VIP_Cookcs;
 	
 	int Normal_Cook_Speed, Vegan_Cook_Speed, VIP_Cook_Speed;
@@ -185,15 +204,15 @@ void::Restaurant::load()
 	
 	int Number_Events;
 
-	file >> Normal_Cooks >> Vegan_Cooks >> VIP_Cookcs;
+	Input >> Normal_Cooks >> Vegan_Cooks >> VIP_Cookcs;
 	
-	file >> Normal_Cook_Speed >> Vegan_Cook_Speed >> VIP_Cook_Speed;
+	Input >> Normal_Cook_Speed >> Vegan_Cook_Speed >> VIP_Cook_Speed;
 	
-	file >>BO >> Normal_Break_Time >> Vegan_Break_Time >> VIP_Break_Time;
+	Input >>BO >> Normal_Break_Time >> Vegan_Break_Time >> VIP_Break_Time;
 	
-	file >> AutoPT;
+	Input >> AutoPT;
 	
-	file >> Number_Events;//getting the information of the cook from file
+	Input >> Number_Events;//getting the information of the cook from file
 
 	int sum = Normal_Cooks + Vegan_Cooks + VIP_Cookcs;
 	
@@ -225,11 +244,11 @@ void::Restaurant::load()
 	{
 		char event, type;
 		ORD_TYPE typ = TYPE_CNT;
-		file >> event;
+		Input >> event;
 		if (event == 'R')
 		{
 			int timestep, ID, size, money, speed = 0;
-			file >> type;
+			Input >> type;
 			switch (type) {
 			case 'N':typ = TYPE_NRM;
 				speed = Normal_Cook_Speed;
@@ -240,20 +259,20 @@ void::Restaurant::load()
 			case'V':typ = TYPE_VIP;
 				speed = VIP_Cook_Speed;//to detemine the type
 			}
-			file >> timestep >> ID >> size >> money;
+			Input >> timestep >> ID >> size >> money;
 			pEv = new ArrivalEvent(timestep, ID, size, money, (ORD_TYPE)typ, 0);
 			Events_Queue.enqueue(pEv);//adding the arrival evevnt in a queue
 		}
 		else if (event == 'X')
 		{
 			int timestep, ID;
-			file >> timestep >> ID;
+			Input >> timestep >> ID;
 			pEv = new CancellationEvent(timestep, ID);
 			Events_Queue.enqueue(pEv);//adding the cancellation evevnt in a queue
 		}
 		else if (event == 'P') {
 			int timestep, ID, Exmoney;
-			file >> timestep >> ID >> Exmoney;
+			Input >> timestep >> ID >> Exmoney;
 			pEv = new promotion(timestep, ID, Exmoney);
 			Events_Queue.enqueue(pEv);//adding the cancellation evevnt in a queue
 		}

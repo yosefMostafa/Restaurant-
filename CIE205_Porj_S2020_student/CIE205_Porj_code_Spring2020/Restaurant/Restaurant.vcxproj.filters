@@ -120,6 +120,9 @@
     <ClInclude Include="Events\PromotionEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
+    <ClInclude Include="HealthProblems.h">
+      <Filter>Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMUgraphicsLib\jpeg\jcomapi.c">
@@ -250,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Events\PromotionEvent.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthProblems.cpp">
       <Filter>Events</Filter>
     </ClCompile>
   </ItemGroup>

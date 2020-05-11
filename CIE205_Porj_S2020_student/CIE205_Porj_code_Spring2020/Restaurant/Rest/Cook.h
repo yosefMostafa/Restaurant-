@@ -27,41 +27,37 @@ public:
 	Cook();
 	
 	Cook(int id, int spd, ORD_TYPE t, int breakDur);
-	
 	virtual ~Cook();
 	
+
 	int GetID() const;
-	
 	void SetID(int);
 
+	
 	ORD_TYPE GetType() const;
 	
+
 	int GetSpeed();
-	
 	void SetSpeed(int);
 	
 	void SetStatue(AVAIL_TYPE t);
-	
 	bool IsAvail(AVAIL_TYPE t);
-	
 	AVAIL_TYPE GetAvail();
 	
 	void SetType(ORD_TYPE) ;
 	
 	void SetOrder(Order* po);
-	
+	Order* GetOrder();
+
 	void Increase_Completed_Orders();
 	
 	int Get_Completed_Orders();
 	
-	Order* GetOrder();
-	
 	bool IsBreak(int x,int bo);
-	
 	bool Breakd(int x);
 
+
 	int GetFT();
-	
 	void SetFT(int x);
 
 };
