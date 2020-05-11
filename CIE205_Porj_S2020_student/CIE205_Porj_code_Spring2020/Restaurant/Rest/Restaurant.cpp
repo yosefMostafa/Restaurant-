@@ -68,31 +68,75 @@ GUI* Restaurant::GetGUI()
 
 void Restaurant::Fill_Drawing_List()
 {	
-	int Normal_Count = Normal_Cook_Queue.getcount(); 
-	
+	//Cooks
+	PQueue<Cook*> arrangecook;
+	Cook* temp;
+	int Normal_Count = Normal_Cook_Queue.getcount();
+
 	int Vegan_Count = Vegan_Cook_Queue.getcount();
-	
+
 	int VIP_Count = VIP_Cook_Queue.getcount();
 
-	int Order_Normal_Count = Normal_Waiting.getcount(); 
+	for (int i = 0; i < Normal_Count; i++) {
+		Normal_Cook_Queue.dequeue(temp);
+		arrangecook.enqueue(temp, temp->GetFT()*-1);
+		Normal_Cook_Queue.enqueue(temp);
+	}
+	for (int i = 0; i < VIP_Count; i++) {
+		VIP_Cook_Queue.dequeue(temp);
+		arrangecook.enqueue(temp, temp->GetFT()*-1);
+		VIP_Cook_Queue.enqueue(temp);
+	}
+	for (int i = 0; i < Vegan_Count; i++) {
+		Vegan_Cook_Queue.dequeue(temp);
+		arrangecook.enqueue(temp, temp->GetFT()*-1);
+		Vegan_Cook_Queue.enqueue(temp);
+	}
+	//drawing Cooks
+	while (arrangecook.dequeue(temp))
+		pGUI->AddToDrawingList(temp);
 	
-	int Order_Vegan_Count = Vegan_Waiting.getcount();
+	
+	//waiting 
+
+	Normal_Count = Normal_Waiting.getcount();
+	
+	Vegan_Count = Vegan_Waiting.getcount();
 		
-	int Order_VIP_Count = VIP_Waiting.getcount();
+	VIP_Count = VIP_Waiting.getcount();
 	
-	Cook** pcn = Normal_Cook_Queue.toArray(Normal_Count);
+	PQueue<Order*> arrangewaiord;
+	Order* temp1;
 	
-	Cook** pcv = Vegan_Cook_Queue.toArray(Vegan_Count);
+	for (int i = 0; i < Normal_Count; i++) {
+		Normal_Waiting.dequeue(temp1);
+		arrangewaiord.enqueue(temp1, temp1->GetArrTime() * -1);
+		Normal_Waiting.enqueue(temp1);
+	}
+	for (int i = 0; i < Vegan_Count; i++) {
+		Vegan_Waiting.dequeue(temp1);
+		arrangewaiord.enqueue(temp1, temp1->GetArrTime() * -1);
+		Vegan_Waiting.enqueue(temp1);
+	}
+	Queue<Order*> vipwai;
+	for (int i = 0; i < VIP_Count; i++) {
+		VIP_Waiting.dequeue(temp1);
+		arrangewaiord.enqueue(temp1, temp1->GetArrTime() * -1);
+		vipwai.enqueue(temp1);
+	}
+	while (vipwai.dequeue(temp1))
+		VIP_Waiting.enqueue(temp1, temp1->Calc_Pirority());
+	//printing waiting 
+	while (arrangewaiord.dequeue(temp1))
+		pGUI->AddToDrawingList(temp1);
 	
-	Cook** pcvip = VIP_Cook_Queue.toArray(VIP_Count);
-	
-	if (Order_VIP_Count != 0) 
+	/*if (Order_VIP_Count != 0) 
 	{
 		Order** orvip = VIP_Waiting.toArray(Order_Vegan_Count);
 		for (int j = 0; j < Order_Vegan_Count; j++)
 			pGUI->AddToDrawingList(orvip[j]);
 	}
-	if (Order_Vegan_Count != 0) 
+	if (Order_Vegan_Count !=  
 	{
 		Order** orveg = Vegan_Waiting.toArray(Order_Vegan_Count);
 		for (int j = 0; j < Order_Vegan_Count; j++)
@@ -104,13 +148,7 @@ void Restaurant::Fill_Drawing_List()
 		for (int j = 0; j < Order_Normal_Count; j++)
 			pGUI->AddToDrawingList(orn[j]);
 	}
-	//Cooks
-	for (int j = 0; j < Normal_Count; j++)
-		pGUI->AddToDrawingList(pcn[j]);
-	for (int j = 0; j < Vegan_Count; j++)
-		pGUI->AddToDrawingList(pcv[j]);
-	for (int j = 0; j < VIP_Count; j++)
-		pGUI->AddToDrawingList(pcvip[j]);
+	*/
 	//serving
 	int busycount = BusyCooks.getcount();
 	
@@ -129,7 +167,7 @@ void Restaurant::Fill_Drawing_List()
 	
 	if (finishedcount != 0) 
 	{
-		Order** finishedord = Finished_Orders.toArray(Order_Normal_Count);
+		Order** finishedord = Finished_Orders.toArray(finishedcount);
 		for (int j = 0; j < finishedcount; j++)
 			pGUI->AddToDrawingList(finishedord[j]);
 	}
@@ -374,7 +412,7 @@ void Restaurant::Run(int &time)
 	
 	T_AutoP += Auto_Promotion(time);
 	
-	ServOrders(time); //Assigning orders to cooks
+	//ServOrders(time); //Assigning orders to cooks
 	
 	Fill_Drawing_List();
 
